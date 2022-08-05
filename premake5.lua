@@ -1,13 +1,18 @@
 workspace "Hangar Engine"
 	architecture "x64"
 	startproject "Sandbox"
+	cppdialect "c++latest"
 	configurations { "Debug", "Release" }
 	flags { "MultiProcessorCompile" }
 	defines {
 		"UNICODE",
 		"_CRT_SECURE_NO_WARNINGS",
+		"STB_IMAGE_IMPLEMENTATION",
+		"STB_TRUETYPE_IMPLEMENTATION"
 	}
-	cppdialect "c++20"
+	includedirs {
+		"%{wks.location}/Vendor"
+	}
 	targetdir ("%{wks.location}/Build")
 	objdir ("%{wks.location}/Intermediates/%{prj.name}_%{cfg.buildcfg}_%{cfg.system}/")
 	filter "system:windows"
@@ -22,6 +27,7 @@ workspace "Hangar Engine"
 		}
 		links {
 			"vulkan-1",
+			"shaderc_combined",
 		}
 	filter "configurations:Debug"
 		symbols "on"
