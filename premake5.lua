@@ -10,9 +10,6 @@ workspace "Hangar Engine"
 		"STB_IMAGE_IMPLEMENTATION",
 		"STB_TRUETYPE_IMPLEMENTATION"
 	}
-	includedirs {
-		"%{wks.location}/Vendor"
-	}
 	targetdir ("%{wks.location}/Build")
 	objdir ("%{wks.location}/Intermediates/%{prj.name}_%{cfg.buildcfg}_%{cfg.system}/")
 	filter "system:windows"
