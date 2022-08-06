@@ -1,7 +1,8 @@
 #ifndef VULKAN_API_H
 #define VULKAN_API_H
 #include "../Platform/GameWindow.h"
-#include "RenderAPI.h"
+#include "IRenderAPI.h"
+#include "VMA.h"
 
 class VulkanAPI : public IRenderAPI {
 private:
@@ -24,8 +25,11 @@ private:
 	std::vector<VkSemaphore> imageAvailableSemaphores;
 	std::vector<VkSemaphore> renderFinishedSemaphores;
 	std::vector<VkFence> inFlightFences;
-	uint32_t currentFrame = 0;
+	uint32_t currentFrame;
 	uint32_t imageIndex;
+
+	// Allocations
+	VmaAllocator allocator;
 public:
 	VulkanAPI(GameWindow* windowPtr, std::vector<const char*> deviceExtensions);
 	~VulkanAPI();
@@ -33,8 +37,9 @@ public:
 	// Inherited via IRenderAPI
 	virtual void Initialize() override;
 	virtual void DeInitialize() override;
-	virtual void BeginFrame(float clearColor[4]) override;
+	virtual void BeginFrame() override;
 	virtual void EndFrame() override;
+	virtual uint64_t CreateVertexBuffer(size_t vertexSize, size_t vertexCount, void* data) override;
 private:
 	void CreateInstance();
 	void CreateDebugLayer();
@@ -42,7 +47,7 @@ private:
 	void CreateLogicalDevice();
 	void CreateSwapchain();
 	void CreateImageViews();
-	VkRenderPass CreateRenderPass();
+	void CreateRenderPass();
 	void CreateFramebuffers();
 	void CreateCommandPool();
 	void CreateCommandBuffers();

@@ -12,9 +12,10 @@ void Main(ArgumentPacket args) {
 	window.Open();
 	VulkanAPI vulkan = VulkanAPI(&window, { VK_KHR_SWAPCHAIN_EXTENSION_NAME });
 
-	float clearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	vulkan.SetClearColor(clearColor);
 	while (window.IsRunning()) {
-		vulkan.BeginFrame(clearColor);
+		vulkan.BeginFrame();
 		vulkan.EndFrame();
 		window.Poll();
 	}

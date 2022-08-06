@@ -6,6 +6,11 @@
 
 #define MAX_FRAMES_IN_FLIGHT 2
 
+extern "C" {
+	HANGAR_API unsigned long NvOptimusEnablement = 0x00000001;
+	HANGAR_API int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 namespace {
 	const std::vector<const char*> vulkanValidationLayers = {
 		"VK_LAYER_KHRONOS_validation"
@@ -70,9 +75,17 @@ namespace {
 	}
 }
 
+struct VulkanAPI::IRenderAPI::VertexBuffer {
+	VkBuffer buffer;
+	VmaAllocation allocation;
+	size_t vertexSize;
+	size_t vertexCount;
+};
+
 VulkanAPI::VulkanAPI(GameWindow* windowPtr, std::vector<const char*> deviceExtensions)
 	: IRenderAPI(windowPtr) {
 	this->deviceExtensions = deviceExtensions;
+	this->currentFrame = 0;
 	Initialize();
 }
 
@@ -90,15 +103,27 @@ void VulkanAPI::Initialize() {
 	CreateLogicalDevice();
 	CreateSwapchain();
 	CreateImageViews();
-	renderPass = CreateRenderPass();
+	CreateRenderPass();
 	CreateFramebuffers();
 	CreateCommandPool();
 	CreateCommandBuffers();
 	CreateSync();
+
+	VmaAllocatorCreateInfo allocatorInfo = { };
+	allocatorInfo.physicalDevice = physicalDevice;
+	allocatorInfo.device = device;
+	allocatorInfo.instance = instance;
+	vmaCreateAllocator(&allocatorInfo, &allocator);
 }
 
 void VulkanAPI::DeInitialize() {
 	vkDeviceWaitIdle(device);
+	for (auto& buffer : vertexBuffers) {
+		vmaDestroyBuffer(allocator, buffer->buffer, buffer->allocation);
+		delete buffer;
+	}
+	vertexBuffers.clear();
+	vmaDestroyAllocator(allocator);
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 		vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
 		vkDestroySemaphore(device, imageAvailableSemaphores[i], nullptr);
@@ -121,7 +146,7 @@ void VulkanAPI::DeInitialize() {
 	vkDestroyInstance(instance, nullptr);
 }
 
-void VulkanAPI::BeginFrame(float clearColor[4]) {
+void VulkanAPI::BeginFrame() {
 	vkWaitForFences(device, 1, &inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
 	vkResetFences(device, 1, &inFlightFences[currentFrame]);
 	
@@ -140,6 +165,7 @@ void VulkanAPI::BeginFrame(float clearColor[4]) {
 
 	VkClearValue clear;
 	memcpy(clear.color.float32, clearColor, sizeof(float) * 4);
+	clear.depthStencil.depth = depth;
 	renderPassInfo.clearValueCount = 1;
 	renderPassInfo.pClearValues = &clear;
 
@@ -264,6 +290,20 @@ void VulkanAPI::CreateLogicalDevice() {
 	vkGetDeviceQueue(device, indices.present.value(), 0, &presentQueue);
 }
 
+uint64_t VulkanAPI::CreateVertexBuffer(size_t vertexSize, size_t vertexCount, void* data) {
+	VkBufferCreateInfo info = { };
+	info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+	info.size = vertexCount * vertexSize;
+	info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+
+	VertexBuffer* vbo = new VertexBuffer;
+	VmaAllocationCreateInfo allocInfo = { };
+	allocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+	vmaCreateBuffer(allocator, &info, &allocInfo, &vbo->buffer, &vbo->allocation, nullptr);
+	vertexBuffers.push_back(vbo);
+	return vertexBuffers.size() - 1;
+}
+
 void VulkanAPI::CreateSwapchain() {
 	VkSurfaceCapabilitiesKHR capabilities;
 	std::vector<VkSurfaceFormatKHR> formats;
@@ -278,9 +318,6 @@ void VulkanAPI::CreateSwapchain() {
 	VkExtent2D extent = capabilities.currentExtent;
 
 	uint32_t imageCount = capabilities.minImageCount + 1;
-	if (capabilities.maxImageCount > 0 && imageCount > capabilities.maxImageCount) {
-		imageCount = capabilities.maxImageCount;
-	}
 
 	VkSwapchainCreateInfoKHR createInfo = { };
 	createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -339,8 +376,7 @@ void VulkanAPI::CreateImageViews() {
 	}
 }
 
-VkRenderPass VulkanAPI::CreateRenderPass() {
-	VkRenderPass renderPass;
+void VulkanAPI::CreateRenderPass() {
 	VkAttachmentDescription colorAttachment{};
 	colorAttachment.format = swapchainFormat;
 	colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -368,7 +404,6 @@ VkRenderPass VulkanAPI::CreateRenderPass() {
 	renderPassInfo.pSubpasses = &subpass;
 
 	vkCreateRenderPass(device, &renderPassInfo, nullptr, &renderPass);
-	return renderPass;
 }
 
 void VulkanAPI::CreateFramebuffers() {

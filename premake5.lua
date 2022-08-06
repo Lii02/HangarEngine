@@ -8,7 +8,7 @@ workspace "Hangar Engine"
 		"UNICODE",
 		"_CRT_SECURE_NO_WARNINGS",
 		"STB_IMAGE_IMPLEMENTATION",
-		"STB_TRUETYPE_IMPLEMENTATION"
+		"STB_TRUETYPE_IMPLEMENTATION",
 	}
 	includedirs {
 		"%{wks.location}/Vendor",
