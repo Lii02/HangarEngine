@@ -1,8 +1,11 @@
 #include "Precompiled.h"
 #include "GameWindow.h"
+#include "Mouse.h"
 
 #ifdef HANGAR_WINDOWS
 LRESULT MessageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	Mouse::Get().Process({ hwnd, msg, wParam, lParam });
+
 	switch (msg) {
 	case WM_DESTROY:
 		PostQuitMessage(0);

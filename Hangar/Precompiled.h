@@ -15,7 +15,14 @@
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <Windowsx.h>
 #include <vulkan/vulkan_win32.h>
+struct MessagePacket {
+	HWND hwnd;
+	UINT msg;
+	WPARAM wParam;
+	LPARAM lParam;
+};
 #elif __linux__
 #define HANGAR_LINUX
 #endif
@@ -27,6 +34,7 @@
 #include <functional>
 #include <thread>
 #include <cstdlib>
+#include <cmath>
 #include <cstdint>
 
 #endif
