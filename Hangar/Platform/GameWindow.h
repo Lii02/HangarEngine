@@ -26,8 +26,6 @@ public:
 	void SetTitle(std::string newTitle);
 	void SetSize(uint32_t width, uint32_t height);
 	void SetReizeFunction(ResizeFunc func);
-	std::vector<const char*> GetVulkanInstExtensions() const;
-	VkSurfaceKHR CreateVulkanSurface(VkInstance& instance);
 
 	bool IsRunning() const;
 	bool IsFocus() const;

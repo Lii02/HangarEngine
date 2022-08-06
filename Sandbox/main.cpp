@@ -5,17 +5,13 @@
 #include <Hangar/Platform/Keyboard.h>
 #include <Hangar/Debug/Logger.h>
 #include <Hangar/Debug/Assert.h>
-#include <Hangar/Renderer/VulkanAPI.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
-	VulkanAPI vulkan = VulkanAPI(&window, { VK_KHR_SWAPCHAIN_EXTENSION_NAME });
 
 	float clearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 	while (window.IsRunning()) {
-		vulkan.BeginFrame(clearColor);
-		vulkan.EndFrame();
 		window.Poll();
 	}
 }

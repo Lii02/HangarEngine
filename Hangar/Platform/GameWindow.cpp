@@ -79,21 +79,6 @@ public:
 		SetWindowPos(handle, NULL, 0, 0, width, height, SWP_NOREPOSITION | SWP_SHOWWINDOW);
 	}
 
-	inline std::vector<const char*> GetVulkanInstExtensions() const {
-		return { VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_WIN32_SURFACE_EXTENSION_NAME };
-	}
-
-	inline VkSurfaceKHR CreateVulkanSurface(VkInstance& instance) {
-		VkSurfaceKHR surface;
-		VkWin32SurfaceCreateInfoKHR createInfo;
-		ZeroMemory(&createInfo, sizeof(VkWin32SurfaceCreateInfoKHR));
-		createInfo.hinstance = hinstance;
-		createInfo.hwnd = handle;
-		createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
-		vkCreateWin32SurfaceKHR(instance, &createInfo, nullptr, &surface);
-		return surface;
-	}
-
 	inline bool IsPolling() const { 
 		return polling;
 	}
@@ -144,14 +129,6 @@ void GameWindow::SetSize(uint32_t width, uint32_t height) {
 
 void GameWindow::SetReizeFunction(ResizeFunc func) {
 	this->resize = resize;
-}
-
-std::vector<const char*> GameWindow::GetVulkanInstExtensions() const {
-	return windowImpl->GetVulkanInstExtensions();
-}
-
-VkSurfaceKHR GameWindow::CreateVulkanSurface(VkInstance& instance) {
-	return windowImpl->CreateVulkanSurface(instance);
 }
 
 bool GameWindow::IsRunning() const {

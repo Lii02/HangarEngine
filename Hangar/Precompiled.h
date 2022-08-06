@@ -1,9 +1,6 @@
 #ifndef HANGAR_PRECOMPILED_H
 #define HANGAR_PRECOMPILED_H
 
-#include <vulkan/vulkan.h>
-#include <shaderc/shaderc.h>
-
 #ifdef _MSC_VER
 #define HANGAR_API __declspec(dllexport)
 #elif
@@ -17,7 +14,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <Windowsx.h>
-#include <vulkan/vulkan_win32.h>
 struct MessagePacket {
 	HWND hwnd;
 	UINT msg;

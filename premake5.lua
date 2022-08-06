@@ -20,14 +20,12 @@ workspace "Hangar Engine"
 		systemversion "latest"
         	defines { "WIN32" }
 		includedirs {
-			os.getenv("VULKAN_SDK") .. "/Include/"
 		}
 		libdirs {
-			os.getenv("VULKAN_SDK") .. "/Lib/"
 		}
 		links {
-			"vulkan-1",
-			"shaderc_combined",
+			"d3d11",
+			"dxgi"
 		}
 	filter "configurations:Debug"
 		symbols "on"
