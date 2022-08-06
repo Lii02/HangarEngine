@@ -2,6 +2,7 @@
 #define HANGAR_PRECOMPILED_H
 
 #include <vulkan/vulkan.h>
+#include <shaderc/shaderc.h>
 
 #ifdef _MSC_VER
 #define HANGAR_API __declspec(dllexport)
