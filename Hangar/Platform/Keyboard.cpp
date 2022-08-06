@@ -23,9 +23,7 @@ public:
 		}
 	}
 
-	inline bool GetKey(uint8_t code) const {
-		// TODO: Replace this with custom assert
-		assert(code > 0 && code < 0xFF);
+	inline bool GetKey(KeyCode code) const {
 		return keys[code];
 	}
 };
@@ -40,17 +38,17 @@ Keyboard& Keyboard::Get() {
 }
 
 Keyboard::Keyboard() {
-	this->keyboardImplementation = new Keyboard::Impl;
+	this->keyboardImpl = new Keyboard::Impl;
 }
 
 Keyboard::~Keyboard() {
-	delete keyboardImplementation;
+	delete keyboardImpl;
 }
 
 void Keyboard::Process(MessagePacket packet) {
-	keyboardImplementation->Process(packet);
+	keyboardImpl->Process(packet);
 }
 
-bool Keyboard::GetKey(uint8_t code) const {
-	return keyboardImplementation->GetKey(code);
+bool Keyboard::GetKey(KeyCode code) const {
+	return keyboardImpl->GetKey(code);
 }

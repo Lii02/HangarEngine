@@ -4,7 +4,7 @@
 class Mouse {
 private:
 	class Impl;
-	Impl* mouseImplementation;
+	Impl* mouseImpl;
 public:
 	static Mouse& Get();
 

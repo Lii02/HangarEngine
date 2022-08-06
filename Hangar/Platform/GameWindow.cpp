@@ -109,37 +109,37 @@ GameWindow::GameWindow(std::string title, uint32_t width, uint32_t height, bool 
 	this->width = width;
 	this->height = height;
 	this->isResizable = isResizable;
-	this->windowImplementation = new GameWindow::Impl;
+	this->windowImpl = new GameWindow::Impl;
 }
 
 GameWindow::~GameWindow() {
 	Close();
-	delete windowImplementation;
+	delete windowImpl;
 }
 
 void GameWindow::Open() {
-	windowImplementation->Open(title, width, height, isResizable);
+	windowImpl->Open(title, width, height, isResizable);
 	this->isRunning = true;
 }
 
 void GameWindow::Close() {
-	windowImplementation->Close();
+	windowImpl->Close();
 	this->isRunning = false;
 }
 
 void GameWindow::Poll() {
-	windowImplementation->Poll();
+	windowImpl->Poll();
 }
 
 void GameWindow::SetTitle(std::string newTitle) {
 	this->title = newTitle;
-	windowImplementation->SetTitle(newTitle);
+	windowImpl->SetTitle(newTitle);
 }
 
 void GameWindow::SetSize(uint32_t width, uint32_t height) {
 	this->width = width;
 	this->height = height;
-	windowImplementation->SetSize(width, height);
+	windowImpl->SetSize(width, height);
 }
 
 void GameWindow::SetReizeFunction(ResizeFunc func) {
@@ -147,17 +147,17 @@ void GameWindow::SetReizeFunction(ResizeFunc func) {
 }
 
 std::vector<const char*> GameWindow::GetVulkanInstExtensions() const {
-	return windowImplementation->GetVulkanInstExtensions();
+	return windowImpl->GetVulkanInstExtensions();
 }
 
 VkSurfaceKHR GameWindow::CreateVulkanSurface(VkInstance& instance) {
-	return windowImplementation->CreateVulkanSurface(instance);
+	return windowImpl->CreateVulkanSurface(instance);
 }
 
 bool GameWindow::IsRunning() const {
-	return windowImplementation->IsPolling() && isRunning;
+	return windowImpl->IsPolling() && isRunning;
 }
 
 bool GameWindow::IsFocus() const {
-	return windowImplementation->IsFocus();
+	return windowImpl->IsFocus();
 }

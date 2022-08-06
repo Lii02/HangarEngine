@@ -73,41 +73,41 @@ Mouse& Mouse::Get() {
 }
 
 Mouse::Mouse() {
-	mouseImplementation = new Mouse::Impl;
+	mouseImpl = new Mouse::Impl;
 }
 
 Mouse::~Mouse() {
-	delete mouseImplementation;
+	delete mouseImpl;
 }
 
 void Mouse::Process(MessagePacket packet) {
-	mouseImplementation->Process(packet);
+	mouseImpl->Process(packet);
 }
 
 int Mouse::GetX() const {
-	return mouseImplementation->GetX();
+	return mouseImpl->GetX();
 }
 
 int Mouse::GetY() const {
-	return mouseImplementation->GetY();
+	return mouseImpl->GetY();
 }
 
 bool Mouse::IsLeftDown() const {
-	return mouseImplementation->IsLeftDown();
+	return mouseImpl->IsLeftDown();
 }
 
 bool Mouse::IsMiddleDown() const {
-	return mouseImplementation->IsMiddleDown();
+	return mouseImpl->IsMiddleDown();
 }
 
 bool Mouse::IsRightDown() const {
-	return mouseImplementation->IsRightDown();
+	return mouseImpl->IsRightDown();
 }
 
 void Mouse::ShowMouseCursor() {
-	mouseImplementation->ShowMouseCursor();
+	mouseImpl->ShowMouseCursor();
 }
 
 void Mouse::HideMouseCursor() {
-	mouseImplementation->HideMouseCursor();
+	mouseImpl->HideMouseCursor();
 }

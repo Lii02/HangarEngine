@@ -14,7 +14,7 @@ private:
 	ResizeFunc resize;
 
 	class Impl;
-	Impl* windowImplementation;
+	Impl* windowImpl;
 public:
 	GameWindow(std::string title, uint32_t width, uint32_t height, bool isResizable);
 	~GameWindow();
