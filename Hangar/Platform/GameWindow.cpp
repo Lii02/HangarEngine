@@ -80,7 +80,7 @@ public:
 	}
 
 	inline std::vector<const char*> GetVulkanInstExtensions() const {
-		return { VK_KHR_WIN32_SURFACE_EXTENSION_NAME };
+		return { VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_WIN32_SURFACE_EXTENSION_NAME };
 	}
 
 	inline VkSurfaceKHR CreateVulkanSurface(VkInstance& instance) {
