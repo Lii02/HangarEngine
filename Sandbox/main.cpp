@@ -10,7 +10,7 @@
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
-	VulkanAPI vulkan = VulkanAPI(&window);
+	VulkanAPI vulkan = VulkanAPI(&window, { VK_KHR_SWAPCHAIN_EXTENSION_NAME });
 
 	while (window.IsRunning()) {
 		window.Poll();
