@@ -1,7 +1,6 @@
 #ifndef HANGAR_PRECOMPILED_H
 #define HANGAR_PRECOMPILED_H
 
-#include <DirectXMath.h>
 #include <vulkan/vulkan.h>
 
 #ifdef _MSC_VER

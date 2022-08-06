@@ -18,7 +18,7 @@ private:
 	HINSTANCE hinstance;
 	bool polling;
 public:
-	inline void Open(std::string title, uint32_t width, uint32_t height) {
+	inline void Open(std::string title, uint32_t width, uint32_t height, bool isResizable) {
 		hinstance = GetModuleHandle(NULL);
 		polling = true;
 
@@ -32,8 +32,11 @@ public:
 		wc.lpfnWndProc = MessageHandler;
 		wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
 		RegisterClassEx(&wc);
-
-		DWORD styles = WS_OVERLAPPED | WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+		DWORD styles;
+		if (isResizable)
+			styles = WS_OVERLAPPEDWINDOW;
+		else
+			styles = WS_OVERLAPPED | WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
 		handle = CreateWindowEx(0, className, nullptr, styles, CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hinstance, this);
 		ShowWindow(handle, SW_NORMAL);
 		SetTitle(title);
@@ -68,7 +71,7 @@ public:
 	inline VkSurfaceKHR CreateVulkanSurface(VkInstance& instance) {
 		VkSurfaceKHR surface;
 		VkWin32SurfaceCreateInfoKHR createInfo;
-		memset(&createInfo, 0, sizeof(VkWin32SurfaceCreateInfoKHR));
+		ZeroMemory(&createInfo, sizeof(VkWin32SurfaceCreateInfoKHR));
 		createInfo.hinstance = hinstance;
 		createInfo.hwnd = handle;
 		createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
@@ -82,10 +85,11 @@ public:
 };
 #endif
 
-GameWindow::GameWindow(std::string title, uint32_t width, uint32_t height) {
+GameWindow::GameWindow(std::string title, uint32_t width, uint32_t height, bool isResizable) {
 	this->title = title;
 	this->width = width;
 	this->height = height;
+	this->isResizable = isResizable;
 	this->windowImplementation = new GameWindow::Impl;
 }
 
@@ -95,7 +99,7 @@ GameWindow::~GameWindow() {
 }
 
 void GameWindow::Open() {
-	windowImplementation->Open(title, width, height);
+	windowImplementation->Open(title, width, height, isResizable);
 	this->isRunning = true;
 }
 

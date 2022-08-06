@@ -2,7 +2,7 @@
 #include <Hangar/Platform/GameWindow.h>
 
 int main(int argc, char** argv) {
-	GameWindow window = GameWindow("Hangar Engine", 1280, 720);
+	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
 
 	while (window.IsRunning()) {
