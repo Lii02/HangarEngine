@@ -5,6 +5,7 @@ enum ConsoleTextColor : uint8_t {
 	DEFAULT,
 	YELLOW,
 	RED,
+	MAGENTA,
 	GREEN
 };
 

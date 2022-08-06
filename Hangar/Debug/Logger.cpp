@@ -27,4 +27,10 @@ namespace Logger {
 		std::cout << "[Hangar | Confirmation | " << TimeHelper::TimeString24H() << "]: " << msg << std::endl;
 		Console::Get().ResetColors();
 	}
+	
+	void Assertion(const std::string& msg, const char* file, int64_t line) {
+		Console::Get().SetTextColor(ConsoleTextColor::MAGENTA);
+		std::cout << "[Hangar | Assert fail | " << file << ", " << line << "]: " << msg << std::endl;
+		Console::Get().ResetColors();
+	}
 }

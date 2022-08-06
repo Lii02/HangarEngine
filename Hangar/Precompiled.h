@@ -27,6 +27,10 @@ struct MessagePacket {
 #define HANGAR_LINUX
 #endif
 
+#ifdef _DEBUG
+#define HANGAR_ENABLE_ASSERT
+#endif
+
 #include <iostream>
 #include <filesystem>
 #include <string>
@@ -39,6 +43,5 @@ struct MessagePacket {
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
-#include <cassert>
 
 #endif

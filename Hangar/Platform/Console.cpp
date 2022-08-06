@@ -50,6 +50,9 @@ public:
 		case GREEN:
 			SetForeground(ConsoleColor::COLOR_GREEN);
 			break;
+		case MAGENTA:
+			SetForeground(ConsoleColor::COLOR_MAGENTA);
+			break;
 		case DEFAULT:
 		default:
 			SetForeground(ConsoleColor::COLOR_WHITE);
