@@ -15,6 +15,8 @@ public:
 
 	virtual void Initialize() = 0;
 	virtual void DeInitialize() = 0;
+	virtual void BeginFrame(float clearColor[4]) = 0;
+	virtual void EndFrame() = 0;
 
 	inline uint64_t GetObjectDrawCount() const { return objectDrawCount; };
 	inline uint64_t GetVertexDrawCount() const { return vertexDrawCount; };
