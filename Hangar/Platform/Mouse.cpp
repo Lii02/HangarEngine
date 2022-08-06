@@ -53,6 +53,14 @@ public:
 	inline bool IsRightDown() const {
 		return rightButton;
 	}
+
+	inline void ShowMouseCursor() {
+		ShowCursor(true);
+	}
+
+	inline void HideMouseCursor() {
+		ShowCursor(false);
+	}
 };
 #endif
 
@@ -94,4 +102,12 @@ bool Mouse::IsMiddleDown() const {
 
 bool Mouse::IsRightDown() const {
 	return mouseImplementation->IsRightDown();
+}
+
+void Mouse::ShowMouseCursor() {
+	mouseImplementation->ShowMouseCursor();
+}
+
+void Mouse::HideMouseCursor() {
+	mouseImplementation->HideMouseCursor();
 }

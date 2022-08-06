@@ -17,6 +17,8 @@ public:
 	bool IsLeftDown() const;
 	bool IsMiddleDown() const;
 	bool IsRightDown() const;
+	void ShowMouseCursor();
+	void HideMouseCursor();
 };
 
 #endif

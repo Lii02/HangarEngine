@@ -36,5 +36,6 @@ struct MessagePacket {
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
+#include <cassert>
 
 #endif

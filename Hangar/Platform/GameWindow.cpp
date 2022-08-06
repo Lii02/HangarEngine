@@ -1,18 +1,28 @@
 #include "Precompiled.h"
 #include "GameWindow.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 
 #ifdef HANGAR_WINDOWS
 LRESULT MessageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	LRESULT defaultProc = DefWindowProc(hwnd, msg, wParam, lParam);
+	auto window = reinterpret_cast<GameWindow*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+	if (!window)
+		return defaultProc;
+
 	Mouse::Get().Process({ hwnd, msg, wParam, lParam });
+	Keyboard::Get().Process({ hwnd, msg, wParam, lParam });
 
 	switch (msg) {
+	case WM_SIZE:
+		window->resize(LOWORD(lParam), HIWORD(lParam));
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return defaultProc;
 }
 
 class GameWindow::Impl {
@@ -43,6 +53,8 @@ public:
 		handle = CreateWindowEx(0, className, nullptr, styles, CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hinstance, this);
 		ShowWindow(handle, SW_NORMAL);
 		SetTitle(title);
+
+		SetWindowLongPtr(handle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 	}
 
 	inline void Close() {
@@ -85,6 +97,10 @@ public:
 	inline bool IsPolling() const { 
 		return polling;
 	}
+
+	inline bool IsFocus() const {
+		return GetActiveWindow() == handle;
+	}
 };
 #endif
 
@@ -126,6 +142,10 @@ void GameWindow::SetSize(uint32_t width, uint32_t height) {
 	windowImplementation->SetSize(width, height);
 }
 
+void GameWindow::SetReizeFunction(ResizeFunc func) {
+	this->resize = resize;
+}
+
 std::vector<const char*> GameWindow::GetVulkanInstExtensions() const {
 	return windowImplementation->GetVulkanInstExtensions();
 }
@@ -136,4 +156,8 @@ VkSurfaceKHR GameWindow::CreateVulkanSurface(VkInstance& instance) {
 
 bool GameWindow::IsRunning() const {
 	return windowImplementation->IsPolling() && isRunning;
+}
+
+bool GameWindow::IsFocus() const {
+	return windowImplementation->IsFocus();
 }
