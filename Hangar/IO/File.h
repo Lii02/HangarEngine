@@ -16,6 +16,7 @@ private:
 public:
 	File(std::string path, FileMode mode);
 	~File();
+	File(const File&) = delete;
 
 	bool Open();
 	void Close();

@@ -29,6 +29,7 @@ bool File::Open() {
 	}
 
 	stream = fopen(path.c_str(), modeString);
+	this->isOpen = true;
 	return stream != nullptr;
 }
 
