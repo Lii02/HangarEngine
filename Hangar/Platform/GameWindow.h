@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 typedef std::function<void(uint32_t, uint32_t)> ResizeFunc;
+typedef void* WindowHandle;
 
 class GameWindow {
 #ifdef HANGAR_WINDOWS
@@ -26,6 +27,7 @@ public:
 	void SetTitle(std::string newTitle);
 	void SetSize(uint32_t width, uint32_t height);
 	void SetReizeFunction(ResizeFunc func);
+	WindowHandle GetHandle();
 
 	bool IsRunning() const;
 	bool IsFocus() const;

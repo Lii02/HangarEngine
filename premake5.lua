@@ -25,7 +25,8 @@ workspace "Hangar Engine"
 		}
 		links {
 			"d3d11",
-			"dxgi"
+			"dxgi",
+			"d3dcompiler"
 		}
 	filter "configurations:Debug"
 		symbols "on"

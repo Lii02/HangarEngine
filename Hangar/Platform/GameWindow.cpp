@@ -86,6 +86,10 @@ public:
 	inline bool IsFocus() const {
 		return GetActiveWindow() == handle;
 	}
+
+	inline WindowHandle GetHandle() {
+		return handle;
+	}
 };
 #endif
 
@@ -129,6 +133,10 @@ void GameWindow::SetSize(uint32_t width, uint32_t height) {
 
 void GameWindow::SetReizeFunction(ResizeFunc func) {
 	this->resize = resize;
+}
+
+WindowHandle GameWindow::GetHandle() {
+	return windowImpl->GetHandle();
 }
 
 bool GameWindow::IsRunning() const {
