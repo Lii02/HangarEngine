@@ -1,7 +1,6 @@
 #include "Precompiled.h"
 #include "MemoryManager.h"
 
-// TODO: Fix ugly globals
 namespace {
 	size_t g_MemoryUsage = 0; // Memory usage in bytes
 	size_t g_MemoryAllocs = 0; // Current # of memory blocks in use

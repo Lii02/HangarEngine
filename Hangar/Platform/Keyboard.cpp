@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "Keyboard.h"
+#include "../Debug/Assert.h"
 
 #ifdef HANGAR_WINDOWS
 class Keyboard::Impl {
@@ -24,6 +25,7 @@ public:
 	}
 
 	inline bool GetKey(KeyCode code) const {
+		HANGAR_ASSERT(code < 0xFF && code > 0, "Key code out of bounds");
 		return keys[code];
 	}
 };

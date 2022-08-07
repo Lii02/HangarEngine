@@ -33,23 +33,23 @@ void Direct3D11API::Initialize() {
 	CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)&factory);
 	uint32_t i;
 
-	IDXGIAdapter1* pCurrentAdapter;
-	for (i = 0; factory->EnumAdapters1(i, &pCurrentAdapter) != DXGI_ERROR_NOT_FOUND; i++) {
+	IDXGIAdapter1* currentAdapter;
+	for (i = 0; factory->EnumAdapters1(i, &currentAdapter) != DXGI_ERROR_NOT_FOUND; i++) {
 		DXGI_ADAPTER_DESC1 desc;
-		pCurrentAdapter->GetDesc1(&desc);
-		adapters.push_back({ i, desc, pCurrentAdapter });
+		currentAdapter->GetDesc1(&desc);
+		adapters.push_back({ i, desc, currentAdapter });
 	}
 
 	// TODO: Select adapter
 	GPU& selectedGPU = adapters[0];
 
-	IDXGIOutput* pCurrentOutput;
-	for (i = 0; selectedGPU.adapter->EnumOutputs(i, &pCurrentOutput) != DXGI_ERROR_NOT_FOUND; i++) {
+	IDXGIOutput* currentOutput;
+	for (i = 0; selectedGPU.adapter->EnumOutputs(i, &currentOutput) != DXGI_ERROR_NOT_FOUND; i++) {
 		uint32_t modeCount = 0;
-		pCurrentOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &modeCount, NULL);
+		currentOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &modeCount, NULL);
 		DXGI_MODE_DESC* modes = new DXGI_MODE_DESC[modeCount];
-		pCurrentOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &modeCount, modes);
-		Monitor m = { i, pCurrentOutput, modes, modeCount };
+		currentOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &modeCount, modes);
+		Monitor m = { i, currentOutput, modes, modeCount };
 		monitors.push_back(m);
 	}
 	uint32_t createDeviceFlags = 0;
@@ -139,14 +139,7 @@ uint64_t Direct3D11API::CreateVertexBuffer(size_t vertexSize, size_t vertexCount
 	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
 
-	void* tempBuffer = malloc(desc.ByteWidth);
-	D3D11_SUBRESOURCE_DATA subres = { };
-	subres.pSysMem = tempBuffer;
-	subres.SysMemPitch = 0;
-	subres.SysMemSlicePitch = 0;
-
-	device->CreateBuffer(&desc, &subres, &vbo->buffer);
-	free(tempBuffer);
+	device->CreateBuffer(&desc, nullptr, &vbo->buffer);
 	vertexBuffers.push_back(vbo);
 	return vertexBuffers.size() - 1;
 }
@@ -186,14 +179,7 @@ uint64_t Direct3D11API::CreateIndexBuffer(size_t indexSize, size_t indexCount) {
 	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
 
-	void* tempBuffer = malloc(desc.ByteWidth);
-	D3D11_SUBRESOURCE_DATA subres = { };
-	subres.pSysMem = tempBuffer;
-	subres.SysMemPitch = 0;
-	subres.SysMemSlicePitch = 0;
-
-	device->CreateBuffer(&desc, &subres, &ibo->buffer);
-	free(tempBuffer);
+	device->CreateBuffer(&desc, nullptr, &ibo->buffer);
 	indexBuffers.push_back(ibo);
 	return indexBuffers.size() - 1;
 }
