@@ -9,15 +9,10 @@ extern "C" {
 
 using namespace DirectX;
 
-struct Direct3D11API::IRenderAPI::VertexBuffer {
+struct Direct3D11API::IRenderAPI::DataBuffer {
 	ID3D11Buffer* buffer;
 	size_t elementSize;
 	size_t elementCount;
-};
-
-struct Direct3D11API::IRenderAPI::IndexBuffer {
-	ID3D11Buffer* buffer;
-	size_t indexCount;
 };
 
 Direct3D11API::Direct3D11API(GameWindow* windowPtr)
@@ -105,8 +100,7 @@ void Direct3D11API::DeInitialize() {
 	}
 
 	delete commonStates;
-	CleanVertexBuffers();
-	CleanIndexBuffers();
+	CleanDataBuffers();
 	depthStencilView->Release();
 	renderTargetView->Release();
 	swapchain->Release();
@@ -127,79 +121,58 @@ void Direct3D11API::EndFrame() {
 	swapchain->Present(vsync, 0);
 }
 
-uint64_t Direct3D11API::CreateVertexBuffer(size_t vertexSize, size_t vertexCount) {
-	VertexBuffer* vbo = new VertexBuffer;
-	vbo->elementCount = vertexCount;
-	vbo->elementSize = vertexCount;
+uint64_t Direct3D11API::CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding) {
+	DataBuffer* buffer = new DataBuffer;
+	buffer->elementCount = dataCount;
+	buffer->elementSize = dataSize;
 	D3D11_BUFFER_DESC desc = { };
-	desc.ByteWidth = vertexCount * vertexSize;
-	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	desc.ByteWidth = dataSize * dataCount;
+	switch (binding)
+	{
+	case VERTEX_BUFFER:
+		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		break;
+	case INDEX_BUFFER:
+		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		break;
+	case CONSTANT_BUFFER:
+		desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		break;
+	}
 	desc.Usage = D3D11_USAGE_DYNAMIC;
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
 
-	device->CreateBuffer(&desc, nullptr, &vbo->buffer);
-	vertexBuffers.push_back(vbo);
-	return vertexBuffers.size() - 1;
+	device->CreateBuffer(&desc, nullptr, &buffer->buffer);
+	dataBuffers.push_back(buffer);
+	return dataBuffers.size() - 1;
 }
 
-void Direct3D11API::UpdateVertexBuffer(uint64_t index, void* data) {
-	auto& vbo = vertexBuffers[index];
+void Direct3D11API::UpdateDataBuffer(uint64_t index, void* data) {
+	auto& vbo = dataBuffers[index];
 	D3D11_MAPPED_SUBRESOURCE subresource;
 	deviceContext->Map(vbo->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subresource);
 	memcpy(subresource.pData, data, vbo->elementSize * vbo->elementCount);
 	deviceContext->Unmap(vbo->buffer, 0);
 }
 
-void Direct3D11API::CleanVertexBuffers() {
-	for (auto& vbo : vertexBuffers) {
+void Direct3D11API::CleanDataBuffers() {
+	for (auto& vbo : dataBuffers) {
 		vbo->buffer->Release();
 		delete vbo;
 	}
-	vertexBuffers.clear();
-}
-
-void Direct3D11API::CleanIndexBuffers() {
-	for (auto& ibo : indexBuffers) {
-		ibo->buffer->Release();
-		delete ibo;
-	}
-	indexBuffers.clear();
-}
-
-uint64_t Direct3D11API::CreateIndexBuffer(size_t indexSize, size_t indexCount) {
-	IndexBuffer* ibo = new IndexBuffer;
-	ibo->indexCount = indexCount;
-	D3D11_BUFFER_DESC desc = { };
-	desc.ByteWidth = sizeof(int) * indexCount;
-	desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	desc.MiscFlags = 0;
-	desc.StructureByteStride = 0;
-
-	device->CreateBuffer(&desc, nullptr, &ibo->buffer);
-	indexBuffers.push_back(ibo);
-	return indexBuffers.size() - 1;
-}
-
-void Direct3D11API::UpdateIndexBuffer(uint64_t index, void* data) {
-	auto& ibo = indexBuffers[index];
-	D3D11_MAPPED_SUBRESOURCE subresource;
-	deviceContext->Map(ibo->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subresource);
-	memcpy(subresource.pData, data, sizeof(int) * ibo->indexCount);
-	deviceContext->Unmap(ibo->buffer, 0);
+	dataBuffers.clear();
 }
 
 void Direct3D11API::BindVertexBuffer(uint64_t index) {
-	UINT stride = vertexBuffers[index]->elementSize;
-	UINT offset = 0;
-	deviceContext->IASetVertexBuffers(0, 1, &vertexBuffers[index]->buffer, &stride, &offset);
+	uint32_t stride = dataBuffers[index]->elementSize;
+	uint32_t offset = 0;
+	deviceContext->IASetVertexBuffers(0, 1, &dataBuffers[index]->buffer, &stride, &offset);
 }
 
 void Direct3D11API::BindIndexBuffer(uint64_t index) {
-	deviceContext->IASetIndexBuffer(indexBuffers[index]->buffer, DXGI_FORMAT_R32_UINT, 0);
+	deviceContext->IASetIndexBuffer(dataBuffers[index]->buffer, DXGI_FORMAT_R32_UINT, 0);
 }
 
 void Direct3D11API::DrawIndexed(uint32_t count, uint32_t first) {

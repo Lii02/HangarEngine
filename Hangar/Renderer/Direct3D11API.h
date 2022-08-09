@@ -36,12 +36,9 @@ public:
 	virtual void DeInitialize() override;
 	virtual void BeginFrame() override;
 	virtual void EndFrame() override;
-	virtual uint64_t CreateVertexBuffer(size_t vertexSize, size_t vertexCount) override;
-	virtual void UpdateVertexBuffer(uint64_t index, void* data) override;
-	virtual uint64_t CreateIndexBuffer(size_t indexSize, size_t indexCount) override;
-	virtual void UpdateIndexBuffer(uint64_t index, void* data) override;
-	virtual void CleanVertexBuffers() override;
-	virtual void CleanIndexBuffers() override;
+	virtual uint64_t CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding) override;
+	virtual void UpdateDataBuffer(uint64_t index, void* data) override;
+	virtual void CleanDataBuffers() override;
 	virtual void BindVertexBuffer(uint64_t index) override;
 	virtual void BindIndexBuffer(uint64_t index) override;
 	virtual void DrawIndexed(uint32_t count, uint32_t first) override;
