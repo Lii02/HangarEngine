@@ -41,11 +41,13 @@ struct MessagePacket {
 #include <chrono>
 #include <iomanip>
 #include <random>
+#include <bit>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
 
 #include "Helpers/RandomGen.hpp"
+#include "Helpers/ByteHelper.h"
 
 #endif
