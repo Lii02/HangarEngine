@@ -40,9 +40,12 @@ struct MessagePacket {
 #include <thread>
 #include <chrono>
 #include <iomanip>
+#include <random>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
+
+#include "Helpers/RandomGen.hpp"
 
 #endif
