@@ -9,7 +9,8 @@ File::File(std::string path, FileMode mode) {
 }
 
 File::~File() {
-	Close();
+	if(isOpen)
+		Close();
 }
 
 bool File::Open() {

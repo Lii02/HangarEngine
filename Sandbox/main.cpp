@@ -6,6 +6,7 @@
 #include <Hangar/Debug/Logger.h>
 #include <Hangar/Debug/Assert.h>
 #include <Hangar/Renderer/Direct3D11API.h>
+#include <Hangar/IO/File.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
