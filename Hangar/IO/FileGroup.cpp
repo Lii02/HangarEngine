@@ -26,7 +26,6 @@ void FileGroup::Open() {
 		} else if(entry.is_regular_file()) {
 			std::string filepath = entry.path().string();
 			File* file = new File(filepath, FileMode::READ, filepath.substr(path.length(), filepath.length()));
-			file->Open();
 			files.push_back(file);
 		}
 	}
