@@ -3,8 +3,9 @@
 #include "../Memory/MemoryManager.h"
 #include "../Debug/Assert.h"
 
-File::File(std::string path, FileMode mode) {
+File::File(std::string path, FileMode mode, std::string filename) {
 	this->path = path;
+	this->filename = filename;
 	this->mode = mode;
 }
 
@@ -30,6 +31,7 @@ bool File::Open() {
 	}
 
 	stream = fopen(path.c_str(), modeString);
+	delete[] modeString;
 	this->isOpen = true;
 	return stream != nullptr;
 }

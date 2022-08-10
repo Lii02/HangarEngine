@@ -4,10 +4,10 @@
 typedef std::chrono::high_resolution_clock::time_point TimePoint;
 
 class Stopwatch {
-public:
+private:
 	TimePoint begin, end;
 	double delta;
-private:
+public:
 	Stopwatch();
 
 	void Begin();

@@ -9,12 +9,12 @@ enum class FileMode {
 
 class File {
 private:
-	std::string path;
+	std::string path, filename;
 	FileMode mode;
 	FILE* stream;
 	bool isOpen;
 public:
-	File(std::string path, FileMode mode);
+	File(std::string path, FileMode mode, std::string filename);
 	~File();
 	File(const File&) = delete;
 
@@ -30,6 +30,8 @@ public:
 	size_t Length();
 
 	inline bool IsOpen() const { return isOpen; }
+	inline std::string GetPath() const { return path; }
+	inline std::string GetFilename() const { return filename; }
 };
 
 #endif

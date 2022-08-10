@@ -6,17 +6,21 @@
 #include <Hangar/Debug/Logger.h>
 #include <Hangar/Debug/Assert.h>
 #include <Hangar/Renderer/Direct3D11API.h>
-#include <Hangar/IO/File.h>
-#include <Hangar/Framework/Identifier.h>
+#include <Hangar/IO/FileGroup.h>
+#include <Hangar/Framework/Stopwatch.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
 	IRenderAPI* renderApi = new Direct3D11API(&window);
+	Stopwatch delta;
 
 	while (window.IsRunning()) {
+		delta.Begin();
 		renderApi->BeginFrame();
+		
 		renderApi->EndFrame();
+		delta.End();
 		window.Poll();
 	}
 
