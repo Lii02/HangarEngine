@@ -18,6 +18,7 @@ public:
 	File* AddFile(std::string filename, FileMode mode);
 	FileGroup* AddSubgroup(std::string subgroupName);
 
+	inline File* operator[](std::string filename) { return ImmSearchFile(filename); }
 	inline std::string GetPath() const { return path; }
 };
 

@@ -42,6 +42,8 @@ struct MessagePacket {
 #include <iomanip>
 #include <random>
 #include <bit>
+#include <stack>
+#include <map>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
