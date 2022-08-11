@@ -67,3 +67,15 @@ FileGroup* FileGroup::AddSubgroup(std::string subgroupName) {
 	subgroups.push_back(group);
 	return group;
 }
+
+void FileGroup::Refresh() {
+	for (auto& group : subgroups) {
+		delete group;
+	}
+
+	for (auto& file : files) {
+		delete file;
+	}
+
+	Open();
+}
