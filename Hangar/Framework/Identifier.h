@@ -3,11 +3,11 @@
 
 #define HANGAR_IDENTIFIER_LENGTH 16
 
-class HangarIdentifier {
+class Identifier {
 public:
-	HangarIdentifier();
-	~HangarIdentifier();
-	HangarIdentifier(const HangarIdentifier&) = delete;
+	Identifier();
+	~Identifier();
+	Identifier(const Identifier&) = delete;
 
 	const char* GetString();
 	operator const char*();

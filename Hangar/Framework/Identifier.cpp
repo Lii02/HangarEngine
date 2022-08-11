@@ -2,32 +2,32 @@
 #include "Identifier.h"
 #include "../Helpers/TimeHelper.h"
 
-HangarIdentifier::HangarIdentifier() {
+Identifier::Identifier() {
 	this->str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
 	memset(str, 0, HANGAR_IDENTIFIER_LENGTH);
 	Generate();
 }
 
-HangarIdentifier::~HangarIdentifier() {
+Identifier::~Identifier() {
 }
 
-const char* HangarIdentifier::GetString() {
+const char* Identifier::GetString() {
 	return str;
 }
 
-HangarIdentifier::operator const char* () {
+Identifier::operator const char* () {
 	return GetString();
 }
 
-HangarIdentifier::operator char* () {
+Identifier::operator char* () {
 	return const_cast<char*>(str);
 }
 
-HangarIdentifier::operator std::string() {
+Identifier::operator std::string() {
 	return std::string(str);
 }
 
-void HangarIdentifier::Generate() {
+void Identifier::Generate() {
 	uint64_t timestamp = TimeHelper::UnixTimestamp();
 	itoa(timestamp, str, 16);
 	itoa(0x4C69, str + 8, 16);
