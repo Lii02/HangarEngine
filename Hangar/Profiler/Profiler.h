@@ -5,7 +5,7 @@
 class Profiler {
 private:
 	std::stack<ProfilerElement> elements;
-	std::map<std::string, double> totals;
+	std::map<ProfilerElementCategory, double> totals;
 public:
 	static Profiler& Get();
 
@@ -13,9 +13,10 @@ public:
 	~Profiler();
 	Profiler(const Profiler&) = delete;
 
+	void ClearTotals();
 	void BeginProfile(std::string name, ProfilerElementCategory category);
 	void EndFunction();
-	double GetTotal(std::string name);
+	double GetTotal(ProfilerElementCategory category);
 };
 
 #endif

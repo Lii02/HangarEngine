@@ -10,11 +10,17 @@ Profiler& Profiler::Get() {
 }
 
 Profiler::Profiler() {
-	totals.emplace("Render", 0.0);
-	totals.emplace("Misc", 0.0);
+	totals.emplace(ProfilerElementCategory::RENDER, 0.0);
+	totals.emplace(ProfilerElementCategory::MISC, 0.0);
 }
 
 Profiler::~Profiler() {
+}
+
+void Profiler::ClearTotals() {
+	for (auto& val : totals) {
+		val.second = 0.0;
+	}
 }
 
 void Profiler::BeginProfile(std::string name, ProfilerElementCategory category) {
@@ -26,10 +32,10 @@ void Profiler::BeginProfile(std::string name, ProfilerElementCategory category) 
 void Profiler::EndFunction() {
 	ProfilerElement& element = elements.top();
 	element.End();
-	totals[element.GetName()] += element.ElapsedTime();
+	totals[element.GetCategory()] += element.ElapsedTime();
 	elements.pop();
 }
 
-double Profiler::GetTotal(std::string name) {
-	return totals[name];
+double Profiler::GetTotal(ProfilerElementCategory category) {
+	return totals[category];
 }
