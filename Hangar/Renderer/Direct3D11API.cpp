@@ -75,10 +75,10 @@ void Direct3D11API::Initialize() {
 
 	result = factory->CreateSwapChain(device, &sd, &swapchain);
 
-	ID3D11Texture2D* pBackBuffer;
-	swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBuffer);
-	device->CreateRenderTargetView(pBackBuffer, nullptr, &renderTargetView);
-	pBackBuffer->Release();
+	ID3D11Texture2D* backBuffer;
+	swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+	device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);
+	backBuffer->Release();
 
 	CD3D11_TEXTURE2D_DESC depthStencilDesc(DXGI_FORMAT_D24_UNORM_S8_UINT, width, height, 1, 1, D3D11_BIND_DEPTH_STENCIL);
 	ID3D11Texture2D* depthStencilTexture;
