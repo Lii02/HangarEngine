@@ -19,10 +19,12 @@ protected:
 	bool vsync;
 	struct DataBuffer;
 	std::vector<DataBuffer*> dataBuffers;
+	struct RenderShader;
+	std::vector<RenderShader*> renderShaders;
 public:
 	IRenderAPI(GameWindow* windowPtr) : windowPtr(windowPtr), objectDrawCount(0), vertexDrawCount(0), depth(1.0f), vsync(true) { }
-	IRenderAPI(const IRenderAPI&) = delete;
 	virtual ~IRenderAPI() { }
+	IRenderAPI(const IRenderAPI&) = delete;
 
 	virtual void Initialize() = 0;
 	virtual void DeInitialize() = 0;
@@ -34,11 +36,9 @@ public:
 	virtual void BindVertexBuffer(uint64_t index) = 0;
 	virtual void BindIndexBuffer(uint64_t index) = 0;
 	virtual void DrawIndexed(uint32_t count, uint32_t first = 0) = 0;
+	virtual void CleanShaders() = 0;
 
-	inline void ClearStats() {
-		this->objectDrawCount = 0;
-		this->vertexDrawCount = 0;
-	}
+	void ClearStats();
 	inline bool IsVsyncEnabled() const { return vsync; }
 	inline void SetClearColor(float clearColor[4]) { memcpy(this->clearColor, clearColor, sizeof(float) * 4); }
 	inline void SetDepth(float depth) { this->depth = depth; }

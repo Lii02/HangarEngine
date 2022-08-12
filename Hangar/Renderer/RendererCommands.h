@@ -28,6 +28,8 @@ public:
 	static void SetClearColor(float clearColor[4]);
 	static void SetDepth(float depth);
 	static void SetVsync(bool vsync);
+	static uint64_t GetObjectDrawCount();
+	static uint64_t GetVertexDrawCount();
 };
 
 #endif

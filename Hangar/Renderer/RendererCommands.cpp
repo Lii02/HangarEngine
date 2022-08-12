@@ -69,3 +69,11 @@ void RendererCommands::SetDepth(float depth) {
 void RendererCommands::SetVsync(bool vsync) {
 	api->SetVsync(vsync);
 }
+
+uint64_t RendererCommands::GetObjectDrawCount() {
+	return api->GetObjectDrawCount();
+}
+
+uint64_t RendererCommands::GetVertexDrawCount() {
+	return api->GetVertexDrawCount();
+}

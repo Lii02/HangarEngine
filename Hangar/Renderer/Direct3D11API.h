@@ -42,6 +42,7 @@ public:
 	virtual void BindVertexBuffer(uint64_t index) override;
 	virtual void BindIndexBuffer(uint64_t index) override;
 	virtual void DrawIndexed(uint32_t count, uint32_t first) override;
+	virtual void CleanShaders() override;
 private:
 	void SetViewport();
 };

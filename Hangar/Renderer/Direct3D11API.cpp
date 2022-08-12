@@ -13,6 +13,22 @@ struct Direct3D11API::IRenderAPI::DataBuffer {
 	ID3D11Buffer* buffer;
 	size_t elementSize;
 	size_t elementCount;
+
+	~DataBuffer() {
+		buffer->Release();
+	}
+};
+
+struct Direct3D11API::IRenderAPI::RenderShader {
+	ID3D11VertexShader* vertexShader, *pixelShader;
+	ID3D11InputLayout* layout;
+	std::string vertexEntry, pixelEntry;
+
+	~RenderShader() {
+		vertexShader->Release();
+		pixelShader->Release();
+		layout->Release();
+	}
 };
 
 Direct3D11API::Direct3D11API(GameWindow* windowPtr)
@@ -100,6 +116,7 @@ void Direct3D11API::DeInitialize() {
 	}
 
 	delete commonStates;
+	CleanShaders();
 	CleanDataBuffers();
 	depthStencilView->Release();
 	renderTargetView->Release();
@@ -159,7 +176,6 @@ void Direct3D11API::UpdateDataBuffer(uint64_t index, void* data) {
 
 void Direct3D11API::CleanDataBuffers() {
 	for (auto& vbo : dataBuffers) {
-		vbo->buffer->Release();
 		delete vbo;
 	}
 	dataBuffers.clear();
@@ -179,6 +195,13 @@ void Direct3D11API::DrawIndexed(uint32_t count, uint32_t first) {
 	objectDrawCount++;
 	vertexDrawCount += count;
 	deviceContext->DrawIndexed(count, first, 0);
+}
+
+void Direct3D11API::CleanShaders() {
+	for (auto& shader : renderShaders) {
+		delete shader;
+	}
+	renderShaders.clear();
 }
 
 void Direct3D11API::SetViewport() {
