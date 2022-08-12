@@ -3,7 +3,7 @@
 #include "Components/Mesh.h"
 
 template <typename T>
-inline constexpr ComponentType IComponent::TypeToEnum() { return ComponentType::Unknown; }
+inline constexpr ComponentType IComponent::TypeToEnum() { return ComponentType::UNKNOWN; }
 
 #define REGISTER_COMPONENT(T, type) template<> ComponentType IComponent::TypeToEnum<T>() { return type; }
 

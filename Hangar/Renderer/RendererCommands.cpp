@@ -70,6 +70,18 @@ void RendererCommands::SetVsync(bool vsync) {
 	api->SetVsync(vsync);
 }
 
+void RendererCommands::CleanShaders() {
+	api->CleanShaders();
+}
+
+void RendererCommands::BindRenderShader(uint64_t index) {
+	api->BindRenderShader(index);
+}
+
+uint64_t RendererCommands::CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs) {
+	return api->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
+}
+
 uint64_t RendererCommands::GetObjectDrawCount() {
 	return api->GetObjectDrawCount();
 }

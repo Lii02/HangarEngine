@@ -20,7 +20,8 @@ struct Direct3D11API::IRenderAPI::DataBuffer {
 };
 
 struct Direct3D11API::IRenderAPI::RenderShader {
-	ID3D11VertexShader* vertexShader, *pixelShader;
+	ID3D11VertexShader* vertexShader;
+	ID3D11PixelShader* pixelShader;
 	ID3D11InputLayout* layout;
 	std::string vertexEntry, pixelEntry;
 
@@ -204,6 +205,12 @@ void Direct3D11API::CleanShaders() {
 	renderShaders.clear();
 }
 
+void Direct3D11API::BindRenderShader(uint64_t index) {
+	auto& shader = renderShaders[index];
+	deviceContext->VSSetShader(shader->vertexShader, 0, 0);
+	deviceContext->PSSetShader(shader->pixelShader, 0, 0);
+}
+
 void Direct3D11API::SetViewport() {
 	D3D11_VIEWPORT vp;
 	vp.Width = (float)windowPtr->GetWidth();
@@ -213,4 +220,53 @@ void Direct3D11API::SetViewport() {
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	deviceContext->RSSetViewports(1, &vp);
+}
+
+uint64_t Direct3D11API::CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) {
+	RenderShader* shader = new RenderShader;
+	ID3DBlob* vsBlob = nullptr, *psBlob = nullptr, *errorBlob = nullptr;
+	UINT flags = D3DCOMPILE_ENABLE_STRICTNESS;
+#if defined( DEBUG ) || defined(_DEBUG)
+	flags |= D3DCOMPILE_DEBUG;
+#endif
+	D3DCompile(shaderSource.data(), shaderSource.length(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, vertexEntry.c_str(), "vs_5_0", flags, 0, &vsBlob, &errorBlob);
+	D3DCompile(shaderSource.data(), shaderSource.length(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, pixelEntry.c_str(), "ps_5_0", flags, 0, &psBlob, &errorBlob);
+
+	device->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), NULL, &shader->vertexShader);
+	device->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), NULL, &shader->pixelShader);
+
+	D3D11_INPUT_ELEMENT_DESC* descs = new D3D11_INPUT_ELEMENT_DESC[inputs.size()];
+	for (size_t i = 0; i < inputs.size(); i++) {
+		D3D11_INPUT_ELEMENT_DESC& desc = descs[i];
+		InputElement element = inputs[i];
+		desc.SemanticName = element.name.c_str();
+		desc.SemanticIndex = 0;
+		desc.InputSlot = 0;
+		switch (element.offset) {
+		case 1:
+			desc.Format = DXGI_FORMAT_R32_FLOAT;
+			break;
+		case 2:
+			desc.Format = DXGI_FORMAT_R32G32_FLOAT;
+			break;
+		case 3:
+			desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+			break;
+		case 4:
+			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			break;
+		}
+		desc.AlignedByteOffset = 0;
+		desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		desc.InstanceDataStepRate = 0;
+	}
+	D3D11_INPUT_ELEMENT_DESC input_desc[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
+	device->CreateInputLayout(descs, inputs.size(), psBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &shader->layout);
+
+	delete descs;
+	renderShaders.push_back(shader);
+	return renderShaders.size() - 1;
 }

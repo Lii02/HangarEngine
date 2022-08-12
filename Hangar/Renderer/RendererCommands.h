@@ -7,6 +7,7 @@ enum class RendererType {
 
 class IRenderAPI;
 class GameWindow;
+struct InputElement;
 enum DataBufferBinding;
 
 class RendererCommands {
@@ -28,6 +29,10 @@ public:
 	static void SetClearColor(float clearColor[4]);
 	static void SetDepth(float depth);
 	static void SetVsync(bool vsync);
+	static void CleanShaders();
+	static void BindRenderShader(uint64_t index);
+	static uint64_t CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs);
+
 	static uint64_t GetObjectDrawCount();
 	static uint64_t GetVertexDrawCount();
 };

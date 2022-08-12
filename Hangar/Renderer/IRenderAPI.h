@@ -9,6 +9,11 @@ enum DataBufferBinding {
 	CONSTANT_BUFFER
 };
 
+struct InputElement {
+	int index, numFloats, offset;
+	std::string name;
+};
+
 class IRenderAPI {
 protected:
 	GameWindow* windowPtr;
@@ -37,6 +42,8 @@ public:
 	virtual void BindIndexBuffer(uint64_t index) = 0;
 	virtual void DrawIndexed(uint32_t count, uint32_t first = 0) = 0;
 	virtual void CleanShaders() = 0;
+	virtual void BindRenderShader(uint64_t index) = 0;
+	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) = 0;
 
 	void ClearStats();
 	inline bool IsVsyncEnabled() const { return vsync; }
