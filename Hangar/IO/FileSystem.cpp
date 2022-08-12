@@ -1,14 +1,14 @@
 #include "Precompiled.h"
-#include "FileGroup.h"
+#include "FileSystem.h"
 
 #define COMPLETE_PATH(str) (path + "\\" + str)
 
-FileGroup::FileGroup(std::string path) {
+FileSystem::FileSystem(std::string path) {
 	this->path = path;
 	Open();
 }
 
-FileGroup::~FileGroup() {
+FileSystem ::~FileSystem() {
 	for (auto& group : subgroups) {
 		delete group;
 	}
@@ -18,10 +18,10 @@ FileGroup::~FileGroup() {
 	}
 }
 
-void FileGroup::Open() {
+void FileSystem::Open() {
 	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path)) {
 		if (entry.is_directory()) {
-			FileGroup* group = new FileGroup(entry.path().string());
+			FileSystem* group = new FileSystem(entry.path().string());
 			subgroups.push_back(group);
 		} else if(entry.is_regular_file()) {
 			std::string filepath = entry.path().string();
@@ -31,13 +31,13 @@ void FileGroup::Open() {
 	}
 }
 
-void FileGroup::CloseFiles() {
+void FileSystem::CloseFiles() {
 	for (auto& file : files) {
 		file->Close();
 	}
 }
 
-File* FileGroup::ImmSearchFile(std::string filename) {
+File* FileSystem::ImmSearchFile(std::string filename) {
 	for (auto& file : files) {
 		if (file->GetFilename() == filename)
 			return file;
@@ -45,7 +45,7 @@ File* FileGroup::ImmSearchFile(std::string filename) {
 	return nullptr;
 }
 
-FileGroup* FileGroup::ImmSearchFolder(std::string subgroupName) {
+FileSystem* FileSystem::ImmSearchFolder(std::string subgroupName) {
 	for (auto& group : subgroups) {
 		if (group->GetPath() == COMPLETE_PATH(subgroupName))
 			return group;
@@ -53,22 +53,22 @@ FileGroup* FileGroup::ImmSearchFolder(std::string subgroupName) {
 	return nullptr;
 }
 
-File* FileGroup::AddFile(std::string filename, FileMode mode) {
+File* FileSystem::AddFile(std::string filename, FileMode mode) {
 	File* file = new File(COMPLETE_PATH(filename), mode, filename);
 	file->Open();
 	files.push_back(file);
 	return file;
 }
 
-FileGroup* FileGroup::AddSubgroup(std::string subgroupName) {
+FileSystem* FileSystem::AddSubgroup(std::string subgroupName) {
 	std::string name = COMPLETE_PATH(subgroupName);
 	std::filesystem::create_directory(name);
-	FileGroup* group = new FileGroup(name);
+	FileSystem* group = new FileSystem(name);
 	subgroups.push_back(group);
 	return group;
 }
 
-void FileGroup::Refresh() {
+void FileSystem::Refresh() {
 	for (auto& group : subgroups) {
 		delete group;
 	}

@@ -6,7 +6,7 @@
 #include <Hangar/Debug/Logger.h>
 #include <Hangar/Debug/Assert.h>
 #include <Hangar/Renderer/Direct3D11API.h>
-#include <Hangar/IO/FileGroup.h>
+#include <Hangar/IO/FileSystem.h>
 #include <Hangar/Framework/Stopwatch.h>
 #include <Hangar/Profiler/Profiler.h>
 

@@ -2,21 +2,21 @@
 #define FILEGROUP_H
 #include "File.h"
 
-class FileGroup {
+class FileSystem {
 private:
 	std::string path;
 	std::list<File*> files;
-	std::vector<FileGroup*> subgroups;
+	std::vector<FileSystem*> subgroups;
 public:
-	FileGroup(std::string path);
-	~FileGroup();
+	FileSystem(std::string path);
+	~FileSystem();
 
 	void Open();
 	void CloseFiles();
 	File* ImmSearchFile(std::string filename);
-	FileGroup* ImmSearchFolder(std::string subgroupName);
+	FileSystem* ImmSearchFolder(std::string subgroupName);
 	File* AddFile(std::string filename, FileMode mode);
-	FileGroup* AddSubgroup(std::string subgroupName);
+	FileSystem* AddSubgroup(std::string subgroupName);
 	void Refresh();
 
 	inline File* operator[](std::string filename) { return ImmSearchFile(filename); }
