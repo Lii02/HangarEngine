@@ -3,6 +3,22 @@
 
 #define COMPLETE_PATH(str) (path + "\\" + str)
 
+namespace {
+	FileSystem* g_FileSystem;
+}
+
+void FileSystem::Init() {
+	g_FileSystem = new FileSystem("./");
+}
+
+void FileSystem::DeInitialize() {
+	delete g_FileSystem;
+}
+
+FileSystem*& FileSystem::Get() {
+	return g_FileSystem;
+}
+
 FileSystem::FileSystem(std::string path) {
 	this->path = path;
 	Open();

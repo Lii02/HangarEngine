@@ -8,8 +8,13 @@ private:
 	std::list<File*> files;
 	std::vector<FileSystem*> subgroups;
 public:
+	static void Init();
+	static void DeInitialize();
+	static FileSystem*& Get();
+
 	FileSystem(std::string path);
 	~FileSystem();
+	FileSystem(const FileSystem&) = delete;
 
 	void Open();
 	void CloseFiles();

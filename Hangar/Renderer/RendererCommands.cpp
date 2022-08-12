@@ -14,7 +14,7 @@ void RendererCommands::Init(RendererType rendererType, GameWindow* windowPtr) {
 	}
 }
 
-void RendererCommands::Shutdown() {
+void RendererCommands::DeInitialize() {
 	delete api;
 }
 

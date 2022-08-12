@@ -14,7 +14,7 @@ public:
 	static IRenderAPI* api;
 
 	static void Init(RendererType rendererType, GameWindow* windowPtr);
-	static void Shutdown();
+	static void DeInitialize();
 	static void BeginFrame();
 	static void EndFrame();
 	static uint64_t CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding);
