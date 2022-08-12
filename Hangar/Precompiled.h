@@ -32,6 +32,8 @@ struct MessagePacket {
 #define HANGAR_ENABLE_ASSERT
 #endif
 
+#define HANGAR_BIT(x) (1 << x)
+
 #include <iostream>
 #include <filesystem>
 #include <string>
@@ -42,6 +44,7 @@ struct MessagePacket {
 #include <iomanip>
 #include <random>
 #include <bit>
+#include <bitset>
 #include <stack>
 #include <map>
 #include <ctime>

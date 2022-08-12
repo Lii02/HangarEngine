@@ -2,12 +2,43 @@
 #define ENTITY_H
 #include "IComponent.h"
 
-typedef uint16_t ComponentMask;
+typedef std::bitset<16> ComponentMask;
 
 class Entity {
+	friend class IComponent;
 private:
-public:
+	std::string name;
+	bool active;
+	std::vector<IComponent*> components;
 	ComponentMask componentMask;
+public:
+	Entity(std::string name = "Entity");
+	~Entity();
+
+	void AddComponent(IComponent* component);
+	void RemoveComponents();
+	void RemoveComponent(uint32_t index);
+	IComponent* GetComponent(uint32_t index);
+	void Render();
+	void Update();
+	std::string GetName() const;
+	bool IsActive() const;
+	void SetActive(bool active);
+	bool HasComponent(ComponentType type) const;
+	template <typename T>
+	T* GetComponent() {
+		ComponentType type = IComponent::TypeToEnum<T>();
+		if (!HasComponent(type))
+			return nullptr;
+		
+		for (auto& component : components) {
+			if (component->type == type)
+				return dynamic_cast<T*>(component);
+		}
+		return nullptr;
+	}
+private:
+	bool GetComponentMask(size_t maskType) const;
 };
 
 #endif
