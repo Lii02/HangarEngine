@@ -7,6 +7,7 @@ File::File(std::string path, FileMode mode, std::string filename) {
 	this->path = path;
 	this->filename = filename;
 	this->mode = mode;
+	this->isOpen = false;
 }
 
 File::~File() {
