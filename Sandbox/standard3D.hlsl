@@ -12,7 +12,7 @@ cbuffer MVP : register(b0) {
 
 VSOut VS(float3 position : POSITION, float2 texCoord : TEXCOORD, float3 normal : NORMAL) {
     VSOut output;
-    matrix finalMatrix = mul(projection, model);
+    matrix finalMatrix = mul(mul(projection, view), model);
     output.outPosition = mul(finalMatrix, float4(position, 1.0));
     output.outTexCoord = texCoord;
     output.outNormal = normal;

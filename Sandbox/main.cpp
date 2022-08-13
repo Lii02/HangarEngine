@@ -38,13 +38,13 @@ void Main(ArgumentPacket args) {
 		};
 		Entity* entity = new Entity;
 		entity->AddComponent(new Mesh(&meshData, 6));
-		entity->GetTransform().position.z = 1;
 		scene.AddEntity(entity);
 
 		Entity* camera = new Entity;
 		camera->AddComponent(new Camera(90.0f, 0.1f, 100.0f));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
+		camera->GetTransform().position.z = -1;
 
 		totalTime.Begin();
 		while (window.IsRunning()) {

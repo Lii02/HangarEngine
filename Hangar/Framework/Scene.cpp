@@ -9,6 +9,7 @@ Scene::Scene(std::string sceneName) {
 }
 
 Scene::~Scene() {
+	delete entityRenderer;
 	ClearObjects();
 }
 
