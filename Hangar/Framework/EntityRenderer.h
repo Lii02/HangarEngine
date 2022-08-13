@@ -11,15 +11,14 @@ private:
 		Matrix model;
 	};
 	ConstantBuffer cbuffer;
-	float fov, nearZ, farZ;
 public:
-	EntityRenderer(float fov, float nearZ, float farZ);
+	EntityRenderer();
 	~EntityRenderer();
 	EntityRenderer(const EntityRenderer&) = delete;
 
 	virtual void Initialize() override;
 	virtual void DeInitialize() override;
-	virtual void PrepareFrame() override;
+	virtual void PrepareFrame(Entity* camera, Matrix projection) override;
 	virtual void DrawEntity(Entity* e) override;
 };
 

@@ -7,15 +7,16 @@ class Identifier {
 public:
 	Identifier();
 	~Identifier();
-	Identifier(const Identifier&) = delete;
-
+	Identifier(const Identifier& right);
+	
 	const char* GetString();
-	operator const char*();
-	operator char* ();
-	operator std::string();
+	const char* GetString() const;
 	void Generate();
 private:
 	char* str;
 };
+
+bool operator<(const Identifier& left, const Identifier& right);
+bool operator>(const Identifier& left, const Identifier& right);
 
 #endif

@@ -3,11 +3,7 @@
 #include "../IO/FileSystem.h"
 #include "../Renderer/RendererCommands.h"
 
-EntityRenderer::EntityRenderer(float fov, float nearZ, float farZ) {
-	this->fov = fov;
-	this->nearZ = nearZ;
-	this->farZ = farZ;
-	this->camera = nullptr;
+EntityRenderer::EntityRenderer() {
 	Initialize();
 }
 
@@ -33,11 +29,9 @@ void EntityRenderer::DeInitialize() {
 	RendererCommands::RemoveRenderShader(shader);
 }
 
-void EntityRenderer::PrepareFrame() {
-	cbuffer.projection = Matrix::PerspectiveLH(fov, RendererCommands::GetAspectRatio(), nearZ, farZ);
-	if (camera != nullptr) {
-		cbuffer.view = camera->GetTransform().ToViewMatrix();
-	}
+void EntityRenderer::PrepareFrame(Entity* camera, Matrix projection) {
+	cbuffer.projection = projection;
+	cbuffer.view = camera->GetTransform().ToViewMatrix();
 }
 
 void EntityRenderer::DrawEntity(Entity* e) {

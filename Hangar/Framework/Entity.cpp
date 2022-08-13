@@ -5,6 +5,7 @@ Entity::Entity(std::string name) {
 	this->name = name;
 	this->active = true;
 	this->componentMask = 0;
+	identifier.Generate();
 }
 
 Entity::~Entity() {
@@ -70,8 +71,8 @@ void Entity::SetActive(bool active) {
 	this->active = active;
 }
 
-Identifier* Entity::GetIdentifier() {
-	return &identifier;
+Identifier Entity::GetIdentifier() {
+	return identifier;
 }
 
 bool Entity::HasComponent(ComponentType type) const {

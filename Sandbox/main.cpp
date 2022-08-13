@@ -9,9 +9,9 @@
 #include <Hangar/IO/FileSystem.h>
 #include <Hangar/Framework/Stopwatch.h>
 #include <Hangar/Profiler/Profiler.h>
-#include <Hangar/Framework/Entity.h>
 #include <Hangar/Framework/Components/Mesh.h>
-#include <Hangar/Framework/EntityRenderer.h>
+#include <Hangar/Framework/Components/Camera.h>
+#include <Hangar/Framework/Scene.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -23,8 +23,8 @@ void Main(ArgumentPacket args) {
 	Profiler& profiler = Profiler::Get();
 
 	{
-		EntityRenderer renderer = EntityRenderer(90.0f, 0.1f, 1000.0f);
-		
+		Scene scene;
+
 		MeshData3D meshData;
 		meshData.vertices = {
 			{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f}, {0, 0, 0}},
@@ -36,20 +36,25 @@ void Main(ArgumentPacket args) {
 		meshData.indices = {
 			0, 1, 2, 0, 2, 3,
 		};
-		Entity entity;
-		entity.AddComponent(new Mesh(&meshData, 6));
-		entity.GetTransform().position.z = 1;
-		
+		Entity* entity = new Entity;
+		entity->AddComponent(new Mesh(&meshData, 6));
+		entity->GetTransform().position.z = 1;
+		scene.AddEntity(entity);
+
+		Entity* camera = new Entity;
+		camera->AddComponent(new Camera(90.0f, 0.1f, 100.0f));
+		scene.AddEntity(camera);
+		scene.SetMainCamera(camera);
+
 		totalTime.Begin();
 		while (window.IsRunning()) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
 			delta.Begin();
 			RendererCommands::BeginFrame();
-			renderer.PrepareFrame();
 
-			renderer.DrawEntity(&entity);
-			entity.Update();
+			scene.Render();
+			scene.Update();
 
 			RendererCommands::EndFrame();
 			delta.End();

@@ -6,6 +6,7 @@ class Entity;
 enum ComponentType : int32_t {
 	UNKNOWN = -1,
 	MESH = HANGAR_BIT(0),
+	CAMERA = HANGAR_BIT(1),
 };
 
 class IComponent {

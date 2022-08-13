@@ -28,7 +28,7 @@ public:
 	std::string GetName() const;
 	bool IsActive() const;
 	void SetActive(bool active);
-	Identifier* GetIdentifier();
+	Identifier GetIdentifier();
 	Transform& GetTransform();
 	bool HasComponent(ComponentType type) const;
 	template <typename T>
