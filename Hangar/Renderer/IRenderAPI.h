@@ -3,7 +3,7 @@
 
 class GameWindow;
 
-enum DataBufferBinding : uint8_t {
+enum class DataBufferBinding {
 	VERTEX_BUFFER,
 	INDEX_BUFFER,
 	CONSTANT_BUFFER
@@ -13,6 +13,10 @@ enum class Topology {
 	LINE,
 	TRIANGLES,
 	POINTS,
+};
+
+enum class TextureFormat {
+	R8G8B8A8,
 };
 
 struct InputElement {
@@ -34,6 +38,8 @@ protected:
 	std::vector<DataBuffer*> dataBuffers;
 	struct RenderShader;
 	std::vector<RenderShader*> renderShaders;
+	struct Texture2D;
+	std::vector<Texture2D*> textures;
 public:
 	IRenderAPI(GameWindow* windowPtr) : windowPtr(windowPtr), objectDrawCount(0), vertexDrawCount(0), depth(1.0f), vsync(true) { }
 	virtual ~IRenderAPI() { }
@@ -57,6 +63,11 @@ public:
 	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) = 0;
 	virtual void SetTopology(Topology topology) = 0;
 	virtual float GetAspectRatio() = 0;
+	virtual std::string GetDeviceName() = 0;
+	virtual uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) = 0;
+	virtual void BindTexture2D(uint64_t index) = 0;
+	virtual void RemoveTexture2D(uint64_t index) = 0;
+	virtual void CleanTextures() = 0;
 
 	void ClearStats();
 	inline bool IsVsyncEnabled() const { return vsync; }

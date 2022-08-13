@@ -102,6 +102,26 @@ float RendererCommands::GetAspectRatio() {
 	return api->GetAspectRatio();
 }
 
+std::string RendererCommands::GetDeviceName() {
+	return api->GetDeviceName();
+}
+
+uint64_t RendererCommands::CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) {
+	return api->CreateTexture2D(data, format, width, height, slot);
+}
+
+void RendererCommands::BindTexture2D(uint64_t index) {
+	api->BindTexture2D(index);
+}
+
+void RendererCommands::RemoveTexture2D(uint64_t index) {
+	api->RemoveTexture2D(index);
+}
+
+void RendererCommands::CleanTextures() {
+	api->CleanTextures();
+}
+
 uint64_t RendererCommands::GetObjectDrawCount() {
 	return api->GetObjectDrawCount();
 }

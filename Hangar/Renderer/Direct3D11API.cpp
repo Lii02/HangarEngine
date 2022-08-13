@@ -34,6 +34,17 @@ struct Direct3D11API::IRenderAPI::RenderShader {
 	}
 };
 
+struct Direct3D11API::IRenderAPI::Texture2D {
+	uint32_t slot, components, width, height;
+	ID3D11Texture2D* texture;
+	ID3D11ShaderResourceView* resource;
+
+	~Texture2D() {
+		texture->Release();
+		resource->Release();
+	}
+};
+
 Direct3D11API::Direct3D11API(GameWindow* windowPtr)
 	: IRenderAPI(windowPtr) {
 	Initialize();
@@ -55,10 +66,10 @@ void Direct3D11API::Initialize() {
 	}
 
 	// TODO: Select adapter
-	GPU& selectedGPU = adapters[0];
+	this->selectedGPU = &adapters[0];
 
 	IDXGIOutput* currentOutput;
-	for (i = 0; selectedGPU.adapter->EnumOutputs(i, &currentOutput) != DXGI_ERROR_NOT_FOUND; i++) {
+	for (i = 0; selectedGPU->adapter->EnumOutputs(i, &currentOutput) != DXGI_ERROR_NOT_FOUND; i++) {
 		uint32_t modeCount = 0;
 		currentOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &modeCount, NULL);
 		DXGI_MODE_DESC* modes = new DXGI_MODE_DESC[modeCount];
@@ -119,6 +130,7 @@ void Direct3D11API::DeInitialize() {
 	}
 
 	delete commonStates;
+	CleanTextures();
 	CleanShaders();
 	CleanDataBuffers();
 	depthStencilView->Release();
@@ -149,13 +161,13 @@ uint64_t Direct3D11API::CreateDataBuffer(size_t dataSize, size_t dataCount, Data
 	size_t bufferSize = dataSize * dataCount;
 	desc.ByteWidth = bufferSize;
 	switch (binding) {
-	case VERTEX_BUFFER:
+	case DataBufferBinding::VERTEX_BUFFER:
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		break;
-	case INDEX_BUFFER:
+	case DataBufferBinding::INDEX_BUFFER:
 		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		break;
-	case CONSTANT_BUFFER:
+	case DataBufferBinding::CONSTANT_BUFFER:
 		desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		break;
 	}
@@ -226,6 +238,65 @@ void Direct3D11API::SetViewport() {
 	deviceContext->RSSetViewports(1, &vp);
 }
 
+uint64_t Direct3D11API::CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) {
+	Texture2D* texture = new Texture2D;
+	texture->slot = slot;
+	texture->width = width;
+	texture->height = height;
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(D3D11_TEXTURE2D_DESC));
+	desc.Width = width;
+	desc.Height = height;
+	desc.MipLevels = 0;
+	desc.ArraySize = 1;
+	switch (format)
+	{
+	case TextureFormat::R8G8B8A8:
+		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		texture->components = 4;
+		break;
+	}
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+	device->CreateTexture2D(&desc, nullptr, &texture->texture);
+	deviceContext->UpdateSubresource(texture->texture, 0, nullptr, data, width * texture->components, 0);
+	D3D11_SHADER_RESOURCE_VIEW_DESC resDesc = {};
+	resDesc.Format = desc.Format;
+	resDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	resDesc.Texture2D.MostDetailedMip = 0;
+	resDesc.Texture2D.MipLevels = -1;
+	device->CreateShaderResourceView(texture->texture, &resDesc, &texture->resource);
+	deviceContext->GenerateMips(texture->resource);
+	textures.push_back(texture);
+	return textures.size() - 1;
+}
+
+void Direct3D11API::BindTexture2D(uint64_t index) {
+	auto& texture = textures[index];
+	deviceContext->PSSetShaderResources(texture->slot, 1, &texture->resource);
+}
+
+void Direct3D11API::RemoveTexture2D(uint64_t index) {
+	auto& texture = textures[index];
+	delete texture;
+	texture = nullptr;
+}
+
+void Direct3D11API::CleanTextures() {
+	for (auto& texture : textures) {
+		delete texture;
+	}
+	textures.clear();
+}
+
+std::string Direct3D11API::GetDeviceName() {
+	std::wstring str = selectedGPU->info.Description;
+	return std::string(str.begin(), str.end());
+}
+
 void Direct3D11API::BindConstantBuffer(uint64_t index) {
 	auto& buffer = dataBuffers[index];
 	deviceContext->VSSetConstantBuffers(0, 1, &buffer->buffer);
@@ -238,7 +309,6 @@ float Direct3D11API::GetAspectRatio() {
 
 void Direct3D11API::RemoveRenderShader(uint64_t index) {
 	auto& shader = renderShaders[index];
-	//renderShaders.erase(renderShaders.begin() + index);
 	delete shader;
 	shader = nullptr;
 }
@@ -259,7 +329,6 @@ void Direct3D11API::SetTopology(Topology topology) {
 
 void Direct3D11API::RemoveBuffer(uint64_t index) {
 	auto& buffer = dataBuffers[index];
-	//dataBuffers.erase(dataBuffers.begin() + index);
 	delete buffer;
 	buffer = nullptr;
 }

@@ -28,6 +28,7 @@ private:
 	std::vector<Monitor> monitors;
 	D3D_FEATURE_LEVEL featureLevel;
 	DirectX::CommonStates* commonStates;
+	GPU* selectedGPU;
 public:
 	Direct3D11API(GameWindow* windowPtr);
 	~Direct3D11API();
@@ -50,6 +51,11 @@ public:
 	virtual void RemoveBuffer(uint64_t index) override;
 	virtual void SetTopology(Topology topology) override;
 	virtual float GetAspectRatio() override;
+	virtual std::string GetDeviceName() override;
+	virtual uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) override;
+	virtual void BindTexture2D(uint64_t index) override;
+	virtual void RemoveTexture2D(uint64_t index) override;
+	virtual void CleanTextures() override;
 private:
 	void SetViewport();
 };

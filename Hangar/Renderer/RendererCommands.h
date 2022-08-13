@@ -35,6 +35,11 @@ public:
 	static uint64_t CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs);
 	static void SetTopology(Topology topology);
 	static float GetAspectRatio();
+	static std::string GetDeviceName();
+	static uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot);
+	static void BindTexture2D(uint64_t index);
+	static void RemoveTexture2D(uint64_t index);
+	static void CleanTextures();
 
 	static uint64_t GetObjectDrawCount();
 	static uint64_t GetVertexDrawCount();

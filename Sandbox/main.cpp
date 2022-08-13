@@ -22,6 +22,8 @@ void Main(ArgumentPacket args) {
 	Stopwatch delta, totalTime;
 	Profiler& profiler = Profiler::Get();
 
+	Logger::Message("Using device: " + RendererCommands::GetDeviceName());
+
 	{
 		Scene scene;
 
