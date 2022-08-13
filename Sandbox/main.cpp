@@ -25,18 +25,19 @@ void Main(ArgumentPacket args) {
 	{
 		EntityRenderer renderer = EntityRenderer(90.0f, 0.1f, 1000.0f);
 		
-		Mesh::Vertices vertices = {
+		MeshData3D meshData;
+		meshData.vertices = {
 			{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f}, {0, 0, 0}},
 			{{-0.5f, 0.5f, 0.0f}, {0.0f, 0.0f}, {0, 0, 0}},
 			{{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f}, {0, 0, 0}},
 			{{0.5f, -0.5f, 0.0f}, {1.0f, 1.0f}, {0, 0, 0}}
 		};
 
-		Mesh::Indices indices = {
+		meshData.indices = {
 			0, 1, 2, 0, 2, 3,
 		};
 		Entity entity;
-		entity.AddComponent(new Mesh(&vertices, &indices, 6));
+		entity.AddComponent(new Mesh(&meshData, 6));
 		entity.GetTransform().position.z = 1;
 		
 		totalTime.Begin();

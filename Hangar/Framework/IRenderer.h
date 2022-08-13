@@ -8,6 +8,7 @@ protected:
 	uint64_t shader;
 	uint64_t constantBuffer;
 	Matrix projectionMatrix;
+	Entity* camera;
 public:
 	virtual ~IRenderer() { };
 
@@ -15,6 +16,10 @@ public:
 	virtual void DeInitialize() = 0;
 	virtual void PrepareFrame() = 0;
 	virtual void DrawEntity(Entity* e) = 0;
+
+	void SetCamera(Entity* camera) {
+		this->camera = camera;
+	}
 };
 
 #endif

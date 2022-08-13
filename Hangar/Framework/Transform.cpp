@@ -15,3 +15,11 @@ Matrix Transform::ToMatrix() {
 	rotationMatrix *= Matrix::RotateX(MathHelper::DegreesToRadians(rotation.x)) * Matrix::RotateY(MathHelper::DegreesToRadians(rotation.y)) * Matrix::RotateZ(MathHelper::DegreesToRadians(rotation.z));
 	return scaleMatrix * rotationMatrix * translationMatrix;
 }
+
+Matrix Transform::ToViewMatrix() {
+	Matrix translationMatrix, scaleMatrix, rotationMatrix;
+	translationMatrix *= Matrix::Translate(-position);
+	scaleMatrix *= Matrix::Scale(scale);
+	rotationMatrix *= Matrix::RotateX(MathHelper::DegreesToRadians(rotation.x)) * Matrix::RotateY(MathHelper::DegreesToRadians(rotation.y)) * Matrix::RotateZ(MathHelper::DegreesToRadians(rotation.z));
+	return rotationMatrix * translationMatrix * scaleMatrix;
+}

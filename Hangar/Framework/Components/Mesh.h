@@ -4,16 +4,12 @@
 #include "../../Math/Vectors.h"
 
 class Mesh : public IComponent {
-public:
-	typedef std::vector<int> Indices;
-	typedef std::vector<StandardVertex3D> Vertices;
 private:
 	uint64_t vbo, ibo;
-	Indices* indices;
-	Vertices* vertices;
+	MeshData3D* meshData;
 	uint32_t indexCount;
 public:
-	Mesh(Vertices* vertices, Indices* indices, uint32_t indexCount);
+	Mesh(MeshData3D* meshData, uint32_t indexCount);
 	~Mesh();
 	
 	virtual void Init() override;
