@@ -134,7 +134,6 @@ void Direct3D11API::BeginFrame() {
 	deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, 0);
 	deviceContext->RSSetState(rasterState);
 	deviceContext->OMSetBlendState(blendState, NULL, 0xFFFFFFFF);
-	deviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ClearStats();
 }
 
@@ -224,6 +223,20 @@ void Direct3D11API::SetViewport() {
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	deviceContext->RSSetViewports(1, &vp);
+}
+
+void Direct3D11API::SetTopology(Topology topology) {
+	switch (topology) {
+	case Topology::LINE:
+		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		break;
+	case Topology::TRIANGLES:
+		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		break;
+	case Topology::POINTS:
+		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+		break;
+	}
 }
 
 void Direct3D11API::RemoveBuffer(uint64_t index) {

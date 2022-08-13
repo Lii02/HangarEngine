@@ -86,6 +86,10 @@ uint64_t RendererCommands::CreateRenderShader(const std::string_view& shaderSour
 	return api->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
 }
 
+void RendererCommands::SetTopology(Topology topology) {
+	api->SetTopology(topology);
+}
+
 uint64_t RendererCommands::GetObjectDrawCount() {
 	return api->GetObjectDrawCount();
 }

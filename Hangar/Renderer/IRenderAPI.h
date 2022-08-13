@@ -9,6 +9,12 @@ enum DataBufferBinding : uint8_t {
 	CONSTANT_BUFFER
 };
 
+enum class Topology {
+	LINE,
+	TRIANGLES,
+	POINTS,
+};
+
 struct InputElement {
 	int index, numFloats, offset;
 	std::string name;
@@ -47,6 +53,7 @@ public:
 	virtual void CleanShaders() = 0;
 	virtual void BindRenderShader(uint64_t index) = 0;
 	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) = 0;
+	virtual void SetTopology(Topology topology) = 0;
 
 	void ClearStats();
 	inline bool IsVsyncEnabled() const { return vsync; }
