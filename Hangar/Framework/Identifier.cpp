@@ -9,6 +9,7 @@ Identifier::Identifier() {
 }
 
 Identifier::~Identifier() {
+	delete[] str;
 }
 
 const char* Identifier::GetString() {

@@ -18,11 +18,12 @@ struct Matrix {
 	};
 
 	Matrix();
-	Matrix(float data[16]);
+	explicit Matrix(float data[16]);
 
 	void SetIdentity();
 	Matrix Multiply(const Matrix& right);
 	Matrix operator*(const Matrix& right);
+	Matrix operator*=(const Matrix& right);
 	static Matrix Translate(Vector3 position);
 	static Matrix Scale(Vector3 scale);
 	static Matrix RotateX(float angle);

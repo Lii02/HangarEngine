@@ -146,7 +146,8 @@ uint64_t Direct3D11API::CreateDataBuffer(size_t dataSize, size_t dataCount, Data
 	buffer->elementCount = dataCount;
 	buffer->elementSize = dataSize;
 	D3D11_BUFFER_DESC desc = { };
-	desc.ByteWidth = dataSize * dataCount;
+	size_t bufferSize = dataSize * dataCount;
+	desc.ByteWidth = bufferSize;
 	switch (binding) {
 	case VERTEX_BUFFER:
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -223,6 +224,16 @@ void Direct3D11API::SetViewport() {
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	deviceContext->RSSetViewports(1, &vp);
+}
+
+void Direct3D11API::BindConstantBuffer(uint64_t index) {
+	auto& buffer = dataBuffers[index];
+	deviceContext->VSSetConstantBuffers(0, 1, &buffer->buffer);
+	deviceContext->PSSetConstantBuffers(0, 1, &buffer->buffer);
+}
+
+float Direct3D11API::GetAspectRatio() {
+	return (float)windowPtr->GetWidth() / (float)windowPtr->GetHeight();
 }
 
 void Direct3D11API::RemoveRenderShader(uint64_t index) {

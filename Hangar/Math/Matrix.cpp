@@ -36,11 +36,16 @@ Matrix Matrix::operator*(const Matrix& right) {
 	return Multiply(right);
 }
 
+Matrix Matrix::operator*=(const Matrix& right) {
+	*this = *this * Multiply(right);
+	return *this;
+}
+
 Matrix Matrix::Translate(Vector3 position) {
 	Matrix mat;
-	mat.floatElements2D[0][3] = position.x;
-	mat.floatElements2D[1][3] = position.y;
-	mat.floatElements2D[2][3] = position.z;
+	mat.floatElements2D[3][0] = position.x;
+	mat.floatElements2D[3][1] = position.y;
+	mat.floatElements2D[3][2] = position.z;
 	mat.floatElements2D[3][3] = 1;
 	return mat;
 }
@@ -89,10 +94,11 @@ Matrix Matrix::Zero() {
 
 Matrix Matrix::PerspectiveLH(float fov, float aspectRatio, float nearZ, float farZ) {
 	Matrix matrix;
-	float yScale = 1.0f / std::tan(MathHelper::DegreesToRadians(fov) / 2.0f);
+	float yScale = (1.0f / std::tan(MathHelper::DegreesToRadians(fov) / 2.0f)) * aspectRatio;
+	float xScale = yScale / aspectRatio;
 	float z = farZ / (farZ - nearZ);
 
-	matrix[0][0] = yScale / aspectRatio;
+	matrix[0][0] = xScale;
 	matrix[1][1] = yScale;
 	matrix[2][2] = z;
 	matrix[2][3] = 1.0f;

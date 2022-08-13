@@ -22,6 +22,7 @@ public:
 	static void CleanDataBuffers();
 	static void BindVertexBuffer(uint64_t index);
 	static void BindIndexBuffer(uint64_t index);
+	static void BindConstantBuffer(uint64_t index);
 	static void DrawIndexed(uint32_t count, uint32_t first = 0);
 	static void ClearStats();
 	static bool IsVsyncEnabled();
@@ -33,6 +34,7 @@ public:
 	static void RemoveRenderShader(uint64_t index);
 	static uint64_t CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs);
 	static void SetTopology(Topology topology);
+	static float GetAspectRatio();
 
 	static uint64_t GetObjectDrawCount();
 	static uint64_t GetVertexDrawCount();

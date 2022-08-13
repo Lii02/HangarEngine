@@ -50,6 +50,10 @@ void Entity::Update() {
 	}
 }
 
+Transform& Entity::GetTransform() {
+	return transform;
+}
+
 bool Entity::GetComponentMask(size_t maskType) const {
 	return componentMask.test(maskType);
 }
@@ -64,6 +68,10 @@ bool Entity::IsActive() const {
 
 void Entity::SetActive(bool active) {
 	this->active = active;
+}
+
+Identifier* Entity::GetIdentifier() {
+	return &identifier;
 }
 
 bool Entity::HasComponent(ComponentType type) const {
