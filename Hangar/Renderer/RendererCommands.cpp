@@ -82,6 +82,10 @@ void RendererCommands::BindRenderShader(uint64_t index) {
 	api->BindRenderShader(index);
 }
 
+void RendererCommands::RemoveRenderShader(uint64_t index) {
+	api->RemoveRenderShader(index);
+}
+
 uint64_t RendererCommands::CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs) {
 	return api->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
 }

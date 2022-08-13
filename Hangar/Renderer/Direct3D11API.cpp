@@ -225,6 +225,13 @@ void Direct3D11API::SetViewport() {
 	deviceContext->RSSetViewports(1, &vp);
 }
 
+void Direct3D11API::RemoveRenderShader(uint64_t index) {
+	auto& shader = renderShaders[index];
+	//renderShaders.erase(renderShaders.begin() + index);
+	delete shader;
+	shader = nullptr;
+}
+
 void Direct3D11API::SetTopology(Topology topology) {
 	switch (topology) {
 	case Topology::LINE:

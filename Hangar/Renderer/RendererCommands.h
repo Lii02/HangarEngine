@@ -30,6 +30,7 @@ public:
 	static void SetVsync(bool vsync);
 	static void CleanShaders();
 	static void BindRenderShader(uint64_t index);
+	static void RemoveRenderShader(uint64_t index);
 	static uint64_t CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs);
 	static void SetTopology(Topology topology);
 
