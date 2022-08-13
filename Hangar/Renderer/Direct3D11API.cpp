@@ -132,8 +132,8 @@ void Direct3D11API::DeInitialize() {
 void Direct3D11API::BeginFrame() {
 	deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 	deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, 0);
-	//deviceContext->RSSetState(rasterState);
-	//deviceContext->OMSetBlendState(blendState, NULL, 0xFFFFFFFF);
+	deviceContext->RSSetState(rasterState);
+	deviceContext->OMSetBlendState(blendState, NULL, 0xFFFFFFFF);
 	deviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ClearStats();
 }
