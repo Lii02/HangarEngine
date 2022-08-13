@@ -102,6 +102,8 @@ struct Vector4 {
 	VECTOR4_OPERATOR_OVERLOAD(/=);
 };
 
+typedef Vector4 Quaternion;
+
 #include "VertexTypes.h"
 
 #endif
