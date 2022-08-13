@@ -102,4 +102,6 @@ struct Vector4 {
 	VECTOR4_OPERATOR_OVERLOAD(/=);
 };
 
+#include "VertexTypes.h"
+
 #endif

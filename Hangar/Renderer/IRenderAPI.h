@@ -3,7 +3,7 @@
 
 class GameWindow;
 
-enum DataBufferBinding {
+enum DataBufferBinding : uint8_t {
 	VERTEX_BUFFER,
 	INDEX_BUFFER,
 	CONSTANT_BUFFER
@@ -13,6 +13,8 @@ struct InputElement {
 	int index, numFloats, offset;
 	std::string name;
 };
+
+typedef std::vector<InputElement> InputElementArray;
 
 class IRenderAPI {
 protected:
@@ -37,6 +39,7 @@ public:
 	virtual void EndFrame() = 0;
 	virtual uint64_t CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding) = 0;
 	virtual void UpdateDataBuffer(uint64_t index, void* data) = 0;
+	virtual void RemoveBuffer(uint64_t index) = 0;
 	virtual void CleanDataBuffers() = 0;
 	virtual void BindVertexBuffer(uint64_t index) = 0;
 	virtual void BindIndexBuffer(uint64_t index) = 0;

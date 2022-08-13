@@ -45,6 +45,7 @@ public:
 	virtual void CleanShaders() override;
 	virtual void BindRenderShader(uint64_t index) override;
 	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) override;
+	virtual void RemoveBuffer(uint64_t index) override;
 private:
 	void SetViewport();
 };

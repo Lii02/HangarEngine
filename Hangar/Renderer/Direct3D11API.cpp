@@ -1,6 +1,8 @@
 #include "Precompiled.h"
 #include "Direct3D11API.h"
 #include "../Platform/GameWindow.h"
+#include "../Debug/Logger.h"
+#include "../Memory/MemoryManager.h"
 
 extern "C" {
 	HANGAR_API unsigned long NvOptimusEnablement = 0x00000001;
@@ -130,8 +132,9 @@ void Direct3D11API::DeInitialize() {
 void Direct3D11API::BeginFrame() {
 	deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 	deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, 0);
-	deviceContext->RSSetState(rasterState);
-	deviceContext->OMSetBlendState(blendState, NULL, 0xFFFFFFFF);
+	//deviceContext->RSSetState(rasterState);
+	//deviceContext->OMSetBlendState(blendState, NULL, 0xFFFFFFFF);
+	deviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ClearStats();
 }
 
@@ -145,8 +148,7 @@ uint64_t Direct3D11API::CreateDataBuffer(size_t dataSize, size_t dataCount, Data
 	buffer->elementSize = dataSize;
 	D3D11_BUFFER_DESC desc = { };
 	desc.ByteWidth = dataSize * dataCount;
-	switch (binding)
-	{
+	switch (binding) {
 	case VERTEX_BUFFER:
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		break;
@@ -177,7 +179,8 @@ void Direct3D11API::UpdateDataBuffer(uint64_t index, void* data) {
 
 void Direct3D11API::CleanDataBuffers() {
 	for (auto& vbo : dataBuffers) {
-		delete vbo;
+		if(vbo)
+			delete vbo;
 	}
 	dataBuffers.clear();
 }
@@ -207,6 +210,7 @@ void Direct3D11API::CleanShaders() {
 
 void Direct3D11API::BindRenderShader(uint64_t index) {
 	auto& shader = renderShaders[index];
+	deviceContext->IASetInputLayout(shader->layout);
 	deviceContext->VSSetShader(shader->vertexShader, 0, 0);
 	deviceContext->PSSetShader(shader->pixelShader, 0, 0);
 }
@@ -222,6 +226,13 @@ void Direct3D11API::SetViewport() {
 	deviceContext->RSSetViewports(1, &vp);
 }
 
+void Direct3D11API::RemoveBuffer(uint64_t index) {
+	auto& buffer = dataBuffers[index];
+	//dataBuffers.erase(dataBuffers.begin() + index);
+	delete buffer;
+	buffer = nullptr;
+}
+
 uint64_t Direct3D11API::CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) {
 	RenderShader* shader = new RenderShader;
 	ID3DBlob* vsBlob = nullptr, *psBlob = nullptr, *errorBlob = nullptr;
@@ -231,18 +242,22 @@ uint64_t Direct3D11API::CreateRenderShader(std::string_view shaderSource, std::s
 #endif
 	D3DCompile(shaderSource.data(), shaderSource.length(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, vertexEntry.c_str(), "vs_5_0", flags, 0, &vsBlob, &errorBlob);
 	D3DCompile(shaderSource.data(), shaderSource.length(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, pixelEntry.c_str(), "ps_5_0", flags, 0, &psBlob, &errorBlob);
+	if (errorBlob) {
+		std::string errorString = (char*)errorBlob->GetBufferPointer();
+		Logger::Error(errorString);
+	}
 
 	device->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), NULL, &shader->vertexShader);
 	device->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), NULL, &shader->pixelShader);
 
-	D3D11_INPUT_ELEMENT_DESC* descs = new D3D11_INPUT_ELEMENT_DESC[inputs.size()];
+	std::vector<D3D11_INPUT_ELEMENT_DESC> descs;
 	for (size_t i = 0; i < inputs.size(); i++) {
-		D3D11_INPUT_ELEMENT_DESC& desc = descs[i];
+		D3D11_INPUT_ELEMENT_DESC desc;
 		InputElement element = inputs[i];
-		desc.SemanticName = element.name.c_str();
+		desc.SemanticName = new char[16] { 0 };
+		strcpy((char*)desc.SemanticName, element.name.c_str());
 		desc.SemanticIndex = 0;
-		desc.InputSlot = 0;
-		switch (element.offset) {
+		switch (element.numFloats) {
 		case 1:
 			desc.Format = DXGI_FORMAT_R32_FLOAT;
 			break;
@@ -256,17 +271,23 @@ uint64_t Direct3D11API::CreateRenderShader(std::string_view shaderSource, std::s
 			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 			break;
 		}
-		desc.AlignedByteOffset = 0;
+		desc.InputSlot = 0;
+		if(i > 0)
+			desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+		else
+			desc.AlignedByteOffset = 0;
 		desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		desc.InstanceDataStepRate = 0;
+		descs.push_back(desc);
 	}
-	D3D11_INPUT_ELEMENT_DESC input_desc[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-	device->CreateInputLayout(descs, inputs.size(), psBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &shader->layout);
+	
+	device->CreateInputLayout(descs.data(), inputs.size(), vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &shader->layout);
 
-	delete descs;
+	for (size_t i = 0; i < inputs.size(); i++) {
+		D3D11_INPUT_ELEMENT_DESC& desc = descs[i];
+		delete[] desc.SemanticName;
+	}
+
 	renderShaders.push_back(shader);
 	return renderShaders.size() - 1;
 }

@@ -1,14 +1,12 @@
 #ifndef RENDERER_COMMANDS_H
 #define RENDERER_COMMANDS_H
+#include "IRenderAPI.h"
 
 enum class RendererType {
 	DIRECTX11,
 };
 
-class IRenderAPI;
 class GameWindow;
-struct InputElement;
-enum DataBufferBinding;
 
 class RendererCommands {
 public:
@@ -20,6 +18,7 @@ public:
 	static void EndFrame();
 	static uint64_t CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding);
 	static void UpdateDataBuffer(uint64_t index, void* data);
+	static void RemoveDataBuffer(uint64_t index);
 	static void CleanDataBuffers();
 	static void BindVertexBuffer(uint64_t index);
 	static void BindIndexBuffer(uint64_t index);

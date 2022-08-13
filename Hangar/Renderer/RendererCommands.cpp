@@ -9,7 +9,7 @@ void RendererCommands::Init(RendererType rendererType, GameWindow* windowPtr) {
 	switch (rendererType)
 	{
 	case RendererType::DIRECTX11:
-		api = new Direct3D11API(windowPtr);
+		api = new Direct3D11API(windowPtr); 
 		break;
 	}
 }
@@ -32,6 +32,10 @@ uint64_t RendererCommands::CreateDataBuffer(size_t dataSize, size_t dataCount, D
 
 void RendererCommands::UpdateDataBuffer(uint64_t index, void* data) {
 	api->UpdateDataBuffer(index, data);
+}
+
+void RendererCommands::RemoveDataBuffer(uint64_t index) {
+	api->RemoveBuffer(index);
 }
 
 void RendererCommands::CleanDataBuffers() {
