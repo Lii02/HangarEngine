@@ -12,6 +12,7 @@
 #include <Hangar/Framework/Components/Mesh.h>
 #include <Hangar/Framework/Components/Camera.h>
 #include <Hangar/Framework/Scene.h>
+#include <Hangar/Assets/OBJLoader.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -27,26 +28,17 @@ void Main(ArgumentPacket args) {
 	{
 		Scene scene;
 
-		MeshData3D meshData;
-		meshData.vertices = {
-			{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f}, {0, 0, 0}},
-			{{-0.5f, 0.5f, 0.0f}, {0.0f, 0.0f}, {0, 0, 0}},
-			{{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f}, {0, 0, 0}},
-			{{0.5f, -0.5f, 0.0f}, {1.0f, 1.0f}, {0, 0, 0}}
-		};
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
 
-		meshData.indices = {
-			0, 1, 2, 0, 2, 3,
-		};
 		Entity* entity = new Entity;
-		entity->AddComponent(new Mesh(&meshData, 6));
+		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
 		scene.AddEntity(entity);
 
 		Entity* camera = new Entity;
 		camera->AddComponent(new Camera(90.0f, 0.1f, 100.0f));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
-		camera->GetTransform().position.z = -1;
+		camera->GetTransform().position.z = -5;
 
 		totalTime.Begin();
 		while (window.IsRunning()) {
@@ -55,6 +47,7 @@ void Main(ArgumentPacket args) {
 			delta.Begin();
 			RendererCommands::BeginFrame();
 
+			entity->GetTransform().rotation.y++;
 			scene.Render();
 			scene.Update();
 
