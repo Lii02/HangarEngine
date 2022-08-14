@@ -1,43 +1,7 @@
 #include "Precompiled.h"
 #include "OBJLoader.h"
 #include "../IO/File.h"
-
-void Compactify(MeshData3D& mesh)
-{
-	std::vector<StandardVertex3D> compactedVertexList;
-	std::vector<int> indicesList;
-
-	int compactedIndex = 0;
-
-	for (StandardVertex3D vertSimpleMesh : mesh.vertices) {
-		bool found = false;
-		int foundIndex = 0;
-		for (StandardVertex3D vertCompactedList : compactedVertexList) {
-			if (vertSimpleMesh.position.x == vertCompactedList.position.x &&
-				vertSimpleMesh.position.y == vertCompactedList.position.y &&
-				vertSimpleMesh.position.z == vertCompactedList.position.z &&
-				vertSimpleMesh.normal.x == vertCompactedList.normal.x &&
-				vertSimpleMesh.normal.y == vertCompactedList.normal.y &&
-				vertSimpleMesh.normal.z == vertCompactedList.normal.z &&
-				vertSimpleMesh.uv.x == vertCompactedList.uv.x &&
-				vertSimpleMesh.uv.y == vertCompactedList.uv.y) {
-				indicesList.push_back(foundIndex);
-				found = true;
-				break;
-			}
-			foundIndex++;
-		}
-		
-		if (!found) {
-			compactedVertexList.push_back(vertSimpleMesh);
-			indicesList.push_back(compactedIndex);
-			compactedIndex++;
-		}
-	}
-
-	mesh.indices = indicesList;
-	mesh.vertices = compactedVertexList;
-}
+#include "../Math/MeshUtils.h"
 
 std::vector<MeshData3D> OBJLoader::Load(File* file) {
 	std::vector<MeshData3D> vec;
@@ -98,7 +62,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 			vertex.normal = temp.normals[temp.normalIndices[i] - 1];
 			mesh.vertices.push_back(vertex);
 		}
-		Compactify(mesh);
+		MeshUtils::Compactify(mesh);
 		vec.push_back(mesh);
 	}
 
