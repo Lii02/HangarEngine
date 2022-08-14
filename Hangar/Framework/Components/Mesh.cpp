@@ -3,10 +3,11 @@
 #include "../../Renderer/IRenderAPI.h"
 #include "../../Renderer/RendererCommands.h"
 
-Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount)
+Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex)
 	: IComponent(ComponentType::MESH) {
 	this->meshData = meshData;
 	this->indexCount = indexCount;
+	this->firstIndex = firstIndex;
 }
 
 Mesh::~Mesh() {
@@ -26,7 +27,7 @@ void Mesh::Render() {
 	// Render whole mesh for now
 	RendererCommands::BindVertexBuffer(vbo);
 	RendererCommands::BindIndexBuffer(ibo);
-	RendererCommands::DrawIndexed(indexCount);
+	RendererCommands::DrawIndexed(indexCount, firstIndex);
 }
 
 void Mesh::Update() {

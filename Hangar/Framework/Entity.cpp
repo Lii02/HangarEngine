@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "Entity.h"
+#include "../Debug/Logger.h"
 
 Entity::Entity(std::string name) {
 	this->name = name;
@@ -13,6 +14,10 @@ Entity::~Entity() {
 }
 
 void Entity::AddComponent(IComponent* component) {
+	if (HasComponent(component->type)) {
+		Logger::Warning(name + " already has component type: " + std::to_string(component->type));
+		return;
+	}
 	component->entity = this;
 	component->enabled = true;
 	componentMask.set(component->type, true);
