@@ -7,6 +7,7 @@ private:
 	uint32_t index;
 public:
 	StringIterator(std::string& str);
+	StringIterator(const StringIterator&) = delete;
 
 	uint32_t GetIndex() const;
 	void ResetIndex();
