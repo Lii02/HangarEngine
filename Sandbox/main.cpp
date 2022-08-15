@@ -31,11 +31,14 @@ void Main(ArgumentPacket args) {
 	{
 		Scene scene;
 
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("cube.obj"));
 
-		Entity* entity = new Entity;
-		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
-		scene.AddEntity(entity);
+		for (MeshData3D& mesh : cube) {
+			Entity* entity = new Entity;
+			entity->AddComponent(new Mesh(&mesh, mesh.indices.size()));
+			scene.AddEntity(entity);
+			entity->GetTransform().rotation.y = 180;
+		}
 
 		Entity* camera = new Entity;
 		camera->AddComponent(new Camera(90.0f, 0.1f, 1000.0f));
