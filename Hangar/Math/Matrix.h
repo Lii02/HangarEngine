@@ -31,6 +31,7 @@ struct Matrix {
 	static Matrix RotateZ(float angle);
 	static Matrix Zero();
 	static Matrix PerspectiveLH(float fov, float aspectRatio, float nearZ, float farZ);
+	static Matrix PerspectiveRH(float fov, float aspectRatio, float nearZ, float farZ);
 
 	float* operator[](int index);
 };

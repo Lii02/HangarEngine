@@ -6,6 +6,7 @@ Entity::Entity(std::string name) {
 	this->name = name;
 	this->active = true;
 	this->componentMask = 0;
+	this->rendererUsage = RendererUsage::ENTITYRENDERER;
 	identifier.Generate();
 }
 
@@ -60,8 +61,16 @@ Transform& Entity::GetTransform() {
 	return transform;
 }
 
+RendererUsage Entity::GetRendererUsage() const {
+	return rendererUsage;
+}
+
 bool Entity::GetComponentMask(size_t maskType) const {
 	return componentMask.test(maskType);
+}
+
+void Entity::SetRendererUsage(RendererUsage rendererUsage) {
+	this->rendererUsage = rendererUsage;
 }
 
 std::string Entity::GetName() const {

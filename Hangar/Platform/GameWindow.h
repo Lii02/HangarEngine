@@ -1,7 +1,7 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-typedef std::function<void(uint32_t, uint32_t)> ResizeFunc;
+typedef void(*ResizeFunc)(uint32_t, uint32_t);
 typedef void* WindowHandle;
 
 class GameWindow {

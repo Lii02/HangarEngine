@@ -12,6 +12,7 @@ class RendererCommands {
 public:
 	static IRenderAPI* api;
 
+	static RendererType GetAPI();
 	static void Init(RendererType rendererType, GameWindow* windowPtr);
 	static void DeInitialize();
 	static void BeginFrame();
@@ -33,7 +34,7 @@ public:
 	static void BindRenderShader(uint64_t index);
 	static void RemoveRenderShader(uint64_t index);
 	static uint64_t CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs);
-	static void SetTopology(Topology topology);
+	static void SetTopology(RenderTopology topology);
 	static float GetAspectRatio();
 	static std::string GetDeviceName();
 	static uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot);

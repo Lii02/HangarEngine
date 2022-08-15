@@ -14,10 +14,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <Windowsx.h>
-#include <d3d11.h>
-#include <directxtk/CommonStates.h>
-#include <dxgi.h>
-#include <d3dcompiler.h>
 struct MessagePacket {
 	HWND hwnd;
 	UINT msg;

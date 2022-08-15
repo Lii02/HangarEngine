@@ -106,6 +106,21 @@ Matrix Matrix::PerspectiveLH(float fov, float aspectRatio, float nearZ, float fa
 	return matrix;
 }
 
+Matrix Matrix::PerspectiveRH(float fov, float aspectRatio, float nearZ, float farZ) {
+	Matrix matrix;
+	float yScale = (float)((1.0f / tan(MathHelper::DegreesToRadians(fov / 2.0f))) * aspectRatio);
+	float xScale = yScale / aspectRatio;
+	float frustumLength = farZ - nearZ;
+
+	matrix[0][0] = xScale;
+	matrix[1][1] = yScale;
+	matrix[2][2] = -((farZ + nearZ) / frustumLength);
+	matrix[2][3] = -1;
+	matrix[3][2] = -((2 * nearZ * farZ) / frustumLength);
+	matrix[3][3] = 0;
+	return matrix;
+}
+
 float* Matrix::operator[](int index) {
 	return floatElements2D[index];
 }

@@ -5,7 +5,16 @@
 
 IRenderAPI* RendererCommands::api = nullptr;
 
+namespace {
+	RendererType g_RendererType;
+}
+
+RendererType RendererCommands::GetAPI() {
+	return g_RendererType;
+}
+
 void RendererCommands::Init(RendererType rendererType, GameWindow* windowPtr) {
+	g_RendererType = rendererType;
 	switch (rendererType)
 	{
 	case RendererType::DIRECTX11:
@@ -94,7 +103,7 @@ uint64_t RendererCommands::CreateRenderShader(const std::string_view& shaderSour
 	return api->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
 }
 
-void RendererCommands::SetTopology(Topology topology) {
+void RendererCommands::SetTopology(RenderTopology topology) {
 	api->SetTopology(topology);
 }
 

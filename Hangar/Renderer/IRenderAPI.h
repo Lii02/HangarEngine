@@ -9,7 +9,7 @@ enum class DataBufferBinding {
 	CONSTANT_BUFFER
 };
 
-enum class Topology {
+enum class RenderTopology {
 	LINES,
 	TRIANGLES,
 	POINTS,
@@ -61,7 +61,7 @@ public:
 	virtual void BindRenderShader(uint64_t index) = 0;
 	virtual void RemoveRenderShader(uint64_t index) = 0;
 	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) = 0;
-	virtual void SetTopology(Topology topology) = 0;
+	virtual void SetTopology(RenderTopology topology) = 0;
 	virtual float GetAspectRatio() = 0;
 	virtual std::string GetDeviceName() = 0;
 	virtual uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) = 0;

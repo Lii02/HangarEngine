@@ -20,7 +20,11 @@ void Scene::Initialize() {
 void Scene::Render() {
 	entityRenderer->PrepareFrame(mainCamera, mainCamera->GetComponent<Camera>()->GetProjection());
 	for (auto& e : entities) {
-		entityRenderer->DrawEntity(e.second);
+		switch (e.second->GetRendererUsage()) {
+		case RendererUsage::ENTITYRENDERER:
+			entityRenderer->DrawEntity(e.second);
+			break;
+		}
 	}
 }
 

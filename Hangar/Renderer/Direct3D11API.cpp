@@ -3,6 +3,7 @@
 #include "../Platform/GameWindow.h"
 #include "../Debug/Logger.h"
 #include "../Memory/MemoryManager.h"
+#include <d3dcompiler.h>
 
 extern "C" {
 	HANGAR_API unsigned long NvOptimusEnablement = 0x00000001;
@@ -313,15 +314,15 @@ void Direct3D11API::RemoveRenderShader(uint64_t index) {
 	shader = nullptr;
 }
 
-void Direct3D11API::SetTopology(Topology topology) {
+void Direct3D11API::SetTopology(RenderTopology topology) {
 	switch (topology) {
-	case Topology::LINES:
+	case RenderTopology::LINES:
 		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
-	case Topology::TRIANGLES:
+	case RenderTopology::TRIANGLES:
 		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		break;
-	case Topology::POINTS:
+	case RenderTopology::POINTS:
 		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 		break;
 	}

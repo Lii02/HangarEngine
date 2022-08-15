@@ -4,7 +4,12 @@
 #include "Identifier.h"
 #include "Transform.h"
 
-typedef std::bitset<16> ComponentMask;
+enum class RendererUsage {
+	NONE,
+	ENTITYRENDERER,
+};
+
+typedef std::bitset<24> ComponentMask;
 
 class Entity {
 	friend class IComponent;
@@ -15,6 +20,7 @@ private:
 	bool active;
 	std::vector<IComponent*> components;
 	ComponentMask componentMask;
+	RendererUsage rendererUsage;
 public:
 	Entity(std::string name = "Entity");
 	~Entity();
@@ -43,6 +49,8 @@ public:
 		}
 		return nullptr;
 	}
+	RendererUsage GetRendererUsage() const;
+	void SetRendererUsage(RendererUsage rendererUsage);
 private:
 	bool GetComponentMask(size_t maskType) const;
 };

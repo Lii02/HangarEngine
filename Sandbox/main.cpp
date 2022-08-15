@@ -13,6 +13,7 @@
 #include <Hangar/Framework/Components/Camera.h>
 #include <Hangar/Framework/Scene.h>
 #include <Hangar/Assets/OBJLoader.h>
+#include <Hangar/Audio/AudioEngine.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -37,13 +38,13 @@ void Main(ArgumentPacket args) {
 		scene.AddEntity(entity);
 
 		Entity* camera = new Entity;
-		camera->AddComponent(new Camera(90.0f, 0.1f, 100.0f));
+		camera->AddComponent(new Camera(90.0f, 0.1f, 1000.0f));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
 		camera->GetTransform().position.z = -5;
 
 		totalTime.Begin();
-		float speed = 10;
+		const float speed = 10;
 		while (window.IsRunning()) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);

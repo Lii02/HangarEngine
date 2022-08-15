@@ -1,6 +1,9 @@
 #ifndef DIRECT3D11_API_H
 #define DIRECT3D11_API_H
 #include "IRenderAPI.h"
+#include <d3d11.h>
+#include <directxtk/CommonStates.h>
+#include <dxgi.h>
 
 class Direct3D11API : public IRenderAPI {
 	struct GPU {
@@ -49,7 +52,7 @@ public:
 	virtual void RemoveRenderShader(uint64_t index) override;
 	virtual uint64_t CreateRenderShader(std::string_view shaderSource, std::string vertexEntry, std::string pixelEntry, std::vector<InputElement> inputs) override;
 	virtual void RemoveBuffer(uint64_t index) override;
-	virtual void SetTopology(Topology topology) override;
+	virtual void SetTopology(RenderTopology topology) override;
 	virtual float GetAspectRatio() override;
 	virtual std::string GetDeviceName() override;
 	virtual uint64_t CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) override;
