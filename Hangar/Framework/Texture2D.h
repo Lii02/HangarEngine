@@ -1,6 +1,8 @@
 #ifndef TEXTURE2D_H
 #define TEXTURE2D_H
 
+enum class TextureFormat;
+
 class Texture2D {
 private:
 	uint64_t index;

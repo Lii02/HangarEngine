@@ -31,7 +31,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 		} else if (line.contains("vt ")) {
 			sscanf(line.c_str(), "vt %f %f", &x, &y);
 			current->uvs.push_back(Vector2(x, y));
-		} else if (line.contains("f")) {
+		} else if (line.contains("f ")) {
 			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 			sscanf(line.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 			current->positionIndices.push_back(vertexIndex[0]);
