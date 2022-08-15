@@ -10,7 +10,7 @@ enum class DataBufferBinding {
 };
 
 enum class Topology {
-	LINE,
+	LINES,
 	TRIANGLES,
 	POINTS,
 };

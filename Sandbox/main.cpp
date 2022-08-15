@@ -22,6 +22,8 @@ void Main(ArgumentPacket args) {
 	RendererCommands::Init(RendererType::DIRECTX11, &window);
 	Stopwatch delta, totalTime;
 	Profiler& profiler = Profiler::Get();
+	Mouse& mouse = Mouse::Get();
+	Keyboard& keyboard = Keyboard::Get();
 
 	Logger::Message("Using device: " + RendererCommands::GetDeviceName());
 
@@ -41,15 +43,25 @@ void Main(ArgumentPacket args) {
 		camera->GetTransform().position.z = -5;
 
 		totalTime.Begin();
+		float speed = 10;
 		while (window.IsRunning()) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
 			delta.Begin();
 			RendererCommands::BeginFrame();
 
-			entity->GetTransform().rotation.y++;
 			scene.Render();
 			scene.Update();
+
+			if (keyboard.GetKey(KeyCode::KEY_W)) {
+				camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
+			} if (keyboard.GetKey(KeyCode::KEY_S)) {
+				camera->GetTransform().position.z -= speed * delta.GetDeltaSeconds();
+			} if (keyboard.GetKey(KeyCode::KEY_A)) {
+				camera->GetTransform().position.x -= speed * delta.GetDeltaSeconds();
+			} if (keyboard.GetKey(KeyCode::KEY_D)) {
+				camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
+			}
 
 			RendererCommands::EndFrame();
 			delta.End();

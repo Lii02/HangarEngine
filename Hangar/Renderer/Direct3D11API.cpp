@@ -315,7 +315,7 @@ void Direct3D11API::RemoveRenderShader(uint64_t index) {
 
 void Direct3D11API::SetTopology(Topology topology) {
 	switch (topology) {
-	case Topology::LINE:
+	case Topology::LINES:
 		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		break;
 	case Topology::TRIANGLES:

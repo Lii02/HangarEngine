@@ -22,14 +22,5 @@ VSOut VS(float3 position : POSITION, float2 texCoord : TEXCOORD, float3 normal :
 }
 
 float4 PS(VSOut input) : SV_TARGET {
-    float3 N = normalize(input.outNormal);
-    float3 lightPos = float3(0, 0, 0);
-    float3 L = normalize(lightPos - float3(input.fragPos.x, input.fragPos.y, input.fragPos.z));
-    float diff = max(dot(N, L), 0.0);
-    float brigtness = 1.0f;
-    float3 lightColor = float3(1, 1, 1);
-    float3 diffuse = diff * (lightColor * brigtness);
-    float ambientStrength = 0.25f;
-    float3 ambient = ambientStrength * lightColor;
-    return float4(ambient + diffuse, 1) * float4(1, 0, 0, 1);
+    return input.fragPos;
 }
