@@ -14,6 +14,7 @@
 #include <Hangar/Framework/Scene.h>
 #include <Hangar/Assets/OBJLoader.h>
 #include <Hangar/Audio/AudioEngine.h>
+#include <Hangar/Framework/Components/AudioListener.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -31,17 +32,17 @@ void Main(ArgumentPacket args) {
 	{
 		Scene scene;
 
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("mosin9130.obj"));
 
 		for (MeshData3D& mesh : cube) {
 			Entity* entity = new Entity;
 			entity->AddComponent(new Mesh(&mesh, mesh.indices.size()));
 			scene.AddEntity(entity);
-			entity->GetTransform().rotation.y = 180;
 		}
 
 		Entity* camera = new Entity;
 		camera->AddComponent(new Camera(90.0f, 0.1f, 1000.0f));
+		camera->AddComponent(new AudioListener(1.0f, Vector3()));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
 		camera->GetTransform().position.z = -5;

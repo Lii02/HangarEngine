@@ -101,6 +101,16 @@ void AudioEngine::SetSourceInfo(unsigned int sourceID, float pitch, float gain, 
 	alSourcei(sourceID, AL_LOOPING, loop);
 }
 
+bool AudioEngine::IsPlaying(unsigned int sourceID) {
+	int state;
+	alGetSourcei(sourceID, AL_SOURCE_STATE, &state);
+	return state == AL_PLAYING;
+}
+
+void AudioEngine::BufferData(unsigned int bufferID, void* data, uint32_t format, uint32_t size, uint32_t frequency) {
+	alBufferData(bufferID, format, data, size, frequency);
+}
+
 uint32_t AudioEngine::GetFormat(uint16_t channels, uint16_t samples) {
 	bool stereo = (channels > 1);
 
@@ -118,14 +128,4 @@ uint32_t AudioEngine::GetFormat(uint16_t channels, uint16_t samples) {
 	default:
 		return -1;
 	}
-}
-
-bool AudioEngine::IsPlaying(unsigned int sourceID) {
-	int state;
-	alGetSourcei(sourceID, AL_SOURCE_STATE, &state);
-	return state == AL_PLAYING;
-}
-
-void AudioEngine::BufferData(unsigned int bufferID, void* data, uint32_t format, uint32_t size, uint32_t frequency) {
-	alBufferData(bufferID, format, data, size, frequency);
 }

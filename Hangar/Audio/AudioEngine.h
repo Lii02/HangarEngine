@@ -30,9 +30,10 @@ public:
 	void PauseSource(unsigned int sourceID);
 	void RewindSource(unsigned int sourceID);
 	void SetSourceInfo(unsigned int sourceID, float pitch, float gain, Vector3 position, Vector3 velocity, bool loop);
-	uint32_t GetFormat(uint16_t channels, uint16_t samples);
 	bool IsPlaying(unsigned int sourceID);
 	void BufferData(unsigned int bufferID, void* data, uint32_t format, uint32_t size, uint32_t frequency);
+	
+	static uint32_t GetFormat(uint16_t channels, uint16_t samples);
 };
 
 #endif
