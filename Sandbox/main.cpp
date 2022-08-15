@@ -31,7 +31,7 @@ void Main(ArgumentPacket args) {
 	{
 		Scene scene;
 
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("cube.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
 
 		for (MeshData3D& mesh : cube) {
 			Entity* entity = new Entity;
