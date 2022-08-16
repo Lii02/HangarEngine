@@ -60,12 +60,6 @@ void File::WriteBuffer(const void* buffer, size_t length) {
 	fwrite(buffer, length, 1, stream);
 }
 
-uint8_t File::ReadByte() {
-	uint8_t b;
-	fread((void*)&b, 1, 1, stream);
-	return b;
-}
-
 void* File::ReadBuffer(size_t length) {
 	void* block = MemoryAllocate(length);
 	fread(block, length, 1, stream);

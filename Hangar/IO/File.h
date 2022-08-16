@@ -24,9 +24,14 @@ public:
 	void WriteByte(uint8_t b);
 	void WriteString(const char* str);
 	void WriteBuffer(const void* buffer, size_t length);
-	uint8_t ReadByte();
 	void* ReadBuffer(size_t length);
 	std::string ReadString(size_t length);
+	template <typename T>
+	T Read() {
+		T val;
+		fread((void*)&val, sizeof(T), 1, stream);
+		return val;
+	}
 	size_t Length();
 
 	inline bool IsOpen() const { return isOpen; }
