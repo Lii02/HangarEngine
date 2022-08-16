@@ -14,6 +14,7 @@ public:
 
 	AudioEngine();
 	~AudioEngine();
+	AudioEngine(const AudioEngine&) = delete;
 
 	void Initialize();
 	void DeInitialize();
