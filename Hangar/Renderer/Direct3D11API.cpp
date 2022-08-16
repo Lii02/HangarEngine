@@ -299,10 +299,10 @@ std::string Direct3D11API::GetDeviceName() {
 	return std::string(str.begin(), str.end());
 }
 
-void Direct3D11API::BindConstantBuffer(uint64_t index) {
+void Direct3D11API::BindConstantBuffer(uint64_t index, uint32_t slot) {
 	auto& buffer = dataBuffers[index];
-	deviceContext->VSSetConstantBuffers(0, 1, &buffer->buffer);
-	deviceContext->PSSetConstantBuffers(0, 1, &buffer->buffer);
+	deviceContext->VSSetConstantBuffers(slot, 1, &buffer->buffer);
+	deviceContext->PSSetConstantBuffers(slot, 1, &buffer->buffer);
 }
 
 float Direct3D11API::GetAspectRatio() {

@@ -23,7 +23,7 @@ public:
 	static void CleanDataBuffers();
 	static void BindVertexBuffer(uint64_t index);
 	static void BindIndexBuffer(uint64_t index);
-	static void BindConstantBuffer(uint64_t index);
+	static void BindConstantBuffer(uint64_t index, uint32_t slot);
 	static void DrawIndexed(uint32_t count, uint32_t first = 0);
 	static void ClearStats();
 	static bool IsVsyncEnabled();

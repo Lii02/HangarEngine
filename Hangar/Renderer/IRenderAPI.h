@@ -55,8 +55,8 @@ public:
 	virtual void CleanDataBuffers() = 0;
 	virtual void BindVertexBuffer(uint64_t index) = 0;
 	virtual void BindIndexBuffer(uint64_t index) = 0;
-	virtual void BindConstantBuffer(uint64_t index) = 0;
-	virtual void DrawIndexed(uint32_t count, uint32_t first = 0) = 0;
+	virtual void BindConstantBuffer(uint64_t index, uint32_t slot) = 0;
+	virtual void DrawIndexed(uint32_t count, uint32_t first) = 0;
 	virtual void CleanShaders() = 0;
 	virtual void BindRenderShader(uint64_t index) = 0;
 	virtual void RemoveRenderShader(uint64_t index) = 0;

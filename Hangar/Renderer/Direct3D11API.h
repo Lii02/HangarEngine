@@ -46,7 +46,7 @@ public:
 	virtual void BindVertexBuffer(uint64_t index) override;
 	virtual void BindIndexBuffer(uint64_t index) override;
 	virtual void DrawIndexed(uint32_t count, uint32_t first) override;
-	virtual void BindConstantBuffer(uint64_t index) override;
+	virtual void BindConstantBuffer(uint64_t index, uint32_t slot) override;
 	virtual void CleanShaders() override;
 	virtual void BindRenderShader(uint64_t index) override;
 	virtual void RemoveRenderShader(uint64_t index) override;

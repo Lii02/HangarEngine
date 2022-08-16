@@ -59,8 +59,8 @@ void RendererCommands::BindIndexBuffer(uint64_t index) {
 	api->BindIndexBuffer(index);
 }
 
-void RendererCommands::BindConstantBuffer(uint64_t index) {
-	api->BindConstantBuffer(index);
+void RendererCommands::BindConstantBuffer(uint64_t index, uint32_t slot) {
+	api->BindConstantBuffer(index, slot);
 }
 
 void RendererCommands::DrawIndexed(uint32_t count, uint32_t first) {
