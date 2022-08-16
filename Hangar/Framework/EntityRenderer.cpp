@@ -1,7 +1,8 @@
 #include "Precompiled.h"
 #include "EntityRenderer.h"
-#include "../IO/FileSystem.h"
-#include "../Renderer/RendererCommands.h"
+#include <IO/FileSystem.h>
+#include <Renderer/RendererCommands.h>
+#include <Assets/ShaderLoader.h>
 
 EntityRenderer::EntityRenderer() {
 	Initialize();
@@ -18,10 +19,7 @@ void EntityRenderer::Initialize() {
 	inputElements.push_back({ 0, 3, 0, "POSITION" });
 	inputElements.push_back({ 0, 2, 0, "TEXCOORD" });
 	inputElements.push_back({ 0, 3, 0, "NORMAL" });
-	File* shaderFile = FileSystem::Get()->ImmSearchFile("standard3D.hlsl");
-	shaderFile->ReOpen();
-
-	this->shader = RendererCommands::CreateRenderShader(shaderFile->ReadString(shaderFile->Length()), "VS", "PS", inputElements);
+	this->shader = ShaderLoader::Load(FileSystem::Get()->ImmSearchFile("standard3D.hlsl"), inputElements, "VS", "PS");
 }
 
 void EntityRenderer::DeInitialize() {
