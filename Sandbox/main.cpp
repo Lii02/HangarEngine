@@ -17,6 +17,7 @@
 #include <Hangar/Framework/Components/AudioListener.h>
 #include <Hangar/Framework/Components/AudioSource.h>
 #include <Hangar/Audio/AudioClip.h>
+#include <Hangar/Assets/WAVLoader.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -34,18 +35,17 @@ void Main(ArgumentPacket args) {
 
 	{
 		Scene scene;
-
 		auto cube = OBJLoader::Load(fs->ImmSearchFile("mosin9130.obj"));
 
-		for (MeshData3D& mesh : cube) {
-			Entity* entity = new Entity;
-			entity->AddComponent(new Mesh(&mesh, mesh.indices.size()));
-			entity->AddComponent(new AudioSource(1.0f, 1.0f, true, Vector3()));
-			scene.AddEntity(entity);
-		}
+		AudioClip* clip = WAVLoader::Load(fs->ImmSearchFile("amulet.wav"));
+		Entity* entity = new Entity;
+		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
+		entity->AddComponent(new AudioSource(1.0f, 1.0f, true, Vector3()));
+		entity->GetComponent<AudioSource>()->SetClip(clip);
+		scene.AddEntity(entity);
 
 		Entity* camera = new Entity;
-		camera->AddComponent(new Camera(90.0f, 0.1f, 1000.0f));
+		camera->AddComponent(new Camera(90.0f, -0.1f, 1000.0f));
 		camera->AddComponent(new AudioListener(1.0f, Vector3()));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
@@ -53,6 +53,7 @@ void Main(ArgumentPacket args) {
 
 		totalTime.Begin();
 		const float speed = 10;
+		std::thread renderThread;
 		while (window.IsRunning()) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
@@ -62,6 +63,8 @@ void Main(ArgumentPacket args) {
 			scene.Render();
 			RendererCommands::EndFrame();
 			
+			entity->GetComponent<AudioSource>()->Play();
+
 			scene.Update();
 			if (keyboard.GetKey(KeyCode::KEY_W)) {
 				camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
@@ -77,6 +80,8 @@ void Main(ArgumentPacket args) {
 			window.Poll();
 			profiler.EndFunction();
 		}
+
+		delete clip;
 	}
 
 	AudioEngine::DeInitialize();

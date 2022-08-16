@@ -64,7 +64,7 @@ void AudioEngine::RemoveSource(unsigned int sourceID) {
 
 void AudioEngine::RemoveBuffer(unsigned int bufferID) {
 	auto it = std::find(buffers.begin(), buffers.end(), bufferID);
-	alDeleteBuffers(1, &*it);
+	alDeleteBuffers(1, &bufferID);
 	buffers.erase(it);
 }
 

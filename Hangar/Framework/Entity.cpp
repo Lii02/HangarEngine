@@ -43,7 +43,8 @@ void Entity::RemoveComponent(uint32_t index) {
 
 void Entity::Render() {
 	for (auto& component : components) {
-		component->Render();
+		if(component->IsEnabled())
+			component->Render();
 	}
 }
 
@@ -53,7 +54,8 @@ IComponent* Entity::GetComponent(uint32_t index) {
 
 void Entity::Update() {
 	for (auto& component : components) {
-		component->Update();
+		if (component->IsEnabled())
+			component->Update();
 	}
 }
 

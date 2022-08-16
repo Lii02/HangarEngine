@@ -17,6 +17,9 @@ public:
 	~AudioSource();
 
 	void SetClip(AudioClip* clip);
+	void Play();
+	void Stop();
+	bool IsPlaying() const;
 	virtual void Init() override;
 	virtual void Render() override;
 	virtual void Update() override;

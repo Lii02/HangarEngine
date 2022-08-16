@@ -22,6 +22,18 @@ void AudioSource::SetClip(AudioClip* clip) {
 	AudioEngine::Get()->SetSourceClip(sourceID, clip->GetID());
 }
 
+void AudioSource::Play() {
+	AudioEngine::Get()->PlaySource(sourceID);
+}
+
+void AudioSource::Stop() {
+	AudioEngine::Get()->StopSource(sourceID);
+}
+
+bool AudioSource::IsPlaying() const {
+	return AudioEngine::Get()->IsPlaying(sourceID);
+}
+
 void AudioSource::Init() {
 	this->sourceID = AudioEngine::Get()->CreateSource();
 }
