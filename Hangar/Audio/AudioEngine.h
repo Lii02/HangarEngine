@@ -10,14 +10,14 @@ private:
 	std::vector<unsigned int> sources;
 	std::vector<unsigned int> buffers;
 public:
-	static AudioEngine& Get();
+	static void Initialize();
+	static void DeInitialize();
+	static AudioEngine*& Get();
 
 	AudioEngine();
 	~AudioEngine();
 	AudioEngine(const AudioEngine&) = delete;
 
-	void Initialize();
-	void DeInitialize();
 	void CleanSources();
 	void CleanBuffers();
 	unsigned int CreateSource();

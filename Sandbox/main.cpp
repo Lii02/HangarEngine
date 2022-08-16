@@ -15,11 +15,14 @@
 #include <Hangar/Assets/OBJLoader.h>
 #include <Hangar/Audio/AudioEngine.h>
 #include <Hangar/Framework/Components/AudioListener.h>
+#include <Hangar/Framework/Components/AudioSource.h>
+#include <Hangar/Audio/AudioClip.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
 	FileSystem::Init();
+	AudioEngine::Initialize();
 	FileSystem*& fs = FileSystem::Get();
 	RendererCommands::Init(RendererType::DIRECTX11, &window);
 	Stopwatch delta, totalTime;
@@ -37,6 +40,7 @@ void Main(ArgumentPacket args) {
 		for (MeshData3D& mesh : cube) {
 			Entity* entity = new Entity;
 			entity->AddComponent(new Mesh(&mesh, mesh.indices.size()));
+			entity->AddComponent(new AudioSource(1.0f, 1.0f, true, Vector3()));
 			scene.AddEntity(entity);
 		}
 
@@ -53,11 +57,12 @@ void Main(ArgumentPacket args) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
 			delta.Begin();
+
 			RendererCommands::BeginFrame();
-
 			scene.Render();
+			RendererCommands::EndFrame();
+			
 			scene.Update();
-
 			if (keyboard.GetKey(KeyCode::KEY_W)) {
 				camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
 			} if (keyboard.GetKey(KeyCode::KEY_S)) {
@@ -67,14 +72,14 @@ void Main(ArgumentPacket args) {
 			} if (keyboard.GetKey(KeyCode::KEY_D)) {
 				camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
 			}
-
-			RendererCommands::EndFrame();
+			
 			delta.End();
 			window.Poll();
 			profiler.EndFunction();
 		}
 	}
 
+	AudioEngine::DeInitialize();
 	FileSystem::DeInitialize();
 	RendererCommands::DeInitialize();
 }

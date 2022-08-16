@@ -10,24 +10,25 @@ AudioSource::AudioSource(float pitch, float gain, bool loop, Vector3 velocity)
 	this->gain = gain;
 	this->loop = loop;
 	this->velocity = velocity;
+	this->clip = nullptr;
 }
 
 AudioSource::~AudioSource() {
-	AudioEngine::Get().RemoveSource(sourceID);
+	AudioEngine::Get()->RemoveSource(sourceID);
 }
 
 void AudioSource::SetClip(AudioClip* clip) {
 	this->clip = clip;
-	AudioEngine::Get().SetSourceClip(sourceID, clip->GetID());
+	AudioEngine::Get()->SetSourceClip(sourceID, clip->GetID());
 }
 
 void AudioSource::Init() {
-	this->sourceID = AudioEngine::Get().CreateSource();
+	this->sourceID = AudioEngine::Get()->CreateSource();
 }
 
 void AudioSource::Render() {
 }
 
 void AudioSource::Update() {
-	AudioEngine::Get().SetSourceInfo(sourceID, pitch, gain, GetEntity()->GetTransform().position, velocity, loop);
+	AudioEngine::Get()->SetSourceInfo(sourceID, pitch, gain, GetEntity()->GetTransform().position, velocity, loop);
 }

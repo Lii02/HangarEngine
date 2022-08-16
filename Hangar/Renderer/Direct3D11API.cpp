@@ -123,6 +123,7 @@ void Direct3D11API::Initialize() {
 	commonStates = new CommonStates(device);
 	rasterState = commonStates->CullCounterClockwise();
 	blendState = commonStates->Opaque();
+	SetTopology(RenderTopology::TRIANGLES);
 }
 
 void Direct3D11API::DeInitialize() {

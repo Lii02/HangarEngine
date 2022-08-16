@@ -3,30 +3,30 @@
 #include <AL/al.h>
 
 namespace {
-	AudioEngine g_AudioEngine;
+	AudioEngine* g_AudioEngine;
 }
 
-AudioEngine& AudioEngine::Get() {
+void AudioEngine::Initialize() {
+	g_AudioEngine = new AudioEngine();
+}
+
+void AudioEngine::DeInitialize() {
+	delete g_AudioEngine;
+}
+
+AudioEngine*& AudioEngine::Get() {
 	return g_AudioEngine;
 }
 
 AudioEngine::AudioEngine() {
-	Initialize();
-}
-
-AudioEngine::~AudioEngine() {
-	DeInitialize();
-}
-
-void AudioEngine::Initialize() {
-	CleanBuffers();
-	CleanSources();
 	this->device = alcOpenDevice(NULL);
 	this->context = alcCreateContext(device, NULL);
 	alcMakeContextCurrent(context);
 }
 
-void AudioEngine::DeInitialize() {
+AudioEngine::~AudioEngine() {
+	CleanBuffers();
+	CleanSources();
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(context);
 	alcCloseDevice(device);
@@ -34,10 +34,12 @@ void AudioEngine::DeInitialize() {
 
 void AudioEngine::CleanSources() {
 	alDeleteSources(sources.size(), sources.data());
+	sources.clear();
 }
 
 void AudioEngine::CleanBuffers() {
 	alDeleteBuffers(buffers.size(), buffers.data());
+	buffers.clear();
 }
 
 unsigned int AudioEngine::CreateSource() {
@@ -56,7 +58,7 @@ unsigned int AudioEngine::CreateBuffer() {
 
 void AudioEngine::RemoveSource(unsigned int sourceID) {
 	auto it = std::find(sources.begin(), sources.end(), sourceID);
-	alDeleteSources(1, &*it);
+	alDeleteSources(1, &sourceID);
 	sources.erase(it);
 }
 
