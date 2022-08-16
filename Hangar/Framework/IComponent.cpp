@@ -4,6 +4,7 @@
 #include "Components/Camera.h"
 #include "Components/AudioListener.h"
 #include "Components/AudioSource.h"
+#include "Components/Light.h"
 
 template <typename T>
 inline constexpr ComponentType IComponent::TypeToEnum() { return ComponentType::UNKNOWN; }
@@ -14,3 +15,4 @@ REGISTER_COMPONENT(Mesh, ComponentType::MESH)
 REGISTER_COMPONENT(Camera, ComponentType::CAMERA)
 REGISTER_COMPONENT(AudioListener, ComponentType::AUDIOLISTENER)
 REGISTER_COMPONENT(AudioSource, ComponentType::AUDIOSOURCE)
+REGISTER_COMPONENT(Light, ComponentType::LIGHT)

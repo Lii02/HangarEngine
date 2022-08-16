@@ -9,6 +9,7 @@ enum ComponentType : int32_t {
 	CAMERA = HANGAR_BIT(1),
 	AUDIOLISTENER = HANGAR_BIT(2),
 	AUDIOSOURCE = HANGAR_BIT(2),
+	LIGHT = HANGAR_BIT(3),
 };
 
 class IComponent {

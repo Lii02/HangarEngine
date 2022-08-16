@@ -35,7 +35,7 @@ void Main(ArgumentPacket args) {
 
 	{
 		Scene scene;
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("mosin9130.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
 
 		AudioClip* clip = WAVLoader::Load(fs->ImmSearchFile("amulet.wav"));
 		Entity* entity = new Entity;
