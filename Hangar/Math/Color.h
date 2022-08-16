@@ -1,7 +1,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-struct Color {
+struct alignas(16) Color {
 	float r, g, b, a;
 
 	Color(float r, float g, float b, float a = 1.0f);

@@ -5,7 +5,7 @@
 
 class EntityRenderer : public IRenderer {
 private:
-	struct ConstantBuffer {
+	struct alignas(16) ConstantBuffer {
 		Matrix projection;
 		Matrix view;
 		Matrix model;

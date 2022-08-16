@@ -38,6 +38,6 @@ void EntityRenderer::DrawEntity(Entity* e) {
 	cbuffer.model = e->GetTransform().ToMatrix();
 	RendererCommands::UpdateDataBuffer(constantBuffer, (void*)&cbuffer);
 	RendererCommands::BindRenderShader(shader);
-	RendererCommands::BindConstantBuffer(constantBuffer);
+	RendererCommands::BindConstantBuffer(constantBuffer, 0);
 	e->Render();
 }
