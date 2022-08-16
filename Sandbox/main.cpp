@@ -38,14 +38,13 @@ void Main(ArgumentPacket args) {
 
 	{
 		Scene scene;
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("cube.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("test.obj"));
 
-		Entity* entity = new Entity;
-		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
-		entity->AddComponent(new AudioSource(1.0f, 10.0f, false, Vector3()));
-		entity->GetTransform().position = Vector3(0, -5, 0);
-		entity->GetTransform().scale = Vector3(10, 1, 10);
-		scene.AddEntity(entity);
+		for (size_t i = 0; i < cube.size(); i++) {
+			Entity* entity = new Entity;
+			entity->AddComponent(new Mesh(&cube[i], cube[i].indices.size()));
+			scene.AddEntity(entity);
+		}
 
 		Entity* camera = new Entity;
 		camera->AddComponent(new Camera(90.0f, -0.1f, 1000.0f));

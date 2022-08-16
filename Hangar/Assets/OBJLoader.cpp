@@ -51,7 +51,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 			normalIndices.push_back(normalIndex[1]);
 			normalIndices.push_back(normalIndex[2]);
 			current->count += 3;
-			index++;
+			index += 3;
 		} else if (line.contains("o ")) {
 			char name[16];
 			sscanf(line.c_str(), "o %s", name);
@@ -66,15 +66,19 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 	for (auto& temp : temps) {
 		MeshData3D mesh;
 		mesh.name = temp.name;
-		for (size_t i = temp.first; i < temp.count; i++) {
+		for (size_t i = 0; i < temp.count; i++) {
 			StandardVertex3D vertex;
+			int realIndex = temp.first + i;
 			mesh.indices.push_back(i);
-			vertex.position = positions[positionIndices[i] - 1];
-			vertex.uv = uvs[uvIndices[i] - 1];
-			vertex.normal = normals[normalIndices[i] - 1];
+			vertex.position = positions[positionIndices[realIndex] - 1];
+			vertex.uv = uvs[uvIndices[realIndex] - 1];
+			vertex.normal = normals[normalIndices[realIndex] - 1];
 			mesh.vertices.push_back(vertex);
 		}
-		//MeshUtils::Compactify(mesh);
+		size_t preNumVertices = mesh.vertices.size();
+		MeshUtils::Compactify(mesh);
+		size_t postNumVertices = mesh.vertices.size();
+		Logger::Message("Compacted mesh: " + mesh.name + " from " + std::to_string(preNumVertices) + " vertices to " + std::to_string(postNumVertices) + " vertices");
 		vec.push_back(mesh);
 	}
 
