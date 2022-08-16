@@ -7,7 +7,7 @@
 std::vector<MeshData3D> OBJLoader::Load(File* file) {
 	std::vector<MeshData3D> vec;
 	if (!file->ReOpen()) {
-		Logger::Error("Failed to load file: " + file->GetPath());
+		Logger::Error("Failed to load 3D model file: " + file->GetPath());
 		delete file;
 		return vec;
 	}

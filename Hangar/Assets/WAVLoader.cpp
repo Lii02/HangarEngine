@@ -29,7 +29,7 @@ struct WAVInfo {
 AudioClip* WAVLoader::Load(File* file) {
 	AudioClip* clip = new AudioClip();
 	if (!file->ReOpen()) {
-		Logger::Error("Failed to load file: " + file->GetPath());
+		Logger::Error("Failed to load WAV file: " + file->GetPath());
 		delete file;
 		return nullptr;
 	}
