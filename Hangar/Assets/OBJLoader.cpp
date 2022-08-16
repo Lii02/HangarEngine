@@ -57,6 +57,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 			current->first = index;
 		}
 	}
+	file->Rewind();
 
 	for (auto& temp : temps) {
 		MeshData3D mesh;
