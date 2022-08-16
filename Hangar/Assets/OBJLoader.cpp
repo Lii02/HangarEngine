@@ -1,11 +1,13 @@
 #include "Precompiled.h"
 #include "OBJLoader.h"
-#include "../IO/File.h"
-#include "../Math/MeshUtils.h"
+#include <IO/File.h>
+#include <IO/FileSystem.h>
+#include <Math/MeshUtils.h>
 #include <Debug/Logger.h>
+#include "MATLoader.h"
 
-std::vector<MeshData3D> OBJLoader::Load(File* file) {
-	std::vector<MeshData3D> vec;
+std::vector<ObjMeshData> OBJLoader::Load(File* file) {
+	std::vector<ObjMeshData> vec;
 	if (!file->ReOpen()) {
 		Logger::Error("Failed to load 3D model file: " + file->GetPath());
 		delete file;
@@ -19,6 +21,8 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 		std::string name;
 		int first;
 		int count;
+		std::string materialName;
+		Material* mat;
 	};
 
 	std::vector<Vector3> positions, normals;
@@ -27,6 +31,8 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 	std::vector<TempMesh> temps;
 	TempMesh* current;
 	int index = 0;
+	std::unordered_map<std::string, Material*> materials;
+
 	while (std::getline(input, line)) {
 		float x, y, z;
 		if (line.contains("v ")) {
@@ -59,6 +65,14 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 			current = &temps.back();
 			current->name = name;
 			current->first = index;
+		} else if (line.contains("mtllib")) {
+			char name[16];
+			sscanf(line.c_str(), "mtllib %s", name);
+			materials = MATLoader::Load(FileSystem::Get()->ImmSearchFile(name));
+		} else if (line.contains("usemtl")) {
+			char name[16];
+			sscanf(line.c_str(), "usemtl %s", name);
+			current->mat = materials[name];
 		}
 	}
 	file->Rewind();
@@ -80,7 +94,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 		MeshUtils::Compactify(mesh);
 		size_t postNumVertices = mesh.vertices.size();
 		Logger::Message("Compacted mesh: " + mesh.name + " from " + std::to_string(preNumVertices) + " vertices to " + std::to_string(postNumVertices) + " vertices");
-		vec.push_back(mesh);
+		vec.push_back(std::make_pair(mesh, temp.mat));
 	}
 
 	return vec;

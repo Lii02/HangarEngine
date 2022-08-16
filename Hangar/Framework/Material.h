@@ -53,6 +53,7 @@ private:
 public:
 	Material(std::string name = "Material");
 	~Material();
+	Material(const Material&) = delete;
 
 	MaterialAttribute<Color> GetDiffuse();
 	void SetDiffuse(MaterialAttribute<Color> diffuse);

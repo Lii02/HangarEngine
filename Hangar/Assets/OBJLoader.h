@@ -3,9 +3,12 @@
 #include "../Math/Vectors.h"
 
 class File;
+class Material;
+
+typedef std::pair<MeshData3D, Material*> ObjMeshData;
 
 namespace OBJLoader {
-	std::vector<MeshData3D> Load(File* file);
+	std::vector<ObjMeshData> Load(File* file);
 }
 
 #endif
