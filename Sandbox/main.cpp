@@ -40,7 +40,7 @@ void Main(ArgumentPacket args) {
 		AudioClip* clip = WAVLoader::Load(fs->ImmSearchFile("amulet.wav"));
 		Entity* entity = new Entity;
 		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
-		entity->AddComponent(new AudioSource(1.0f, 1.0f, true, Vector3()));
+		entity->AddComponent(new AudioSource(1.0f, 10.0f, false, Vector3()));
 		entity->GetComponent<AudioSource>()->SetClip(clip);
 		scene.AddEntity(entity);
 
@@ -63,7 +63,9 @@ void Main(ArgumentPacket args) {
 			scene.Render();
 			RendererCommands::EndFrame();
 			
-			entity->GetComponent<AudioSource>()->Play();
+			if (keyboard.GetKey(KeyCode::KEY_TAB)) {
+				entity->GetComponent<AudioSource>()->Play();
+			}
 
 			scene.Update();
 			if (keyboard.GetKey(KeyCode::KEY_W)) {
