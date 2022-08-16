@@ -24,7 +24,7 @@ private:
 	RendererUsage rendererUsage;
 	Material* material;
 public:
-	Entity(std::string name = "Entity");
+	Entity(std::string name = "Entity", Identifier identifier = Identifier::New());
 	~Entity();
 
 	void AddComponent(IComponent* component);

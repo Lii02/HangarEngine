@@ -2,13 +2,13 @@
 #include "Entity.h"
 #include "../Debug/Logger.h"
 
-Entity::Entity(std::string name) {
+Entity::Entity(std::string name, Identifier identifier) {
 	this->name = name;
+	this->identifier = identifier;
 	this->active = true;
 	this->componentMask = 0;
 	this->rendererUsage = RendererUsage::ENTITYRENDERER;
 	this->material = new Material();
-	identifier.Generate();
 }
 
 Entity::~Entity() {

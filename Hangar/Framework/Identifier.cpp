@@ -16,6 +16,12 @@ Identifier::Identifier(const Identifier& right) {
 	strcpy(str, right.str);
 }
 
+Identifier Identifier::operator=(const Identifier& right) {
+	Identifier id;
+	strcpy(str, right.str);
+	return id;
+}
+
 const char* Identifier::GetString() {
 	return str;
 }
@@ -32,6 +38,12 @@ void Identifier::Generate() {
 		uint8_t random = rand() % 0x0F;
 		itoa(random, str + i, 16);
 	}
+}
+
+Identifier Identifier::New() {
+	Identifier id;
+	id.Generate();
+	return id;
 }
 
 bool operator<(const Identifier& left, const Identifier& right) {

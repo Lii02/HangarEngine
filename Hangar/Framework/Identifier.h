@@ -8,10 +8,13 @@ public:
 	Identifier();
 	~Identifier();
 	Identifier(const Identifier& right);
+	Identifier operator=(const Identifier& right);
 	
 	const char* GetString();
 	const char* GetString() const;
 	void Generate();
+
+	static Identifier New();
 private:
 	char* str;
 };
