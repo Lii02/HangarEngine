@@ -1,8 +1,6 @@
 #ifndef THREAD_H
 #define THREAD_H
 
-#undef Yield
-
 class Thread {
 private:
 	std::thread* thread;
