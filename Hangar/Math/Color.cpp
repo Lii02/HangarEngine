@@ -1,6 +1,13 @@
 #include "Precompiled.h"
 #include "Color.h"
 
+Color::Color(float r, float g, float b, float a) {
+	this->r = r;
+	this->g = g;
+	this->b = b;
+	this->a = a;
+}
+
 void Color::Invert() {
 	this->r = 1.0f - r;
 	this->g = 1.0f - g;
