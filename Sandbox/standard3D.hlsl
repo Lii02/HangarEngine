@@ -21,6 +21,8 @@ VSOut VS(float3 position : POSITION, float2 texCoord : TEXCOORD, float3 normal :
     return output;
 }
 
+#include "material.hlsl"
+
 float4 PS(VSOut input) : SV_TARGET {
-    return input.fragPos;
+    return diffuse.color;
 }

@@ -19,10 +19,7 @@
 #include <Hangar/Audio/AudioClip.h>
 #include <Hangar/Assets/WAVLoader.h>
 #include <Hangar/Threading/ThreadPool.h>
-
-void TestFunction() {
-	Logger::Message("Thread pool test");
-}
+#include <Hangar/Framework/Material.h>
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
@@ -41,13 +38,15 @@ void Main(ArgumentPacket args) {
 
 	{
 		Scene scene;
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("monkey.obj"));
+		auto cube = OBJLoader::Load(fs->ImmSearchFile("cube.obj"));
 
 		AudioClip* clip = WAVLoader::Load(fs->ImmSearchFile("amulet.wav"));
 		Entity* entity = new Entity;
 		entity->AddComponent(new Mesh(&cube[0], cube[0].indices.size()));
 		entity->AddComponent(new AudioSource(1.0f, 10.0f, false, Vector3()));
 		entity->GetComponent<AudioSource>()->SetClip(clip);
+		entity->GetTransform().position = Vector3(0, -5, 0);
+		entity->GetTransform().scale = Vector3(10, 1, 10);
 		scene.AddEntity(entity);
 
 		Entity* camera = new Entity;
@@ -56,6 +55,10 @@ void Main(ArgumentPacket args) {
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
 		camera->GetTransform().position.z = -5;
+
+		Material* material = new Material();
+		material->SetDiffuse(MaterialAttribute<Color>(Color(1, 0, 0), MaterialAttributeType::COLOR_VALUE));
+		material->Update();
 
 		totalTime.Begin();
 		const float speed = 10;
@@ -66,6 +69,7 @@ void Main(ArgumentPacket args) {
 
 			RendererCommands::BeginFrame();
 			scene.Render();
+			material->Bind();
 			RendererCommands::EndFrame();
 
 			if (keyboard.GetKey(KeyCode::KEY_TAB)) {
@@ -82,12 +86,13 @@ void Main(ArgumentPacket args) {
 			} if (keyboard.GetKey(KeyCode::KEY_D)) {
 				camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
 			}
-			
+
 			delta.End();
 			window.Poll();
 			profiler.EndFunction();
 		}
 
+		delete material;
 		delete clip;
 	}
 
