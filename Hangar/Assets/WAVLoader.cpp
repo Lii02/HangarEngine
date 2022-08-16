@@ -4,6 +4,7 @@
 #include <Audio/AudioClip.h>
 #include <Audio/AudioEngine.h>
 #include <Memory/MemoryManager.h>
+#include <Debug/Logger.h>
 
 #define WAV_DESC_SIZE 4
 
@@ -27,8 +28,11 @@ struct WAVInfo {
 
 AudioClip* WAVLoader::Load(File* file) {
 	AudioClip* clip = new AudioClip();
-	if (!file->IsOpen())
-		file->Open();
+	if (!file->ReOpen()) {
+		Logger::Error("Failed to load file: " + file->GetPath());
+		delete file;
+		return nullptr;
+	}
 	WAVInfo info = file->Read<WAVInfo>();
 	void* buffer = file->ReadBuffer(info.dataSize);
 	clip->SetData(buffer, AudioEngine::GetFormat(info.channels, info.bitsSample), info.dataSize, info.frequency);

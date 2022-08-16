@@ -58,7 +58,9 @@ File* FileSystem::ImmSearchFile(std::string filename) {
 		if (file->GetFilename() == filename)
 			return file;
 	}
-	return nullptr;
+	// Create a temporary file, make sure to free memory after use
+	File* file = new File(filename, FileMode::READ, filename);
+	return file;
 }
 
 FileSystem* FileSystem::ImmSearchFolder(std::string subgroupName) {

@@ -21,6 +21,7 @@ public:
 	bool Open();
 	void Close();
 	void Rewind();
+	bool ReOpen();
 	void WriteByte(uint8_t b);
 	void WriteString(const char* str);
 	void WriteBuffer(const void* buffer, size_t length);

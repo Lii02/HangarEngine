@@ -19,7 +19,7 @@ void EntityRenderer::Initialize() {
 	inputElements.push_back({ 0, 2, 0, "TEXCOORD" });
 	inputElements.push_back({ 0, 3, 0, "NORMAL" });
 	File* shaderFile = FileSystem::Get()->ImmSearchFile("standard3D.hlsl");
-	shaderFile->Open();
+	shaderFile->ReOpen();
 
 	this->shader = RendererCommands::CreateRenderShader(shaderFile->ReadString(shaderFile->Length()), "VS", "PS", inputElements);
 }

@@ -48,6 +48,13 @@ void File::Rewind() {
 	rewind(stream);
 }
 
+bool File::ReOpen() {
+	if (isOpen) {
+		Close();
+	}
+	return Open();
+}
+
 void File::WriteByte(uint8_t b) {
 	fwrite((void*)&b, 1, 1, stream);
 }

@@ -2,11 +2,15 @@
 #include "OBJLoader.h"
 #include "../IO/File.h"
 #include "../Math/MeshUtils.h"
+#include <Debug/Logger.h>
 
 std::vector<MeshData3D> OBJLoader::Load(File* file) {
 	std::vector<MeshData3D> vec;
-	if(!file->IsOpen())
-		file->Open();
+	if (!file->ReOpen()) {
+		Logger::Error("Failed to load file: " + file->GetPath());
+		delete file;
+		return vec;
+	}
 	std::istringstream input;
 	input.str(file->ReadString(file->Length()));
 	std::string line;
