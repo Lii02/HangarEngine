@@ -45,6 +45,7 @@ struct MessagePacket {
 #include <bitset>
 #include <stack>
 #include <map>
+#include <queue>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>

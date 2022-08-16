@@ -18,12 +18,18 @@
 #include <Hangar/Framework/Components/AudioSource.h>
 #include <Hangar/Audio/AudioClip.h>
 #include <Hangar/Assets/WAVLoader.h>
+#include <Hangar/Threading/ThreadPool.h>
+
+void TestFunction() {
+	Logger::Message("Thread pool test");
+}
 
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
 	FileSystem::Init();
 	AudioEngine::Initialize();
+	ThreadPool::Initialize();
 	FileSystem*& fs = FileSystem::Get();
 	RendererCommands::Init(RendererType::DIRECTX11, &window);
 	Stopwatch delta, totalTime;
@@ -53,7 +59,6 @@ void Main(ArgumentPacket args) {
 
 		totalTime.Begin();
 		const float speed = 10;
-		std::thread renderThread;
 		while (window.IsRunning()) {
 			profiler.ClearTotals();
 			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
@@ -62,7 +67,7 @@ void Main(ArgumentPacket args) {
 			RendererCommands::BeginFrame();
 			scene.Render();
 			RendererCommands::EndFrame();
-			
+
 			if (keyboard.GetKey(KeyCode::KEY_TAB)) {
 				entity->GetComponent<AudioSource>()->Play();
 			}
@@ -86,6 +91,7 @@ void Main(ArgumentPacket args) {
 		delete clip;
 	}
 
+	ThreadPool::DeInitialize();
 	AudioEngine::DeInitialize();
 	FileSystem::DeInitialize();
 	RendererCommands::DeInitialize();

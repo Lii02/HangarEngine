@@ -32,6 +32,18 @@ void* Thread::GetHandle() {
 	return thread->native_handle();
 }
 
+std::mutex& Thread::GetMutex() {
+	return mut;
+}
+
+void Thread::Sleep(int milliseconds) {
+	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
+void Thread::Yield() {
+	std::this_thread::yield();
+}
+
 uint32_t Thread::GetThreadCount() {
 	return std::thread::hardware_concurrency();
 }
