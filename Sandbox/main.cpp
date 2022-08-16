@@ -56,10 +56,6 @@ void Main(ArgumentPacket args) {
 		scene.SetMainCamera(camera);
 		camera->GetTransform().position.z = -5;
 
-		Material* material = new Material();
-		material->SetDiffuse(MaterialAttribute<Color>(Color(1, 0, 0), MaterialAttributeType::COLOR_VALUE));
-		material->Update();
-
 		totalTime.Begin();
 		const float speed = 10;
 		while (window.IsRunning()) {
@@ -69,7 +65,6 @@ void Main(ArgumentPacket args) {
 
 			RendererCommands::BeginFrame();
 			scene.Render();
-			material->Bind();
 			RendererCommands::EndFrame();
 
 			if (keyboard.GetKey(KeyCode::KEY_TAB)) {
@@ -92,7 +87,6 @@ void Main(ArgumentPacket args) {
 			profiler.EndFunction();
 		}
 
-		delete material;
 		delete clip;
 	}
 

@@ -62,6 +62,8 @@ public:
 	void SetSpecularExponent(float specularExponent);
 	void Bind();
 	void Update();
+	std::string GetName() const;
+	void SetName(std::string name);
 };
 
 #endif
