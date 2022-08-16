@@ -62,6 +62,7 @@ std::vector<MeshData3D> OBJLoader::Load(File* file) {
 		}
 	}
 	file->Rewind();
+	Logger::Confirmation("Loaded " + file->GetFilename() + " mesh file");
 
 	for (auto& temp : temps) {
 		MeshData3D mesh;
