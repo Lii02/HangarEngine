@@ -8,9 +8,11 @@ Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex)
 	this->meshData = meshData;
 	this->indexCount = indexCount;
 	this->firstIndex = firstIndex;
+	this->material = new Material();
 }
 
 Mesh::~Mesh() {
+	delete material;
 	RendererCommands::RemoveDataBuffer(vbo);
 	RendererCommands::RemoveDataBuffer(ibo);
 }
@@ -25,10 +27,20 @@ void Mesh::Init() {
 
 void Mesh::Render() {
 	// Render whole mesh for now
+	material->Bind();
 	RendererCommands::BindVertexBuffer(vbo);
 	RendererCommands::BindIndexBuffer(ibo);
 	RendererCommands::DrawIndexed(indexCount, firstIndex);
 }
 
 void Mesh::Update() {
+}
+
+Material* Mesh::GetMaterial() {
+	return material;
+}
+
+void Mesh::SetMaterial(Material* newMaterial) {
+	delete material;
+	this->material = newMaterial;
 }

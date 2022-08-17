@@ -43,7 +43,7 @@ void Main(ArgumentPacket args) {
 		for (size_t i = 0; i < cube.size(); i++) {
 			Entity* entity = new Entity;
 			entity->AddComponent(new Mesh(&cube[i].first, cube[i].first.indices.size()));
-			entity->SetMaterial(cube[i].second);
+			entity->GetComponent<Mesh>()->SetMaterial(cube[i].second);
 			scene.AddEntity(entity);
 		}
 

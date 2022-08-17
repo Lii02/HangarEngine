@@ -8,11 +8,9 @@ Entity::Entity(std::string name, Identifier identifier) {
 	this->active = true;
 	this->componentMask = 0;
 	this->rendererUsage = RendererUsage::ENTITYRENDERER;
-	this->material = new Material();
 }
 
 Entity::~Entity() {
-	delete material;
 	RemoveComponents();
 }
 
@@ -44,7 +42,6 @@ void Entity::RemoveComponent(uint32_t index) {
 }
 
 void Entity::Render() {
-	material->Bind();
 	for (auto& component : components) {
 		if(component->IsEnabled())
 			component->Render();
@@ -76,15 +73,6 @@ bool Entity::GetComponentMask(size_t maskType) const {
 
 void Entity::SetRendererUsage(RendererUsage rendererUsage) {
 	this->rendererUsage = rendererUsage;
-}
-
-Material* Entity::GetMaterial() {
-	return material;
-}
-
-void Entity::SetMaterial(Material* material) {
-	delete this->material;
-	this->material = material;
 }
 
 std::string Entity::GetName() const {

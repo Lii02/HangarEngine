@@ -3,7 +3,6 @@
 #include "IComponent.h"
 #include "Identifier.h"
 #include "Transform.h"
-#include "Material.h"
 
 enum class RendererUsage {
 	NONE,
@@ -22,7 +21,6 @@ private:
 	std::vector<IComponent*> components;
 	ComponentMask componentMask;
 	RendererUsage rendererUsage;
-	Material* material;
 public:
 	Entity(std::string name = "Entity", Identifier identifier = Identifier::New());
 	~Entity();
@@ -53,8 +51,6 @@ public:
 	}
 	RendererUsage GetRendererUsage() const;
 	void SetRendererUsage(RendererUsage rendererUsage);
-	Material* GetMaterial();
-	void SetMaterial(Material* newMaterial);
 private:
 	bool GetComponentMask(size_t maskType) const;
 };

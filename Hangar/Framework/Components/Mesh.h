@@ -2,12 +2,14 @@
 #define MESH_H
 #include "../IComponent.h"
 #include "../../Math/Vectors.h"
+#include "../Material.h"
 
 class Mesh : public IComponent {
 private:
 	uint64_t vbo, ibo;
 	MeshData3D* meshData;
 	uint32_t indexCount, firstIndex;
+	Material* material;
 public:
 	Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex = 0);
 	~Mesh();
@@ -15,6 +17,8 @@ public:
 	virtual void Init() override;
 	virtual void Render() override;
 	virtual void Update() override;
+	Material* GetMaterial();
+	void SetMaterial(Material* newMaterial);
 };
 
 #endif

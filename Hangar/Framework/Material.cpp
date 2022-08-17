@@ -5,14 +5,21 @@
 
 Material::Material(std::string name) {
 	this->name = name;
-	this->cbuffer = RendererCommands::CreateDataBuffer(MATERIAL_CBUFFER_SIZE, 1, DataBufferBinding::CONSTANT_BUFFER);
+	Initialize();
 	SetDiffuse(MaterialAttribute<Color>(Color(1, 1, 1), MaterialAttributeType::COLOR_VALUE));
 	SetSpecular(MaterialAttribute<Color>(Color(0, 0, 0), MaterialAttributeType::COLOR_VALUE));
 	SetSpecularExponent(1.0f);
-	Update();
 }
 
 Material::~Material() {
+	DeInitialize();
+}
+
+void Material::Initialize() {
+	this->cbuffer = RendererCommands::CreateDataBuffer(MATERIAL_CBUFFER_SIZE, 1, DataBufferBinding::CONSTANT_BUFFER);
+}
+
+void Material::DeInitialize() {
 	RendererCommands::RemoveDataBuffer(cbuffer);
 }
 
