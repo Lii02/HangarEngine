@@ -8,11 +8,9 @@ Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex)
 	this->meshData = meshData;
 	this->indexCount = indexCount;
 	this->firstIndex = firstIndex;
-	this->material = new Material();
 }
 
 Mesh::~Mesh() {
-	delete material;
 	RendererCommands::RemoveDataBuffer(vbo);
 	RendererCommands::RemoveDataBuffer(ibo);
 }
@@ -22,7 +20,6 @@ void Mesh::Init() {
 	this->ibo = RendererCommands::CreateDataBuffer(sizeof(int), meshData->indices.size(), DataBufferBinding::INDEX_BUFFER);
 	RendererCommands::UpdateDataBuffer(vbo, meshData->vertices.data());
 	RendererCommands::UpdateDataBuffer(ibo, meshData->indices.data());
-	this->meshData = nullptr;
 }
 
 void Mesh::Render() {
@@ -41,6 +38,5 @@ Material* Mesh::GetMaterial() {
 }
 
 void Mesh::SetMaterial(Material* newMaterial) {
-	delete material;
 	this->material = newMaterial;
 }

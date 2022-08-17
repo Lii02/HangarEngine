@@ -80,6 +80,10 @@ void Main(ArgumentPacket args) {
 			window.Poll();
 			profiler.EndFunction();
 		}
+
+		for (auto& obj : cube) {
+			delete obj.second;
+		}
 	}
 
 	ThreadPool::DeInitialize();
