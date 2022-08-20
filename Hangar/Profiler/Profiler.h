@@ -7,7 +7,9 @@ private:
 	std::stack<ProfilerElement> elements;
 	std::map<ProfilerElementCategory, double> totals;
 public:
-	static Profiler& Get();
+	static Profiler*& Get();
+	static void Initialize();
+	static void DeInitialize();
 
 	Profiler();
 	~Profiler();

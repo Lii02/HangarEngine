@@ -13,7 +13,7 @@ public:
 	~Texture2D();
 
 	void Initialize(void* data);
-	void DeInitialize();
+	void Unload();
 	void Bind();
 };
 

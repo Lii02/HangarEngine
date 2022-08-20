@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "Camera.h"
-#include "../../Renderer/RendererCommands.h"
+#include <Renderer/RendererCommands.h>
 
 Camera::Camera(float fov, float nearZ, float farZ, ProjectionType projectionType)
 	: IComponent(ComponentType::CAMERA) {
@@ -10,7 +10,7 @@ Camera::Camera(float fov, float nearZ, float farZ, ProjectionType projectionType
 	this->projectionType = projectionType;
 }
 
-void Camera::Init() {
+void Camera::Initialize() {
 }
 
 void Camera::Render() {

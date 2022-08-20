@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "Keyboard.h"
-#include "../Debug/Assert.h"
+#include <Debug/Assert.h>
 
 #ifdef HANGAR_WINDOWS
 class Keyboard::Impl {
@@ -32,11 +32,19 @@ public:
 #endif
 
 namespace {
-	Keyboard g_Keyboard;
+	Keyboard* g_Keyboard;
 }
 
-Keyboard& Keyboard::Get() {
+Keyboard*& Keyboard::Get() {
 	return g_Keyboard;
+}
+
+void Keyboard::Initialize() {
+	g_Keyboard = new Keyboard();
+}
+
+void Keyboard::DeInitialize() {
+	delete g_Keyboard;
 }
 
 Keyboard::Keyboard() {

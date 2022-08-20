@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "Mesh.h"
-#include "../../Renderer/IRenderAPI.h"
-#include "../../Renderer/RendererCommands.h"
+#include <Renderer/IRenderAPI.h>
+#include <Renderer/RendererCommands.h>
 
 Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex)
 	: IComponent(ComponentType::MESH) {
@@ -11,11 +11,10 @@ Mesh::Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex)
 }
 
 Mesh::~Mesh() {
-	RendererCommands::RemoveDataBuffer(vbo);
-	RendererCommands::RemoveDataBuffer(ibo);
+	Unload();
 }
 
-void Mesh::Init() {
+void Mesh::Initialize() {
 	this->vbo = RendererCommands::CreateDataBuffer(sizeof(StandardVertex3D), meshData->vertices.size(), DataBufferBinding::VERTEX_BUFFER);
 	this->ibo = RendererCommands::CreateDataBuffer(sizeof(int), meshData->indices.size(), DataBufferBinding::INDEX_BUFFER);
 	RendererCommands::UpdateDataBuffer(vbo, meshData->vertices.data());
@@ -31,6 +30,11 @@ void Mesh::Render() {
 }
 
 void Mesh::Update() {
+}
+
+void Mesh::Unload() {
+	RendererCommands::RemoveDataBuffer(vbo);
+	RendererCommands::RemoveDataBuffer(ibo);
 }
 
 Material* Mesh::GetMaterial() {

@@ -1,8 +1,8 @@
 #include "Precompiled.h"
 #include "File.h"
-#include "../Memory/MemoryManager.h"
-#include "../Debug/Assert.h"
-#include "../Debug/Logger.h"
+#include <Memory/MemoryManager.h>
+#include <Debug/Assert.h>
+#include <Debug/Logger.h>
 
 File::File(std::string path, FileMode mode, std::string filename) {
 	this->path = path;

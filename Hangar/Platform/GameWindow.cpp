@@ -10,8 +10,8 @@ LRESULT MessageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if (!window)
 		return defaultProc;
 
-	Mouse::Get().Process({ hwnd, msg, wParam, lParam });
-	Keyboard::Get().Process({ hwnd, msg, wParam, lParam });
+	Mouse::Get()->Process({ hwnd, msg, wParam, lParam });
+	Keyboard::Get()->Process({ hwnd, msg, wParam, lParam });
 
 	switch (msg) {
 	case WM_SIZE:

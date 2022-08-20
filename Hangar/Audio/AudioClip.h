@@ -10,6 +10,8 @@ public:
 	~AudioClip();
 	AudioClip(const AudioClip&) = delete;
 
+	void Initialize();
+	void Unload();
 	void SetData(void* data, uint32_t format, uint32_t size, uint32_t frequency);
 	unsigned int GetID() const;
 };

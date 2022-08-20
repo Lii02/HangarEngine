@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "Identifier.h"
-#include "../Helpers/TimeHelper.h"
+#include <Helpers/TimeHelper.h>
 
 Identifier::Identifier() {
 	this->str = new char[HANGAR_IDENTIFIER_LENGTH + 1];

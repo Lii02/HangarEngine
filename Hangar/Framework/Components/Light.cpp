@@ -8,7 +8,7 @@ Light::Light(Vector3 color, float intensity, LightType type)
 	this->type = type;
 }
 
-void Light::Init() {
+void Light::Initialize() {
 }
 
 void Light::Render() {

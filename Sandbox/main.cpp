@@ -24,15 +24,19 @@
 void Main(ArgumentPacket args) {
 	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
 	window.Open();
+	Logger::Initialize();
 	FileSystem::Init();
 	AudioEngine::Initialize();
 	ThreadPool::Initialize();
+	Profiler::Initialize();
+	Mouse::Initialize();
+	Keyboard::Initialize();
 	FileSystem*& fs = FileSystem::Get();
-	RendererCommands::Init(RendererType::DIRECTX11, &window);
+	RendererCommands::Inititialize(RendererType::DIRECTX11, &window);
 	Stopwatch delta, totalTime;
-	Profiler& profiler = Profiler::Get();
-	Mouse& mouse = Mouse::Get();
-	Keyboard& keyboard = Keyboard::Get();
+	Profiler*& profiler = Profiler::Get();
+	Mouse*& mouse = Mouse::Get();
+	Keyboard*& keyboard = Keyboard::Get();
 
 	Logger::Message("Using device: " + RendererCommands::GetDeviceName());
 
@@ -58,8 +62,8 @@ void Main(ArgumentPacket args) {
 		totalTime.Begin();
 		const float speed = 10;
 		while (window.IsRunning()) {
-			profiler.ClearTotals();
-			profiler.BeginProfile("Main", ProfilerElementCategory::RENDER);
+			profiler->ClearTotals();
+			profiler->BeginProfile("Main", ProfilerElementCategory::RENDER);
 			delta.Begin();
 
 			RendererCommands::BeginFrame();
@@ -67,19 +71,19 @@ void Main(ArgumentPacket args) {
 			RendererCommands::EndFrame();
 
 			scene.Update();
-			if (keyboard.GetKey(KeyCode::KEY_W)) {
+			if (keyboard->GetKey(KeyCode::KEY_W)) {
 				camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
-			} if (keyboard.GetKey(KeyCode::KEY_S)) {
+			} if (keyboard->GetKey(KeyCode::KEY_S)) {
 				camera->GetTransform().position.z -= speed * delta.GetDeltaSeconds();
-			} if (keyboard.GetKey(KeyCode::KEY_A)) {
+			} if (keyboard->GetKey(KeyCode::KEY_A)) {
 				camera->GetTransform().position.x -= speed * delta.GetDeltaSeconds();
-			} if (keyboard.GetKey(KeyCode::KEY_D)) {
+			} if (keyboard->GetKey(KeyCode::KEY_D)) {
 				camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
 			}
 
 			delta.End();
 			window.Poll();
-			profiler.EndFunction();
+			profiler->EndFunction();
 		}
 
 		for (auto& obj : cube) {
@@ -87,8 +91,12 @@ void Main(ArgumentPacket args) {
 		}
 	}
 
+	Keyboard::DeInitialize();
+	Mouse::DeInitialize();
+	Profiler::DeInitialize();
 	ThreadPool::DeInitialize();
 	AudioEngine::DeInitialize();
-	FileSystem::DeInitialize();
 	RendererCommands::DeInitialize();
+	FileSystem::DeInitialize();
+	Logger::DeInitialize();
 }

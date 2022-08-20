@@ -112,7 +112,9 @@ private:
 	class Impl;
 	Impl* keyboardImpl;
 public:
-	static Keyboard& Get();
+	static Keyboard*& Get();
+	static void Initialize();
+	static void DeInitialize();
 
 	Keyboard();
 	~Keyboard();

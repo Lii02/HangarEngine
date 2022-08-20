@@ -17,7 +17,7 @@ private:
 public:
 	Light(Vector3 color, float intensity, LightType type);
 
-	virtual void Init() override;
+	virtual void Initialize() override;
 	virtual void Render() override;
 	virtual void Update() override;
 	Vector3 GetColor() const;

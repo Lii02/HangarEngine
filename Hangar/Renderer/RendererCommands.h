@@ -10,10 +10,8 @@ class GameWindow;
 
 class RendererCommands {
 public:
-	static IRenderAPI* api;
-
 	static RendererType GetAPI();
-	static void Init(RendererType rendererType, GameWindow* windowPtr);
+	static void Inititialize(RendererType rendererType, GameWindow* windowPtr);
 	static void DeInitialize();
 	static void BeginFrame();
 	static void EndFrame();

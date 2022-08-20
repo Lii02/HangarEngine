@@ -12,14 +12,14 @@ Material::Material(std::string name) {
 }
 
 Material::~Material() {
-	DeInitialize();
+	Unload();
 }
 
 void Material::Initialize() {
 	this->cbuffer = RendererCommands::CreateDataBuffer(MATERIAL_CBUFFER_SIZE, 1, DataBufferBinding::CONSTANT_BUFFER);
 }
 
-void Material::DeInitialize() {
+void Material::Unload() {
 	RendererCommands::RemoveDataBuffer(cbuffer);
 }
 

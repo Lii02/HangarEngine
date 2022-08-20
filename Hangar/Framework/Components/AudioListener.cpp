@@ -12,7 +12,7 @@ AudioListener::AudioListener(float gain, Vector3 velocity)
 AudioListener::~AudioListener() {
 }
 
-void AudioListener::Init() {
+void AudioListener::Initialize() {
 }
 
 void AudioListener::Render() {

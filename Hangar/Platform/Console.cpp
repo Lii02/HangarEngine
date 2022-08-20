@@ -76,11 +76,19 @@ private:
 #endif
 
 namespace {
-	Console g_Console;
+	Console* g_Console;
 }
 
-Console& Console::Get() {
+Console*& Console::Get() {
 	return g_Console;
+}
+
+void Console::Initialize() {
+	g_Console = new Console();
+}
+
+void Console::DeInitialize() {
+	delete g_Console;
 }
 
 Console::Console() {

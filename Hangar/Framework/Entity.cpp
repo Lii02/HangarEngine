@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "Entity.h"
-#include "../Debug/Logger.h"
+#include <Debug/Logger.h>
 
 Entity::Entity(std::string name, Identifier identifier) {
 	this->name = name;
@@ -20,9 +20,8 @@ void Entity::AddComponent(IComponent* component) {
 		return;
 	}
 	component->entity = this;
-	component->enabled = true;
 	componentMask.set(component->type, true);
-	component->Init();
+	component->Initialize();
 	components.push_back(component);
 }
 

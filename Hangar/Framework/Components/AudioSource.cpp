@@ -34,7 +34,7 @@ bool AudioSource::IsPlaying() const {
 	return AudioEngine::Get()->IsPlaying(sourceID);
 }
 
-void AudioSource::Init() {
+void AudioSource::Initialize() {
 	this->sourceID = AudioEngine::Get()->CreateSource();
 }
 

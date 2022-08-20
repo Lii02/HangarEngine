@@ -2,11 +2,19 @@
 #include "Profiler.h"
 
 namespace {
-	Profiler g_Profiler;
+	Profiler* g_Profiler;
 }
 
-Profiler& Profiler::Get() {
+Profiler*& Profiler::Get() {
 	return g_Profiler;
+}
+
+void Profiler::Initialize() {
+	g_Profiler = new Profiler();
+}
+
+void Profiler::DeInitialize() {
+	delete g_Profiler;
 }
 
 Profiler::Profiler() {

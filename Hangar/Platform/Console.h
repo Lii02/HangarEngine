@@ -14,7 +14,9 @@ private:
 	class Impl;
 	Impl* consoleImpl;
 public:
-	static Console& Get();
+	static Console*& Get();
+	static void Initialize();
+	static void DeInitialize();
 
 	Console();
 	~Console();

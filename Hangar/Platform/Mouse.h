@@ -6,7 +6,9 @@ private:
 	class Impl;
 	Impl* mouseImpl;
 public:
-	static Mouse& Get();
+	static Mouse*& Get();
+	static void Initialize();
+	static void DeInitialize();
 
 	Mouse();
 	~Mouse();

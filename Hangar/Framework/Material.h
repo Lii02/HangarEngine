@@ -56,7 +56,7 @@ public:
 	Material(const Material&) = delete;
 
 	void Initialize();
-	void DeInitialize();
+	void Unload();
 	MaterialAttribute<Color> GetDiffuse();
 	void SetDiffuse(MaterialAttribute<Color> diffuse);
 	MaterialAttribute<Color> GetSpecular();

@@ -1,140 +1,139 @@
 #include "Precompiled.h"
 #include "RendererCommands.h"
 #include "Direct3D11API.h"
-#include "../Platform/GameWindow.h"
-
-IRenderAPI* RendererCommands::api = nullptr;
+#include <Platform/GameWindow.h>
 
 namespace {
 	RendererType g_RendererType;
+	IRenderAPI* g_RendererAPI = nullptr;
 }
 
 RendererType RendererCommands::GetAPI() {
 	return g_RendererType;
 }
 
-void RendererCommands::Init(RendererType rendererType, GameWindow* windowPtr) {
+void RendererCommands::Inititialize(RendererType rendererType, GameWindow* windowPtr) {
 	g_RendererType = rendererType;
 	switch (rendererType)
 	{
 	case RendererType::DIRECTX11:
-		api = new Direct3D11API(windowPtr); 
+		g_RendererAPI = new Direct3D11API(windowPtr);
 		break;
 	}
 }
 
 void RendererCommands::DeInitialize() {
-	delete api;
+	delete g_RendererAPI;
 }
 
 void RendererCommands::BeginFrame() {
-	api->BeginFrame();
+	g_RendererAPI->BeginFrame();
 }
 
 void RendererCommands::EndFrame() {
-	api->EndFrame();
+	g_RendererAPI->EndFrame();
 }
 
 uint64_t RendererCommands::CreateDataBuffer(size_t dataSize, size_t dataCount, DataBufferBinding binding) {
-	return api->CreateDataBuffer(dataSize, dataCount, binding);
+	return g_RendererAPI->CreateDataBuffer(dataSize, dataCount, binding);
 }
 
 void RendererCommands::UpdateDataBuffer(uint64_t index, void* data) {
-	api->UpdateDataBuffer(index, data);
+	g_RendererAPI->UpdateDataBuffer(index, data);
 }
 
 void RendererCommands::RemoveDataBuffer(uint64_t index) {
-	api->RemoveBuffer(index);
+	g_RendererAPI->RemoveBuffer(index);
 }
 
 void RendererCommands::CleanDataBuffers() {
-	api->CleanDataBuffers();
+	g_RendererAPI->CleanDataBuffers();
 }
 
 void RendererCommands::BindVertexBuffer(uint64_t index) {
-	api->BindVertexBuffer(index);
+	g_RendererAPI->BindVertexBuffer(index);
 }
 
 void RendererCommands::BindIndexBuffer(uint64_t index) {
-	api->BindIndexBuffer(index);
+	g_RendererAPI->BindIndexBuffer(index);
 }
 
 void RendererCommands::BindConstantBuffer(uint64_t index, uint32_t slot) {
-	api->BindConstantBuffer(index, slot);
+	g_RendererAPI->BindConstantBuffer(index, slot);
 }
 
 void RendererCommands::DrawIndexed(uint32_t count, uint32_t first) {
-	api->DrawIndexed(count, first);
+	g_RendererAPI->DrawIndexed(count, first);
 }
 
 void RendererCommands::ClearStats() {
-	api->ClearStats();
+	g_RendererAPI->ClearStats();
 }
 
 bool RendererCommands::IsVsyncEnabled() {
-	return api->IsVsyncEnabled();
+	return g_RendererAPI->IsVsyncEnabled();
 }
 
 void RendererCommands::SetClearColor(float clearColor[4]) {
-	api->SetClearColor(clearColor);
+	g_RendererAPI->SetClearColor(clearColor);
 }
 
 void RendererCommands::SetDepth(float depth) {
-	api->SetDepth(depth);
+	g_RendererAPI->SetDepth(depth);
 }
 
 void RendererCommands::SetVsync(bool vsync) {
-	api->SetVsync(vsync);
+	g_RendererAPI->SetVsync(vsync);
 }
 
 void RendererCommands::CleanShaders() {
-	api->CleanShaders();
+	g_RendererAPI->CleanShaders();
 }
 
 void RendererCommands::BindRenderShader(uint64_t index) {
-	api->BindRenderShader(index);
+	g_RendererAPI->BindRenderShader(index);
 }
 
 void RendererCommands::RemoveRenderShader(uint64_t index) {
-	api->RemoveRenderShader(index);
+	g_RendererAPI->RemoveRenderShader(index);
 }
 
 uint64_t RendererCommands::CreateRenderShader(const std::string_view& shaderSource, std::string vertexEntry, std::string pixelEntry, const std::vector<InputElement>& inputs) {
-	return api->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
+	return g_RendererAPI->CreateRenderShader(shaderSource, vertexEntry, pixelEntry, inputs);
 }
 
 void RendererCommands::SetTopology(RenderTopology topology) {
-	api->SetTopology(topology);
+	g_RendererAPI->SetTopology(topology);
 }
 
 float RendererCommands::GetAspectRatio() {
-	return api->GetAspectRatio();
+	return g_RendererAPI->GetAspectRatio();
 }
 
 std::string RendererCommands::GetDeviceName() {
-	return api->GetDeviceName();
+	return g_RendererAPI->GetDeviceName();
 }
 
 uint64_t RendererCommands::CreateTexture2D(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) {
-	return api->CreateTexture2D(data, format, width, height, slot);
+	return g_RendererAPI->CreateTexture2D(data, format, width, height, slot);
 }
 
 void RendererCommands::BindTexture2D(uint64_t index) {
-	api->BindTexture2D(index);
+	g_RendererAPI->BindTexture2D(index);
 }
 
 void RendererCommands::RemoveTexture2D(uint64_t index) {
-	api->RemoveTexture2D(index);
+	g_RendererAPI->RemoveTexture2D(index);
 }
 
 void RendererCommands::CleanTextures() {
-	api->CleanTextures();
+	g_RendererAPI->CleanTextures();
 }
 
 uint64_t RendererCommands::GetObjectDrawCount() {
-	return api->GetObjectDrawCount();
+	return g_RendererAPI->GetObjectDrawCount();
 }
 
 uint64_t RendererCommands::GetVertexDrawCount() {
-	return api->GetVertexDrawCount();
+	return g_RendererAPI->GetVertexDrawCount();
 }

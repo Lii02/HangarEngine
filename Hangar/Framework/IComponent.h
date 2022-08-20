@@ -19,11 +19,11 @@ private:
 	bool enabled;
 	ComponentType type;
 public:
-	IComponent(ComponentType type) : type(type) { }
+	IComponent(ComponentType type) : entity(nullptr), enabled(true), type(type) { }
 	virtual ~IComponent() { }
 	IComponent(const IComponent&) = delete;
 
-	virtual void Init() = 0;
+	virtual void Initialize() = 0;
 	virtual void Render() = 0;
 	virtual void Update() = 0;
 	Entity* GetEntity() { return entity; }

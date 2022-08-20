@@ -3,10 +3,18 @@
 #include <Audio/AudioEngine.h>
 
 AudioClip::AudioClip() {
-	this->bufferID = AudioEngine::Get()->CreateBuffer();
+	Initialize();
 }
 
 AudioClip::~AudioClip() {
+	Unload();
+}
+
+void AudioClip::Initialize() {
+	this->bufferID = AudioEngine::Get()->CreateBuffer();
+}
+
+void AudioClip::Unload() {
 	AudioEngine::Get()->RemoveBuffer(bufferID);
 }
 

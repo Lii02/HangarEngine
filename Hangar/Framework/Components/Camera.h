@@ -17,7 +17,7 @@ private:
 public:
 	Camera(float fov, float nearZ, float farZ, ProjectionType projectionType = PERSPECTIVE);
 
-	virtual void Init() override;
+	virtual void Initialize() override;
 	virtual void Render() override;
 	virtual void Update() override;
 

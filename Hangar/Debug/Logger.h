@@ -2,6 +2,8 @@
 #define LOGGER_H
 
 namespace Logger {
+	void Initialize();
+	void DeInitialize();
 	void Message(const std::string& msg);
 	void Error(const std::string& msg);
 	void Warning(const std::string& msg);

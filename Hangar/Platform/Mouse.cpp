@@ -65,11 +65,19 @@ public:
 #endif
 
 namespace {
-	Mouse g_Mouse;
+	Mouse* g_Mouse;
 }
 
-Mouse& Mouse::Get() {
+Mouse*& Mouse::Get() {
 	return g_Mouse;
+}
+
+void Mouse::Initialize() {
+	g_Mouse = new Mouse();
+}
+
+void Mouse::DeInitialize() {
+	delete g_Mouse;
 }
 
 Mouse::Mouse() {

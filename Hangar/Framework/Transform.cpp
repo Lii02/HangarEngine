@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "Transform.h"
-#include "../Math/MathHelper.h"
+#include <Math/MathHelper.h>
 
 Transform::Transform(Vector3 position, Vector3 scale, Vector3 rotation) {
 	this->position = position;

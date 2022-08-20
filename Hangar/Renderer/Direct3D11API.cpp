@@ -1,8 +1,9 @@
 #include "Precompiled.h"
 #include "Direct3D11API.h"
-#include "../Platform/GameWindow.h"
-#include "../Debug/Logger.h"
-#include "../Memory/MemoryManager.h"
+#include <Platform/GameWindow.h>
+#include <Debug/Logger.h>
+#include <Debug/Assert.h>
+#include <Memory/MemoryManager.h>
 #include <d3dcompiler.h>
 
 extern "C" {
@@ -282,6 +283,7 @@ void Direct3D11API::BindTexture2D(uint64_t index) {
 }
 
 void Direct3D11API::RemoveTexture2D(uint64_t index) {
+	HANGAR_ASSERT(index >= 0 && index < textures.size(), "Texture2D index is out of range");
 	auto& texture = textures[index];
 	delete texture;
 	texture = nullptr;
@@ -310,6 +312,7 @@ float Direct3D11API::GetAspectRatio() {
 }
 
 void Direct3D11API::RemoveRenderShader(uint64_t index) {
+	HANGAR_ASSERT(index >= 0 && index < renderShaders.size(), "Shader index is out of range");
 	auto& shader = renderShaders[index];
 	delete shader;
 	shader = nullptr;
@@ -330,6 +333,7 @@ void Direct3D11API::SetTopology(RenderTopology topology) {
 }
 
 void Direct3D11API::RemoveBuffer(uint64_t index) {
+	HANGAR_ASSERT(index >= 0 && index < dataBuffers.size(), "Data buffer index is out of range");
 	auto& buffer = dataBuffers[index];
 	delete buffer;
 	buffer = nullptr;
