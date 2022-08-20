@@ -1,9 +1,9 @@
 #include "Precompiled.h"
-#include "MATLoader.h"
+#include "MTLLoader.h"
 #include <IO/File.h>
 #include <Debug/Logger.h>
 
-std::unordered_map<std::string, Material*> MATLoader::Load(File* file) {
+std::unordered_map<std::string, Material*> MTLLoader::Load(File* file) {
 	std::unordered_map<std::string, Material*> vec;
 	if (!file->ReOpen()) {
 		Logger::Error("Failed to load material file: " + file->GetPath());

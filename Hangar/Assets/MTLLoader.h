@@ -4,7 +4,7 @@
 
 class File;
 
-namespace MATLoader {
+namespace MTLLoader {
 	std::unordered_map<std::string, Material*> Load(File* file);
 }
 

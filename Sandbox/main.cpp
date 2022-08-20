@@ -48,11 +48,12 @@ void Main(ArgumentPacket args) {
 		}
 
 		Entity* camera = new Entity;
-		camera->AddComponent(new Camera(90.0f, -0.1f, 1000.0f));
+		camera->AddComponent(new Camera(90.0f, 0.01f, std::numeric_limits<float>().max()));
 		camera->AddComponent(new AudioListener(1.0f, Vector3()));
 		scene.AddEntity(camera);
 		scene.SetMainCamera(camera);
 		camera->GetTransform().position.z = -5;
+		camera->GetTransform().position.y = 2;
 
 		totalTime.Begin();
 		const float speed = 10;

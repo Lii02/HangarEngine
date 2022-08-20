@@ -4,7 +4,7 @@
 #include <IO/FileSystem.h>
 #include <Math/MeshUtils.h>
 #include <Debug/Logger.h>
-#include "MATLoader.h"
+#include "MTLLoader.h"
 
 std::vector<ObjMeshData> OBJLoader::Load(File* file) {
 	std::vector<ObjMeshData> vec;
@@ -68,7 +68,7 @@ std::vector<ObjMeshData> OBJLoader::Load(File* file) {
 		} else if (line.contains("mtllib")) {
 			char name[16];
 			sscanf(line.c_str(), "mtllib %s", name);
-			materials = MATLoader::Load(FileSystem::Get()->ImmSearchFile(name));
+			materials = MTLLoader::Load(FileSystem::Get()->ImmSearchFile(name));
 		} else if (line.contains("usemtl")) {
 			char name[16];
 			sscanf(line.c_str(), "usemtl %s", name);
