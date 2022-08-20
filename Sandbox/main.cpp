@@ -22,10 +22,10 @@
 #include <Hangar/Framework/Material.h>
 
 void Main(ArgumentPacket args) {
-	GameWindow window = GameWindow("Hangar Engine", 1280, 720, false);
-	window.Open();
 	Logger::Initialize();
 	FileSystem::Init();
+	GameWindow window = GameWindow("Hangar Engine", 1600, 900, false);
+	window.Open();
 	AudioEngine::Initialize();
 	ThreadPool::Initialize();
 	Profiler::Initialize();
