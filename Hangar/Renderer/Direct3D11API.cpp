@@ -194,8 +194,7 @@ void Direct3D11API::UpdateDataBuffer(uint64_t index, void* data) {
 
 void Direct3D11API::CleanDataBuffers() {
 	for (auto& vbo : dataBuffers) {
-		if(vbo)
-			delete vbo;
+		delete vbo;
 	}
 	dataBuffers.clear();
 }
