@@ -2,7 +2,7 @@
 #include "AudioSource.h"
 #include <Audio/AudioEngine.h>
 #include <Framework/Entity.h>
-#include <Audio/AudioClip.h>
+#include <Assets/AudioClip.h>
 
 AudioSource::AudioSource(float pitch, float gain, bool loop, Vector3 velocity)
 	: IComponent(ComponentType::AUDIOSOURCE) {

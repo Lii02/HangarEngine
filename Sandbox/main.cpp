@@ -20,55 +20,44 @@ void Main(ArgumentPacket args) {
 
 	Logger::Message("Using device: " + RendererCommands::GetDeviceName());
 
-	{
-		Scene scene;
-		auto cube = OBJLoader::Load(fs->ImmSearchFile("test.obj"));
+	Scene* scene = new Scene();
 
-		for (size_t i = 0; i < cube.size(); i++) {
-			Entity* entity = new Entity;
-			scene.AddEntity(entity);
+	Entity* camera = new Entity;
+	camera->AddComponent(new Camera(90.0f, 0.01f, FLT_MAX));
+	camera->AddComponent(new AudioListener(1.0f, Vector3()));
+	scene->AddEntity(camera);
+	scene->SetMainCamera(camera);
+	camera->GetTransform().position.z = -5;
+	camera->GetTransform().position.y = 2;
+
+	totalTime.Begin();
+	const float speed = 10;
+	while (window.IsRunning()) {
+		profiler->ClearTotals();
+		profiler->BeginProfile("Main", ProfilerElementCategory::RENDER);
+		delta.Begin();
+
+		RendererCommands::BeginFrame();
+		scene->Render();
+		RendererCommands::EndFrame();
+
+		scene->Update();
+		if (keyboard->GetKey(KeyCode::KEY_W)) {
+			camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
+		} if (keyboard->GetKey(KeyCode::KEY_S)) {
+			camera->GetTransform().position.z -= speed * delta.GetDeltaSeconds();
+		} if (keyboard->GetKey(KeyCode::KEY_A)) {
+			camera->GetTransform().position.x -= speed * delta.GetDeltaSeconds();
+		} if (keyboard->GetKey(KeyCode::KEY_D)) {
+			camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
 		}
 
-		Entity* camera = new Entity;
-		camera->AddComponent(new Camera(90.0f, 0.01f, std::numeric_limits<float>().max()));
-		camera->AddComponent(new AudioListener(1.0f, Vector3()));
-		scene.AddEntity(camera);
-		scene.SetMainCamera(camera);
-		camera->GetTransform().position.z = -5;
-		camera->GetTransform().position.y = 2;
-
-		totalTime.Begin();
-		const float speed = 10;
-		while (window.IsRunning()) {
-			profiler->ClearTotals();
-			profiler->BeginProfile("Main", ProfilerElementCategory::RENDER);
-			delta.Begin();
-
-			RendererCommands::BeginFrame();
-			scene.Render();
-			RendererCommands::EndFrame();
-
-			scene.Update();
-			if (keyboard->GetKey(KeyCode::KEY_W)) {
-				camera->GetTransform().position.z += speed * delta.GetDeltaSeconds();
-			} if (keyboard->GetKey(KeyCode::KEY_S)) {
-				camera->GetTransform().position.z -= speed * delta.GetDeltaSeconds();
-			} if (keyboard->GetKey(KeyCode::KEY_A)) {
-				camera->GetTransform().position.x -= speed * delta.GetDeltaSeconds();
-			} if (keyboard->GetKey(KeyCode::KEY_D)) {
-				camera->GetTransform().position.x += speed * delta.GetDeltaSeconds();
-			}
-
-			delta.End();
-			window.Poll();
-			profiler->EndFunction();
-		}
-
-		for (auto& obj : cube) {
-			delete obj.second;
-		}
+		delta.End();
+		window.Poll();
+		profiler->EndFunction();
 	}
 
+	delete scene;
 	RendererCommands::DeInitialize();
 	AssetManager::DeInitialize();
 	Keyboard::DeInitialize();

@@ -54,6 +54,5 @@ struct MessagePacket {
 #include <cstdint>
 
 #include "Helpers/RandomGen.hpp"
-#include "Helpers/ByteHelper.h"
 
 #endif
