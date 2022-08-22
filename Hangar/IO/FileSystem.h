@@ -8,7 +8,7 @@ private:
 	std::list<File*> files;
 	std::vector<FileSystem*> subgroups;
 public:
-	static void Init();
+	static void Initialize();
 	static void DeInitialize();
 	static FileSystem*& Get();
 

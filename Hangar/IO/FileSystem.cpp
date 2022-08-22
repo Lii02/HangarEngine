@@ -7,7 +7,7 @@ namespace {
 	FileSystem* g_FileSystem;
 }
 
-void FileSystem::Init() {
+void FileSystem::Initialize() {
 	g_FileSystem = new FileSystem("./");
 }
 

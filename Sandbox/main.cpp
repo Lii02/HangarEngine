@@ -23,7 +23,7 @@
 
 void Main(ArgumentPacket args) {
 	Logger::Initialize();
-	FileSystem::Init();
+	FileSystem::Initialize();
 	GameWindow window = GameWindow("Hangar Engine", 1600, 900, false);
 	window.Open();
 	AudioEngine::Initialize();
