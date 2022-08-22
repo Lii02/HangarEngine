@@ -9,7 +9,7 @@
 #include <Hangar/IO/FileSystem.h>
 #include <Hangar/Framework/Stopwatch.h>
 #include <Hangar/Profiler/Profiler.h>
-#include <Hangar/Framework/Components/Mesh.h>
+#include <Hangar/Framework/Components/MeshRenderer.h>
 #include <Hangar/Framework/Components/Camera.h>
 #include <Hangar/Framework/Scene.h>
 #include <Hangar/Assets/OBJLoader.h>
@@ -48,8 +48,8 @@ void Main(ArgumentPacket args) {
 
 		for (size_t i = 0; i < cube.size(); i++) {
 			Entity* entity = new Entity;
-			entity->AddComponent(new Mesh(&cube[i].first, cube[i].first.indices.size()));
-			entity->GetComponent<Mesh>()->SetMaterial(cube[i].second);
+			entity->AddComponent(new MeshRenderer(&cube[i].first, cube[i].first.indices.size()));
+			entity->GetComponent<MeshRenderer>()->SetMaterial(cube[i].second);
 			scene.AddEntity(entity);
 		}
 

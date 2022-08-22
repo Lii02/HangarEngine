@@ -1,18 +1,18 @@
-#ifndef MESH_H
-#define MESH_H
+#ifndef MESHRENDERER_H
+#define MESHRENDERER_H
 #include "../IComponent.h"
 #include "../../Math/Vectors.h"
 #include "../Material.h"
 
-class Mesh : public IComponent {
+class MeshRenderer : public IComponent {
 private:
 	uint64_t vbo, ibo;
 	MeshData3D* meshData;
 	uint32_t indexCount, firstIndex;
 	Material* material;
 public:
-	Mesh(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex = 0);
-	~Mesh();
+	MeshRenderer(MeshData3D* meshData, uint32_t indexCount, uint32_t firstIndex = 0);
+	~MeshRenderer();
 	
 	virtual void Initialize() override;
 	virtual void Render() override;

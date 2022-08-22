@@ -5,7 +5,7 @@ class Entity;
 
 enum ComponentType : int32_t {
 	UNKNOWN = -1,
-	MESH = HANGAR_BIT(0),
+	MESHRENDERER = HANGAR_BIT(0),
 	CAMERA = HANGAR_BIT(1),
 	AUDIOLISTENER = HANGAR_BIT(2),
 	AUDIOSOURCE = HANGAR_BIT(2),
