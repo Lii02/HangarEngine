@@ -1,6 +1,6 @@
 #ifndef MATLOADER_H
 #define MATLOADER_H
-#include "../Framework/Material.h"
+#include "Material.h"
 
 class File;
 

@@ -4,6 +4,7 @@
 class AudioClip;
 class Material;
 class Texture2D;
+class Mesh;
 
 class AssetManager {
 private:
@@ -17,6 +18,17 @@ public:
 
 	AssetManager();
 	~AssetManager();
+
+	void AddTexture(std::string name, Texture2D* texture);
+	void AddSound(std::string name, AudioClip* sound);
+	void AddMaterials(std::string name, Material* material);
+	Texture2D* GetTexture(std::string name);
+	AudioClip* GetSound(std::string name);
+	Material* GetMaterial(std::string name);
+	void UnloadAll();
+	void UnloadTextures();
+	void UnloadSounds();
+	void UnloadMaterials();
 };
 
 #endif

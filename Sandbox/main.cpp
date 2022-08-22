@@ -1,26 +1,4 @@
-#include <Hangar/Precompiled.h>
-#include <Hangar/Platform/EntryPoint.h>
-#include <Hangar/Platform/GameWindow.h>
-#include <Hangar/Platform/Mouse.h>
-#include <Hangar/Platform/Keyboard.h>
-#include <Hangar/Debug/Logger.h>
-#include <Hangar/Debug/Assert.h>
-#include <Hangar/Renderer/RendererCommands.h>
-#include <Hangar/IO/FileSystem.h>
-#include <Hangar/Framework/Stopwatch.h>
-#include <Hangar/Profiler/Profiler.h>
-#include <Hangar/Framework/Components/MeshRenderer.h>
-#include <Hangar/Framework/Components/Camera.h>
-#include <Hangar/Framework/Scene.h>
-#include <Hangar/Assets/OBJLoader.h>
-#include <Hangar/Audio/AudioEngine.h>
-#include <Hangar/Framework/Components/AudioListener.h>
-#include <Hangar/Framework/Components/AudioSource.h>
-#include <Hangar/Audio/AudioClip.h>
-#include <Hangar/Assets/AssetManager.h>
-#include <Hangar/Assets/WAVLoader.h>
-#include <Hangar/Threading/ThreadPool.h>
-#include <Hangar/Framework/Material.h>
+#include <Hangar/HangarEngine.h>
 
 void Main(ArgumentPacket args) {
 	Logger::Initialize();
@@ -48,8 +26,6 @@ void Main(ArgumentPacket args) {
 
 		for (size_t i = 0; i < cube.size(); i++) {
 			Entity* entity = new Entity;
-			entity->AddComponent(new MeshRenderer(&cube[i].first, cube[i].first.indices.size()));
-			entity->GetComponent<MeshRenderer>()->SetMaterial(cube[i].second);
 			scene.AddEntity(entity);
 		}
 
