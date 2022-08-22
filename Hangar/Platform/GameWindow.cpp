@@ -15,7 +15,8 @@ LRESULT MessageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	switch (msg) {
 	case WM_SIZE:
-		window->resize(LOWORD(lParam), HIWORD(lParam));
+		if(window->resize != nullptr)
+			window->resize(LOWORD(lParam), HIWORD(lParam));
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
