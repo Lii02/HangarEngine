@@ -50,10 +50,7 @@ void ThreadPool::Start() {
 }
 
 void ThreadPool::Stop() {
-	{
-		std::unique_lock<std::mutex> lock(mut);
-		this->done = true;
-	}
+	this->done = true;
 
 	cond.notify_all();
 	for (std::thread& worker : workers)
