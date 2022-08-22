@@ -11,7 +11,9 @@ private:
 	std::unordered_map<std::string, AudioClip*> sounds;
 	std::unordered_map<std::string, Material*> materials;
 public:
-	static AssetManager& Get();
+	static AssetManager*& Get();
+	static void Initialize();
+	static void DeInitialize();
 
 	AssetManager();
 	~AssetManager();

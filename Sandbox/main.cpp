@@ -17,6 +17,7 @@
 #include <Hangar/Framework/Components/AudioListener.h>
 #include <Hangar/Framework/Components/AudioSource.h>
 #include <Hangar/Audio/AudioClip.h>
+#include <Hangar/Assets/AssetManager.h>
 #include <Hangar/Assets/WAVLoader.h>
 #include <Hangar/Threading/ThreadPool.h>
 #include <Hangar/Framework/Material.h>
@@ -31,6 +32,7 @@ void Main(ArgumentPacket args) {
 	Profiler::Initialize();
 	Mouse::Initialize();
 	Keyboard::Initialize();
+	AssetManager::Initialize();
 	FileSystem*& fs = FileSystem::Get();
 	RendererCommands::Inititialize(RendererType::DIRECTX11, &window);
 	Stopwatch delta, totalTime;
@@ -91,12 +93,13 @@ void Main(ArgumentPacket args) {
 		}
 	}
 
+	RendererCommands::DeInitialize();
+	AssetManager::DeInitialize();
 	Keyboard::DeInitialize();
 	Mouse::DeInitialize();
 	Profiler::DeInitialize();
 	ThreadPool::DeInitialize();
 	AudioEngine::DeInitialize();
-	RendererCommands::DeInitialize();
 	FileSystem::DeInitialize();
 	Logger::DeInitialize();
 }
