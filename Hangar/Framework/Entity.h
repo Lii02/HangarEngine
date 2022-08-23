@@ -4,7 +4,7 @@
 #include "Identifier.h"
 #include "Transform.h"
 
-enum class RendererUsage {
+enum class SelectedRenderer {
 	NONE,
 	ENTITYRENDERER,
 };
@@ -20,7 +20,7 @@ private:
 	bool active;
 	std::vector<IComponent*> components;
 	ComponentMask componentMask;
-	RendererUsage rendererUsage;
+	SelectedRenderer selectedRenderer;
 public:
 	Entity(std::string name = "Entity", Identifier identifier = Identifier::New());
 	~Entity();
@@ -49,8 +49,8 @@ public:
 		}
 		return nullptr;
 	}
-	RendererUsage GetRendererUsage() const;
-	void SetRendererUsage(RendererUsage rendererUsage);
+	SelectedRenderer GetSelectedRenderer() const;
+	void SetSelectedRenderer(SelectedRenderer selectedRenderer);
 private:
 	bool GetComponentMask(size_t maskType) const;
 };

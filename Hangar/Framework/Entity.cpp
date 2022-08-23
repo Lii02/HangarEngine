@@ -7,7 +7,7 @@ Entity::Entity(std::string name, Identifier identifier) {
 	this->identifier = identifier;
 	this->active = true;
 	this->componentMask = 0;
-	this->rendererUsage = RendererUsage::ENTITYRENDERER;
+	this->selectedRenderer = SelectedRenderer::ENTITYRENDERER;
 }
 
 Entity::~Entity() {
@@ -58,22 +58,6 @@ void Entity::Update() {
 	}
 }
 
-Transform& Entity::GetTransform() {
-	return transform;
-}
-
-RendererUsage Entity::GetRendererUsage() const {
-	return rendererUsage;
-}
-
-bool Entity::GetComponentMask(size_t maskType) const {
-	return componentMask.test(maskType);
-}
-
-void Entity::SetRendererUsage(RendererUsage rendererUsage) {
-	this->rendererUsage = rendererUsage;
-}
-
 std::string Entity::GetName() const {
 	return name;
 }
@@ -90,6 +74,22 @@ Identifier Entity::GetIdentifier() {
 	return identifier;
 }
 
+Transform& Entity::GetTransform() {
+	return transform;
+}
+
 bool Entity::HasComponent(ComponentType type) const {
 	return GetComponentMask(type);
+}
+
+SelectedRenderer Entity::GetSelectedRenderer() const {
+	return selectedRenderer;
+}
+
+void Entity::SetSelectedRenderer(SelectedRenderer selectedRenderer) {
+	this->selectedRenderer = selectedRenderer;
+}
+
+bool Entity::GetComponentMask(size_t maskType) const {
+	return componentMask.test(maskType);
 }

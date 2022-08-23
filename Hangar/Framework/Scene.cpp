@@ -21,8 +21,8 @@ void Scene::Render() {
 	entityRenderer->PrepareFrame(mainCamera, mainCamera->GetComponent<Camera>()->GetProjection());
 	for (auto& e : entities) {
 		if (e.second->IsActive()) {
-			switch (e.second->GetRendererUsage()) {
-			case RendererUsage::ENTITYRENDERER:
+			switch (e.second->GetSelectedRenderer()) {
+			case SelectedRenderer::ENTITYRENDERER:
 				entityRenderer->DrawEntity(e.second);
 				break;
 			}
