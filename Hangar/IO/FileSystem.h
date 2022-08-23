@@ -6,7 +6,7 @@ class FileSystem {
 private:
 	std::string path;
 	std::list<File*> files;
-	std::vector<FileSystem*> subgroups;
+	std::vector<FileSystem*> folders;
 public:
 	static void Initialize();
 	static void DeInitialize();
@@ -21,7 +21,7 @@ public:
 	File* ImmSearchFile(std::string filename);
 	FileSystem* ImmSearchFolder(std::string subgroupName);
 	File* AddFile(std::string filename, FileMode mode);
-	FileSystem* AddSubgroup(std::string subgroupName);
+	FileSystem* AddFolder(std::string subgroupName);
 	void Refresh();
 
 	inline File* operator[](std::string filename) { return ImmSearchFile(filename); }

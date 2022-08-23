@@ -25,7 +25,7 @@ FileSystem::FileSystem(std::string path) {
 }
 
 FileSystem ::~FileSystem() {
-	for (auto& group : subgroups) {
+	for (auto& group : folders) {
 		delete group;
 	}
 
@@ -38,7 +38,7 @@ void FileSystem::Open() {
 	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path)) {
 		if (entry.is_directory()) {
 			FileSystem* group = new FileSystem(entry.path().string());
-			subgroups.push_back(group);
+			folders.push_back(group);
 		} else if(entry.is_regular_file()) {
 			std::string filepath = entry.path().string();
 			File* file = new File(filepath, FileMode::READ, filepath.substr(path.length(), filepath.length()));
@@ -64,7 +64,7 @@ File* FileSystem::ImmSearchFile(std::string filename) {
 }
 
 FileSystem* FileSystem::ImmSearchFolder(std::string subgroupName) {
-	for (auto& group : subgroups) {
+	for (auto& group : folders) {
 		if (group->GetPath() == COMPLETE_PATH(subgroupName))
 			return group;
 	}
@@ -78,16 +78,16 @@ File* FileSystem::AddFile(std::string filename, FileMode mode) {
 	return file;
 }
 
-FileSystem* FileSystem::AddSubgroup(std::string subgroupName) {
-	std::string name = COMPLETE_PATH(subgroupName);
+FileSystem* FileSystem::AddFolder(std::string folderName) {
+	std::string name = COMPLETE_PATH(folderName);
 	std::filesystem::create_directory(name);
 	FileSystem* group = new FileSystem(name);
-	subgroups.push_back(group);
+	folders.push_back(group);
 	return group;
 }
 
 void FileSystem::Refresh() {
-	for (auto& group : subgroups) {
+	for (auto& group : folders) {
 		delete group;
 	}
 
