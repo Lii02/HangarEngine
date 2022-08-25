@@ -1,25 +1,25 @@
-#include "Precompiled.h"
-#include "Transform.h"
-#include <Math/MathHelper.h>
+#include "precompiled.h"
+#include "transform.h"
+#include "math/math_helper.h"
 
-Transform::Transform(Vector3 position, Vector3 scale, Vector3 rotation) {
-	this->position = position;
-	this->scale = scale;
-	this->rotation = rotation;
+Transform::Transform(Vector3 tposition, Vector3 tscale, Vector3 trotation) {
+	position = tposition;
+	scale = tscale;
+	rotation = trotation;
 }
 
-Matrix Transform::ToMatrix() {
-	Matrix translationMatrix, scaleMatrix, rotationMatrix;
-	translationMatrix *= Matrix::Translate(position);
-	scaleMatrix *= Matrix::Scale(scale);
-	rotationMatrix *= Matrix::RotateX(MathHelper::DegreesToRadians(rotation.x)) * Matrix::RotateY(MathHelper::DegreesToRadians(rotation.y)) * Matrix::RotateZ(MathHelper::DegreesToRadians(rotation.z));
-	return scaleMatrix * rotationMatrix * translationMatrix;
+Matrix Transform::to_matrix() {
+	Matrix translation_matrix, scale_matrix, rotation_matrix;
+	translation_matrix *= Matrix::translate(position);
+	scale_matrix *= Matrix::scale(scale);
+	rotation_matrix *= Matrix::rotate_x(MathHelper::degrees_to_radians(rotation.x)) * Matrix::rotate_y(MathHelper::degrees_to_radians(rotation.y)) * Matrix::rotate_z(MathHelper::degrees_to_radians(rotation.z));
+	return scale_matrix * rotation_matrix * translation_matrix;
 }
 
-Matrix Transform::ToViewMatrix() {
-	Matrix translationMatrix, scaleMatrix, rotationMatrix;
-	translationMatrix *= Matrix::Translate(-position);
-	scaleMatrix *= Matrix::Scale(scale);
-	rotationMatrix *= Matrix::RotateX(MathHelper::DegreesToRadians(rotation.x)) * Matrix::RotateY(MathHelper::DegreesToRadians(rotation.y)) * Matrix::RotateZ(MathHelper::DegreesToRadians(rotation.z));
-	return rotationMatrix * translationMatrix * scaleMatrix;
+Matrix Transform::to_view_matrix() {
+	Matrix translation_matrix, scale_matrix, rotation_matrix;
+	translation_matrix *= Matrix::translate(-position);
+	scale_matrix *= Matrix::scale(scale);
+	rotation_matrix *= Matrix::rotate_x(MathHelper::degrees_to_radians(rotation.x)) * Matrix::rotate_y(MathHelper::degrees_to_radians(rotation.y)) * Matrix::rotate_z(MathHelper::degrees_to_radians(rotation.z));
+	return rotation_matrix * translation_matrix * scale_matrix;
 }

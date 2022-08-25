@@ -7,15 +7,15 @@ ProfilerElement::ProfilerElement(std::string element_name, ProfilerElementCatego
 }
 
 void ProfilerElement::begin() {
-	stopwatch.Begin();
+	stopwatch.begin();
 }
 
 void ProfilerElement::end() {
-	stopwatch.End();
+	stopwatch.end();
 }
 
 double ProfilerElement::get_elapsed_time() const {
-	return stopwatch.GetDeltaSeconds();
+	return stopwatch.get_delta_seconds();
 }
 
 std::string ProfilerElement::get_name() const {

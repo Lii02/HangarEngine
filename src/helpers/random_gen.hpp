@@ -23,8 +23,8 @@ public:
 	RandomGen(const RandomGen&) = delete;
 
 	void set_limits(T new_min_val, T new_max_val) {
-		minVal = new_min_val;
-		maxVal = new_max_val;
+		min_val = new_min_val;
+		max_val = new_max_val;
 		dist = std::uniform_real_distribution<T>(new_min_val, new_max_val);
 	}
 

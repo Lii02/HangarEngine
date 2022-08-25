@@ -23,7 +23,7 @@ char StringIterator::advance() {
 }
 
 char StringIterator::peek() const {
-	if (IsEnd()) return '\0';
+	if (is_end()) return '\0';
 	return str->at(index);
 }
 
@@ -36,7 +36,7 @@ bool StringIterator::is_alpha(char c) const {
 }
 
 bool StringIterator::is_alpha_num(char c) const {
-	return IsAlpha(c) || IsDigit(c);
+	return is_alpha(c) || is_digit(c);
 }
 
 char StringIterator::peek_next() const {

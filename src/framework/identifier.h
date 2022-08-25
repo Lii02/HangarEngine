@@ -10,11 +10,11 @@ public:
 	Identifier(const Identifier& right);
 	Identifier operator=(const Identifier& right);
 	
-	const char* GetString();
-	const char* GetString() const;
-	void Generate();
+	const char* get_string();
+	const char* get_string() const;
+	void generate();
 
-	static Identifier New();
+	static Identifier new_identifier();
 private:
 	char* str;
 };

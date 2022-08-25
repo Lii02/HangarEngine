@@ -1,9 +1,9 @@
-#include "Precompiled.h"
-#include "Identifier.h"
-#include <Helpers/TimeHelper.h>
+#include "precompiled.h"
+#include "identifier.h"
+#include "helpers/time_helper.h"
 
 Identifier::Identifier() {
-	this->str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
+	str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
 	memset(str, 0, HANGAR_IDENTIFIER_LENGTH);
 }
 
@@ -12,7 +12,7 @@ Identifier::~Identifier() {
 }
 
 Identifier::Identifier(const Identifier& right) {
-	this->str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
+	str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
 	strcpy(str, right.str);
 }
 
@@ -22,16 +22,16 @@ Identifier Identifier::operator=(const Identifier& right) {
 	return id;
 }
 
-const char* Identifier::GetString() {
+const char* Identifier::get_string() {
 	return str;
 }
 
-const char* Identifier::GetString() const {
+const char* Identifier::get_string() const {
 	return str;
 }
 
-void Identifier::Generate() {
-	uint64_t timestamp = TimeHelper::UnixTimestamp();
+void Identifier::generate() {
+	uint64_t timestamp = TimeHelper::get_unix_timestamp();
 	itoa(timestamp, str, 16);
 	itoa(0x4C69, str + 8, 16);
 	for (int i = 12; i < HANGAR_IDENTIFIER_LENGTH; i++) {
@@ -40,16 +40,16 @@ void Identifier::Generate() {
 	}
 }
 
-Identifier Identifier::New() {
+Identifier Identifier::new_identifier() {
 	Identifier id;
-	id.Generate();
+	id.generate();
 	return id;
 }
 
 bool operator<(const Identifier& left, const Identifier& right) {
-	return std::hash<std::string>{}(left.GetString()) < std::hash<std::string>{}(right.GetString());
+	return std::hash<std::string>{}(left.get_string()) < std::hash<std::string>{}(right.get_string());
 }
 
 bool operator>(const Identifier& left, const Identifier& right) {
-	return std::hash<std::string>{}(left.GetString()) > std::hash<std::string>{}(right.GetString());
+	return std::hash<std::string>{}(left.get_string()) > std::hash<std::string>{}(right.get_string());
 }

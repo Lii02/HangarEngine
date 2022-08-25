@@ -43,7 +43,7 @@ void File::close() {
 	is_open = false;
 }
 
-void File::rewind() {
+void File::rewind_ptr() {
 	rewind(stream);
 }
 
@@ -82,6 +82,6 @@ std::string File::read_string(size_t length) {
 size_t File::length() {
 	fseek(stream, 0, SEEK_END);
 	size_t length = ftell(stream);
-	rewind();
+	rewind_ptr();
 	return length;
 }

@@ -20,7 +20,7 @@ public:
 
 	bool open();
 	void close();
-	void rewind();
+	void rewind_ptr();
 	bool reopen();
 	void write_byte(uint8_t b);
 	void write_string(const char* str);
