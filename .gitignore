@@ -1,6 +1,6 @@
 .vs/
-Build/
-Intermediates/
+build/
+intermediates/
 *.sln
 *.vcxproj
 *.filters
