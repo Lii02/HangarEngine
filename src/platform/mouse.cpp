@@ -28,8 +28,8 @@ public:
 			right_button = false;
 			break;
 		case WM_MOUSEMOVE:
-			x = GET_X_LPARAM(packet.lParam);
-			y = GET_Y_LPARAM(packet.lParam);
+			x = GET_X_LPARAM(packet.l_param);
+			y = GET_Y_LPARAM(packet.l_param);
 			break;
 		}
 	}

@@ -15,11 +15,11 @@ public:
 		switch (packet.msg) {
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
-			keys[packet.wParam] = true;
+			keys[packet.w_param] = true;
 			break;
 		case WM_SYSKEYUP:
 		case WM_KEYUP:
-			keys[packet.wParam] = false;
+			keys[packet.w_param] = false;
 			break;
 		}
 	}

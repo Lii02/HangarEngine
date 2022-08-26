@@ -1,5 +1,5 @@
-#include "Precompiled.h"
-#include "Thread.h"
+#include "precompiled.h"
+#include "thread.h"
 
 Thread::Thread() {
 	thread = nullptr;

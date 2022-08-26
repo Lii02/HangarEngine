@@ -22,8 +22,8 @@
 struct MessagePacket {
 	HWND hwnd;
 	UINT msg;
-	WPARAM wParam;
-	LPARAM lParam;
+	WPARAM w_param;
+	LPARAM l_param;
 };
 #elif __linux__
 #define HANGAR_LINUX
