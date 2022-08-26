@@ -14,7 +14,7 @@ private:
 	FILE* stream;
 	bool is_open;
 public:
-	File(std::string file_path, FileMode file_mode, std::string file_filename);
+	File(std::string _path, FileMode _mode, std::string _filename);
 	~File();
 	File(const File&) = delete;
 

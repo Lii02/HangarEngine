@@ -94,11 +94,11 @@ public:
 };
 #endif
 
-GameWindow::GameWindow(std::string window_title, uint32_t window_width, uint32_t window_height, bool window_is_resizable) {
-	title = window_title;
-	width = window_width;
-	height = window_height;
-	is_resizable = window_is_resizable;
+GameWindow::GameWindow(std::string _title, uint32_t _width, uint32_t _height, bool _is_resizable) {
+	title = _title;
+	width = _width;
+	height = _height;
+	is_resizable = _is_resizable;
 	window_impl = new GameWindow::Impl;
 }
 

@@ -12,7 +12,7 @@ public:
 	static void deinitialize();
 	static FileSystem*& get();
 
-	FileSystem(std::string fs_path);
+	FileSystem(std::string _fs_path);
 	~FileSystem();
 	FileSystem(const FileSystem&) = delete;
 

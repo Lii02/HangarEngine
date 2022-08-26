@@ -1,8 +1,8 @@
 #include "precompiled.h"
 #include "string_iterator.h"
 
-StringIterator::StringIterator(std::string& selected_str) {
-	this->str = &selected_str;
+StringIterator::StringIterator(std::string& _str) {
+	str = &_str;
 	reset_index();
 }
 
@@ -11,7 +11,7 @@ uint32_t StringIterator::get_index() const {
 }
 
 void StringIterator::reset_index() {
-	this->index = 0;
+	index = 0;
 }
 
 bool StringIterator::is_end() const {

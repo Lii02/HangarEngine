@@ -5,8 +5,8 @@ namespace {
 	ThreadPool* g_ThreadPool;
 }
 
-void ThreadPool::initialize(size_t thread_pool_size) {
-	g_ThreadPool = new ThreadPool(thread_pool_size);
+void ThreadPool::initialize(size_t _thread_pool_size) {
+	g_ThreadPool = new ThreadPool(_thread_pool_size);
 }
 
 void ThreadPool::deinitialize() {

@@ -10,22 +10,22 @@ public:
 	inline void Process(MessagePacket packet) {
 		switch (packet.msg) {
 		case WM_LBUTTONDOWN:
-			this->left_button = true;
+			left_button = true;
 			break;
 		case WM_LBUTTONUP:
-			this->left_button = false;
+			left_button = false;
 			break;
 		case WM_MBUTTONDOWN:
-			this->middle_button = true;
+			middle_button = true;
 			break;
 		case WM_MBUTTONUP:
-			this->middle_button = false;
+			middle_button = false;
 			break;
 		case WM_RBUTTONDOWN:
-			this->right_button = true;
+			right_button = true;
 			break;
 		case WM_RBUTTONUP:
-			this->right_button = false;
+			right_button = false;
 			break;
 		case WM_MOUSEMOVE:
 			x = GET_X_LPARAM(packet.lParam);

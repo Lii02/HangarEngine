@@ -2,10 +2,10 @@
 #include "transform.h"
 #include "math/math_helper.h"
 
-Transform::Transform(Vector3 tposition, Vector3 tscale, Vector3 trotation) {
-	position = tposition;
-	scale = tscale;
-	rotation = trotation;
+Transform::Transform(Vector3 _position, Vector3 _scale, Vector3 _rotation) {
+	position = _position;
+	scale = _scale;
+	rotation = _rotation;
 }
 
 Matrix Transform::to_matrix() {

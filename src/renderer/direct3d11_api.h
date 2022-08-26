@@ -33,7 +33,7 @@ private:
 	DirectX::CommonStates* common_states;
 	GPU* selected_gpu;
 public:
-	Direct3D11API(GameWindow* window_ptr);
+	Direct3D11API(GameWindow* _window_ptr);
 	~Direct3D11API();
 
 	virtual void initialize() override;

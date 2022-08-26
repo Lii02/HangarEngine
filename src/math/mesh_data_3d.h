@@ -10,10 +10,10 @@ struct MeshData3D {
 	Indices indices;
 
 	MeshData3D() = default;
-	MeshData3D(std::string name, StandardVertices3D vertices, Indices indices) {
-		this->name = name;
-		this->vertices = vertices;
-		this->indices = indices;
+	MeshData3D(std::string _name, StandardVertices3D _vertices, Indices _indices) {
+		name = _name;
+		vertices = _vertices;
+		indices = _indices;
 	}
 };
 

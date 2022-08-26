@@ -7,7 +7,7 @@ private:
 	Impl* lib_impl;
 	std::string module_name;
 public:
-	DynamicLibrary(std::string lib_module_name);
+	DynamicLibrary(std::string _module_name);
 	~DynamicLibrary();
 	
 	void* get_function(std::string function_name);

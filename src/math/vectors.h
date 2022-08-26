@@ -26,7 +26,7 @@ struct Vector2 {
 	float y;
 
 	Vector2() : x(0), y(0) { }
-	Vector2(float vx, float vy);
+	Vector2(float _x, float _y);
 	explicit Vector2(float v);
 	explicit Vector2(float* arr);
 
@@ -53,7 +53,7 @@ struct Vector3 {
 	float z;
 
 	Vector3() : x(0), y(0), z(0) { }
-	Vector3(float vx, float vy, float vz);
+	Vector3(float _x, float _y, float _z);
 	explicit Vector3(float v);
 	explicit Vector3(float* arr);
 
@@ -81,7 +81,7 @@ struct Vector4 {
 	float w;
 
 	Vector4() : x(0), y(0), z(0), w(0) { }
-	Vector4(float vx, float vy, float vz, float vw);
+	Vector4(float _x, float _y, float _z, float _w);
 	explicit Vector4(float v);
 	explicit Vector4(float* arr);
 

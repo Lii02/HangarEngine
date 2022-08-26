@@ -17,7 +17,7 @@ private:
 	class Impl;
 	Impl* window_impl;
 public:
-	GameWindow(std::string window_title, uint32_t window_width, uint32_t window_height, bool window_is_resizable);
+	GameWindow(std::string _title, uint32_t _width, uint32_t _height, bool _is_resizable);
 	~GameWindow();
 	GameWindow(const GameWindow&) = delete;
 

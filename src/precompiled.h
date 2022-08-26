@@ -14,8 +14,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <Windowsx.h>
+#undef UINT
+#undef INT
 #undef FLOAT
-#undef Yield
+#undef min
+#undef max
 struct MessagePacket {
 	HWND hwnd;
 	UINT msg;
@@ -33,7 +36,6 @@ struct MessagePacket {
 #define HANGAR_BIT(x) (1 << x)
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
-#include <iostream>
 #include <filesystem>
 #include <string>
 #include <vector>
@@ -41,17 +43,16 @@ struct MessagePacket {
 #include <thread>
 #include <mutex>
 #include <chrono>
-#include <iomanip>
 #include <random>
-#include <bit>
 #include <bitset>
 #include <stack>
 #include <map>
 #include <queue>
-#include <ctime>
-#include <cstdlib>
-#include <cmath>
-#include <cstdint>
+
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdint.h>
 
 #include "helpers/random_gen.hpp"
 

@@ -7,7 +7,7 @@ private:
 	HMODULE dll;
 public:
 	Impl(const char* module_name) {
-		this->dll = LoadLibraryA(module_name);
+		dll = LoadLibraryA(module_name);
 	}
 
 	~Impl() {
@@ -20,9 +20,9 @@ public:
 };
 #endif
 
-DynamicLibrary::DynamicLibrary(std::string lib_module_name) {
-	module_name = lib_module_name;
-	lib_impl = new Impl(lib_module_name.c_str());
+DynamicLibrary::DynamicLibrary(std::string _module_name) {
+	module_name = _module_name;
+	lib_impl = new Impl(_module_name.c_str());
 }
 
 DynamicLibrary::~DynamicLibrary() {

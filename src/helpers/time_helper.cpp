@@ -8,8 +8,8 @@ namespace TimeHelper {
 
 	std::string get_time_string_24() {
 		char buffer[100];
-		auto t = std::time(nullptr);
-		std::strftime(buffer, sizeof(buffer), "%T", std::localtime(&t));
+		auto t = time(nullptr);
+		strftime(buffer, sizeof(buffer), "%T", localtime(&t));
 		return std::string(buffer);
 	}
 }

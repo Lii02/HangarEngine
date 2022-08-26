@@ -1,11 +1,11 @@
 #include "Precompiled.h"
 #include "Color.h"
 
-Color::Color(float cr, float cg, float cb, float ca) {
-	r = cr;
-	g = cg;
-	b = cb;
-	a = ca;
+Color::Color(float _r, float _g, float _b, float _a) {
+	r = _r;
+	g = _g;
+	b = _b;
+	a = _a;
 }
 
 void Color::invert() {

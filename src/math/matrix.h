@@ -18,7 +18,8 @@ struct Matrix {
 	};
 
 	Matrix();
-	explicit Matrix(float data[16]);
+	explicit Matrix(float _data[16]);
+	explicit Matrix(float _data[4][4]);
 
 	void set_identity();
 	Matrix multiply(const Matrix& right);

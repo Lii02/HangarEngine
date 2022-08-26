@@ -48,7 +48,7 @@ void Keyboard::deinitialize() {
 }
 
 Keyboard::Keyboard() {
-	this->keyboard_impl = new Keyboard::Impl;
+	keyboard_impl = new Keyboard::Impl;
 }
 
 Keyboard::~Keyboard() {

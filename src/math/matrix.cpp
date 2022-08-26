@@ -6,8 +6,12 @@ Matrix::Matrix() {
 	set_identity();
 }
 
-Matrix::Matrix(float data[16]) {
-	memcpy(float_elements_1d, data, 64);
+Matrix::Matrix(float _data[16]) {
+	memcpy(float_elements_1d, _data, 64);
+}
+
+Matrix::Matrix(float _data[4][4]) {
+	memcpy(float_elements_2d, _data, 64);
 }
 
 void Matrix::set_identity() {
@@ -94,7 +98,7 @@ Matrix Matrix::zero() {
 
 Matrix Matrix::perspectiveLH(float fov, float aspect_ratio, float near_z, float far_z) {
 	Matrix matrix;
-	float yScale = (1.0f / std::tan(MathHelper::degrees_to_radians(fov) / 2.0f)) * aspect_ratio;
+	float yScale = (1.0f / tanf(MathHelper::degrees_to_radians(fov) / 2.0f)) * aspect_ratio;
 	float xScale = yScale / aspect_ratio;
 	float z = far_z / (far_z - near_z);
 
@@ -108,7 +112,7 @@ Matrix Matrix::perspectiveLH(float fov, float aspect_ratio, float near_z, float 
 
 Matrix Matrix::perspectiveRH(float fov, float aspect_ratio, float near_z, float far_z) {
 	Matrix matrix;
-	float yScale = (float)((1.0f / tan(MathHelper::degrees_to_radians(fov / 2.0f))) * aspect_ratio);
+	float yScale = (float)((1.0f / tanf(MathHelper::degrees_to_radians(fov / 2.0f))) * aspect_ratio);
 	float xScale = yScale / aspect_ratio;
 	float frustumLength = far_z - near_z;
 

@@ -19,8 +19,8 @@ FileSystem*& FileSystem::get() {
 	return g_FileSystem;
 }
 
-FileSystem::FileSystem(std::string fs_path) {
-	path = fs_path;
+FileSystem::FileSystem(std::string _fs_path) {
+	path = _fs_path;
 	open();
 }
 

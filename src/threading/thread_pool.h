@@ -12,7 +12,7 @@ private:
 	std::queue<ThreadFunction> jobs;
 	std::mutex mut;
 public:
-	static void initialize(size_t thread_pool_size = 2);
+	static void initialize(size_t _thread_pool_size = 2);
 	static void deinitialize();
 	static ThreadPool*& get();
 

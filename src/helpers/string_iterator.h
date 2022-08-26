@@ -6,7 +6,7 @@ private:
 	std::string* str;
 	uint32_t index;
 public:
-	StringIterator(std::string& selected_str);
+	StringIterator(std::string& _str);
 	StringIterator(const StringIterator&) = delete;
 
 	uint32_t get_index() const;

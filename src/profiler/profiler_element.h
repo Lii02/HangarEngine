@@ -13,7 +13,7 @@ private:
 	Stopwatch stopwatch;
 	ProfilerElementCategory category;
 public:
-	ProfilerElement(std::string element_name, ProfilerElementCategory element_category);
+	ProfilerElement(std::string _name, ProfilerElementCategory _category);
 	
 	void begin();
 	void end();

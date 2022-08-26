@@ -45,8 +45,8 @@ struct Direct3D11API::IRenderAPI::Texture2D {
 	}
 };
 
-Direct3D11API::Direct3D11API(GameWindow* window_ptr)
-	: IRenderAPI(window_ptr) {
+Direct3D11API::Direct3D11API(GameWindow* _window_ptr)
+	: IRenderAPI(_window_ptr) {
 	initialize();
 }
 

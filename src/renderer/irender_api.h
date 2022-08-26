@@ -41,7 +41,7 @@ protected:
 	struct Texture2D;
 	std::vector<Texture2D*> textures;
 public:
-	IRenderAPI(GameWindow* window_ptr) : window_ptr(window_ptr), object_draw_count(0), vertex_draw_count(0), depth(1.0f), vsync(true) { }
+	IRenderAPI(GameWindow* _window_ptr) : window_ptr(_window_ptr), object_draw_count(0), vertex_draw_count(0), depth(1.0f), vsync(true) { }
 	virtual ~IRenderAPI() { }
 	IRenderAPI(const IRenderAPI&) = delete;
 
@@ -74,9 +74,9 @@ public:
 		vertex_draw_count = 0;
 	}
 	inline bool is_vsync_enabled() const { return vsync; }
-	inline void set_clear_color(float clearColor[4]) { memcpy(this->clear_color, clear_color, sizeof(float) * 4); }
-	inline void set_depth(float depth) { this->depth = depth; }
-	inline void set_vsync(bool vsync) { this->vsync = vsync; }
+	inline void set_clear_color(float _clear_color[4]) { memcpy(clear_color, _clear_color, sizeof(float) * 4); }
+	inline void set_depth(float _depth) { depth = _depth; }
+	inline void set_vsync(bool _vsync) { vsync = _vsync; }
 	inline uint64_t get_object_draw_count() const { return object_draw_count; };
 	inline uint64_t get_vertex_draw_count() const { return vertex_draw_count; };
 };

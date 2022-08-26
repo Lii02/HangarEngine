@@ -1,9 +1,9 @@
 #include "precompiled.h"
 #include "profiler_element.h"
 
-ProfilerElement::ProfilerElement(std::string element_name, ProfilerElementCategory element_category) {
-	name = element_name;
-	category = element_category;
+ProfilerElement::ProfilerElement(std::string _name, ProfilerElementCategory _category) {
+	name = _name;
+	category = _category;
 }
 
 void ProfilerElement::begin() {

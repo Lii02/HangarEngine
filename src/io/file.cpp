@@ -3,10 +3,10 @@
 #include "debug/assert.h"
 #include "debug/logger.h"
 
-File::File(std::string file_path, FileMode file_mode, std::string file_filename) {
-	path = file_path;
-	filename = file_filename;
-	mode = file_mode;
+File::File(std::string _path, FileMode _mode, std::string _filename) {
+	path = _path;
+	filename = _filename;
+	mode = _mode;
 	is_open = false;
 }
 
