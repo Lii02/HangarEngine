@@ -44,7 +44,6 @@ struct MessagePacket {
 #include <mutex>
 #include <chrono>
 #include <random>
-#include <bitset>
 #include <stack>
 #include <map>
 #include <queue>
