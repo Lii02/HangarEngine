@@ -2,8 +2,7 @@
 #define DIRECT3D11_API_H
 #include "irender_api.h"
 #include <d3d11.h>
-#include <directxtk/CommonStates.h>
-#include <dxgi.h>
+#include <dxgi1_2.h>
 
 class Direct3D11API : public IRenderAPI {
 	struct GPU {
@@ -27,10 +26,9 @@ private:
 	ID3D11DepthStencilView* depth_stencil_view;
 	ID3D11RasterizerState* raster_state;
 	ID3D11BlendState* blend_state;
-	std::vector<GPU> adapters;
-	std::vector<Monitor> monitors;
+	List<GPU> adapters;
+	List<Monitor> monitors;
 	D3D_FEATURE_LEVEL feature_level;
-	DirectX::CommonStates* common_states;
 	GPU* selected_gpu;
 public:
 	Direct3D11API(GameWindow* _window_ptr);
@@ -49,7 +47,7 @@ public:
 	virtual void bind_constant_buffer(uint64_t index, uint32_t slot) override;
 	virtual void draw_indexed(uint32_t count, uint32_t first) override;
 	virtual void clean_shaders() override;
-	virtual uint64_t create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, std::vector<InputElement> inputs) override;
+	virtual uint64_t create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, List<InputElement> inputs) override;
 	virtual void bind_render_shader(uint64_t index) override;
 	virtual void remove_render_shader(uint64_t index) override;
 	virtual void set_topology(RenderTopology topology) override;

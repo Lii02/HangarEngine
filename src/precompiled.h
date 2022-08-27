@@ -38,7 +38,6 @@ struct MessagePacket {
 
 #include <filesystem>
 #include <string>
-#include <vector>
 #include <functional>
 #include <thread>
 #include <mutex>

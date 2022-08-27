@@ -3,8 +3,6 @@
 #include "allocator.h"
 
 class DefaultMemoryAllocator : public Allocator {
-private:
-	size_t usage, allocs;
 public:
 	static DefaultMemoryAllocator& get();
 

@@ -1,9 +1,10 @@
 #include "precompiled.h"
 #include "mesh_utils.h"
+#include "containers/list.h"
 
 void MeshUtils::compactify(MeshData3D& mesh) {
-	std::vector<StandardVertex3D> compacted_vertex_list;
-	std::vector<int> indices_list;
+	List<StandardVertex3D> compacted_vertex_list;
+	List<int> indices_list;
 
 	int compacted_index = 0;
 
@@ -19,7 +20,7 @@ void MeshUtils::compactify(MeshData3D& mesh) {
 				vert_simple_mesh.normal.z == vert_compacted_list.normal.z &&
 				vert_simple_mesh.uv.x == vert_compacted_list.uv.x &&
 				vert_simple_mesh.uv.y == vert_compacted_list.uv.y) {
-				indices_list.push_back(found_index);
+				indices_list.push(found_index);
 				found = true;
 				break;
 			}
@@ -27,8 +28,8 @@ void MeshUtils::compactify(MeshData3D& mesh) {
 		}
 
 		if (!found) {
-			compacted_vertex_list.push_back(vert_simple_mesh);
-			indices_list.push_back(compacted_index);
+			compacted_vertex_list.push(vert_simple_mesh);
+			indices_list.push(compacted_index);
 			compacted_index++;
 		}
 	}

@@ -1,5 +1,6 @@
 #ifndef RENDER_API_H
 #define RENDER_API_H
+#include "containers/list.h"
 
 class GameWindow;
 
@@ -24,7 +25,7 @@ struct InputElement {
 	std::string name;
 };
 
-typedef std::vector<InputElement> InputElementArray;
+typedef List<InputElement> InputElementArray;
 
 class IRenderAPI {
 protected:
@@ -35,11 +36,11 @@ protected:
 	float depth;
 	bool vsync;
 	struct DataBuffer;
-	std::vector<DataBuffer*> data_buffers;
+	List<DataBuffer*> data_buffers;
 	struct RenderShader;
-	std::vector<RenderShader*> render_shaders;
+	List<RenderShader*> render_shaders;
 	struct Texture2D;
-	std::vector<Texture2D*> textures;
+	List<Texture2D*> textures;
 public:
 	IRenderAPI(GameWindow* _window_ptr) : window_ptr(_window_ptr), object_draw_count(0), vertex_draw_count(0), depth(1.0f), vsync(true) { }
 	virtual ~IRenderAPI() { }
@@ -58,7 +59,7 @@ public:
 	virtual void bind_constant_buffer(uint64_t index, uint32_t slot) = 0;
 	virtual void draw_indexed(uint32_t count, uint32_t first) = 0;
 	virtual void clean_shaders() = 0;
-	virtual uint64_t create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, std::vector<InputElement> inputs) = 0;
+	virtual uint64_t create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, List<InputElement> inputs) = 0;
 	virtual void bind_render_shader(uint64_t index) = 0;
 	virtual void remove_render_shader(uint64_t index) = 0;
 	virtual void set_topology(RenderTopology topology) = 0;

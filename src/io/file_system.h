@@ -1,12 +1,13 @@
 #ifndef FILEGROUP_H
 #define FILEGROUP_H
 #include "File.h"
+#include "containers/list.h"
 
 class FileSystem {
 private:
 	std::string path;
-	std::list<File*> files;
-	std::vector<FileSystem*> folders;
+	List<File*> files;
+	List<FileSystem*> folders;
 public:
 	static void initialize();
 	static void deinitialize();

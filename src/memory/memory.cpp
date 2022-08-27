@@ -33,7 +33,7 @@ void DefaultMemoryAllocator::deallocate(void* memory) {
 
 void* DefaultMemoryAllocator::reallocate(void* memory, size_t old_size, size_t new_size) {
 	void* new_memory = allocate(new_size);
-	memcpy(new_memory, memory, new_size);
+	memcpy(new_memory, memory, old_size);
 	deallocate(memory);
 	return new_memory;
 }

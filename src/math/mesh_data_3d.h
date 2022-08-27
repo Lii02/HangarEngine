@@ -1,8 +1,9 @@
 #ifndef MESHDATA_H
 #define MESHDATA_H
+#include "containers/list.h"
 
-typedef std::vector<int> Indices;
-typedef std::vector<StandardVertex3D> StandardVertices3D;
+typedef List<int> Indices;
+typedef List<StandardVertex3D> StandardVertices3D;
 
 struct MeshData3D {
 	std::string name;

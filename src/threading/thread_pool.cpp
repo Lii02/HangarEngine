@@ -29,7 +29,7 @@ ThreadPool::~ThreadPool() {
 void ThreadPool::start() {
 	done = false;
 	for (size_t i = 0; i < pool_size; i++) {
-		workers.emplace_back([&] {
+		workers.emplace_back(new std::thread([&]() {
 			while (true) {
 				ThreadFunction job;
 				{
@@ -45,7 +45,7 @@ void ThreadPool::start() {
 				}
 				job();
 			}
-		});
+		}));
 	}
 }
 
@@ -53,8 +53,10 @@ void ThreadPool::stop() {
 	done = true;
 
 	cond.notify_all();
-	for (std::thread& worker : workers)
-		worker.join();
+	for (std::thread*& worker : workers) {
+		worker->join();
+		delete worker;
+	}
 	workers.clear();
 }
 

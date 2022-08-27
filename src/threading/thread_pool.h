@@ -1,5 +1,6 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
+#include "containers/list.h"
 
 typedef std::function<void()> ThreadFunction;
 
@@ -8,7 +9,7 @@ private:
 	size_t pool_size;
 	std::atomic_bool done;
 	std::condition_variable cond;
-	std::vector<std::thread> workers;
+	List<std::thread*> workers;
 	std::queue<ThreadFunction> jobs;
 	std::mutex mut;
 public:

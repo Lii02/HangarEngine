@@ -38,11 +38,11 @@ void FileSystem::open() {
 	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path)) {
 		if (entry.is_directory()) {
 			FileSystem* group = new FileSystem(entry.path().string());
-			folders.push_back(group);
+			folders.push(group);
 		} else if(entry.is_regular_file()) {
 			std::string filepath = entry.path().string();
 			File* file = new File(filepath, FileMode::READ, filepath.substr(path.length(), filepath.length()));
-			files.push_back(file);
+			files.push(file);
 		}
 	}
 }
@@ -74,7 +74,7 @@ FileSystem* FileSystem::immediate_search_folder(std::string folder_name) {
 File* FileSystem::add_file(std::string filename, FileMode mode) {
 	File* file = new File(COMPLETE_PATH(filename), mode, filename);
 	file->open();
-	files.push_back(file);
+	files.push(file);
 	return file;
 }
 
@@ -82,7 +82,7 @@ FileSystem* FileSystem::add_folder(std::string folderName) {
 	std::string name = COMPLETE_PATH(folderName);
 	std::filesystem::create_directory(name);
 	FileSystem* group = new FileSystem(name);
-	folders.push_back(group);
+	folders.push(group);
 	return group;
 }
 

@@ -33,37 +33,37 @@ AudioEngine::~AudioEngine() {
 }
 
 void AudioEngine::clean_sources() {
-	alDeleteSources(sources.size(), sources.data());
+	alDeleteSources(sources.get_size(), sources.ptr());
 	sources.clear();
 }
 
 void AudioEngine::clean_buffers() {
-	alDeleteBuffers(buffers.size(), buffers.data());
+	alDeleteBuffers(buffers.get_size(), buffers.ptr());
 	buffers.clear();
 }
 
 unsigned int AudioEngine::create_source() {
 	unsigned int source;
 	alGenSources(1, &source);
-	sources.push_back(source);
+	sources.push(source);
 	return source;
 }
 
 unsigned int AudioEngine::create_buffer() {
 	unsigned int buffer;
 	alGenBuffers(1, &buffer);
-	buffers.push_back(buffer);
+	buffers.push(buffer);
 	return buffer;
 }
 
 void AudioEngine::remove_source(unsigned int sourceID) {
-	auto it = std::find(sources.begin(), sources.end(), sourceID);
+	auto it = sources.find(sources.begin(), sources.end(), sourceID);
 	alDeleteSources(1, &sourceID);
 	sources.erase(it);
 }
 
 void AudioEngine::remove_buffer(unsigned int bufferID) {
-	auto it = std::find(buffers.begin(), buffers.end(), bufferID);
+	auto it = buffers.find(buffers.begin(), buffers.end(), bufferID);
 	alDeleteBuffers(1, &bufferID);
 	buffers.erase(it);
 }

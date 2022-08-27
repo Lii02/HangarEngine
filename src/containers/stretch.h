@@ -10,7 +10,7 @@ private:
 	size_t size, capacity;
 public:
 	Stretch(size_t _capacity = 1) {
-		HANGAR_ASSERT(_capacity != 0, "Stretch buffer capacity cannot be initialized as 0");
+		HANGAR_ASSERT(_capacity != 0, "Stretch<T> capacity cannot be initialized as 0");
 		capacity = _capacity;
 		size = 0;
 		buffer = new T[capacity];
@@ -40,6 +40,10 @@ public:
 		return buffer;
 	}
 
+	const T* ptr() const {
+		return buffer;
+	}
+
 	void free_data() {
 		if (buffer)
 			delete[] buffer;
@@ -51,6 +55,7 @@ public:
 	void resize(size_t new_capacity) {
 		DefaultMemoryAllocator& allocator = DefaultMemoryAllocator::get();
 		buffer = allocator.reallocate_template<T>(buffer, capacity, new_capacity);
+		capacity = new_capacity;
 	}
 
 	void double_capacity() {
@@ -80,6 +85,12 @@ public:
 
 	bool within_bounds(size_t index) const {
 		return index >= 0 && index < size;
+	}
+
+	void clear() {
+		free_data();
+		capacity = 1;
+		buffer = new T[capacity];
 	}
 
 	Stretch& operator=(const Stretch& stretch_copy) {

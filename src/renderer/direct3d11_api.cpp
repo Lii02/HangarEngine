@@ -9,8 +9,6 @@ extern "C" {
 	HANGAR_API int AmdPowerXpressRequestHighPerformance = 1;
 }
 
-using namespace DirectX;
-
 struct Direct3D11API::IRenderAPI::DataBuffer {
 	ID3D11Buffer* buffer;
 	size_t element_size;
@@ -105,7 +103,7 @@ void Direct3D11API::draw_indexed(uint32_t count, uint32_t first) {
 void Direct3D11API::clean_shaders() {
 }
 
-uint64_t Direct3D11API::create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, std::vector<InputElement> inputs) {
+uint64_t Direct3D11API::create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, List<InputElement> inputs) {
 	return uint64_t();
 }
 

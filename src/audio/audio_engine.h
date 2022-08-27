@@ -2,13 +2,14 @@
 #define AUDIOENGINE_H
 #include <AL/alc.h>
 #include "math/vectors.h"
+#include "containers/list.h"
 
 class AudioEngine {
 private:
 	ALCdevice* device;
 	ALCcontext* context;
-	std::vector<unsigned int> sources;
-	std::vector<unsigned int> buffers;
+	List<unsigned int> sources;
+	List<unsigned int> buffers;
 public:
 	static void initialize();
 	static void deinitialize();

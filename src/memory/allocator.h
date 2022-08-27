@@ -24,7 +24,7 @@ public:
 
 	template <typename T>
 	T* reallocate_template(T* memory, size_t old_size, size_t new_size) {
-		return (T*)reallocate(memory, old_size, new_size);
+		return (T*)reallocate(memory, old_size * sizeof(T), new_size * sizeof(T));
 	}
 };
 
