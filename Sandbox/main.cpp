@@ -6,6 +6,8 @@
 
 void Main(ArgumentPacket args) {
 	Logger::initialize();
+	List<int> int_list;
+	int_list.push(5);
 	Logger::deinitialize();
 	system("pause");	
 }
