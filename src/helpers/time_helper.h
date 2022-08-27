@@ -1,9 +1,10 @@
 #ifndef TIMEHELPER_H
 #define TIMEHELPER_H
+#include "string/astring.h"
 
 namespace TimeHelper {
 	uint64_t get_unix_timestamp();
-	std::string get_time_string_24();
+	AString get_time_string_24();
 }
 
 #endif

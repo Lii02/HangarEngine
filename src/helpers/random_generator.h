@@ -1,5 +1,6 @@
-#ifndef RANDOMGEN_H
-#define RANDOMGEN_H
+#ifndef RANDOMGENERATOR_H
+#define RANDOMGENERATOR_H
+#include <random>
 
 template <typename T>
 class RandomGen {

@@ -3,7 +3,7 @@
 #include "debug/assert.h"
 #include "debug/logger.h"
 
-File::File(std::string _path, FileMode _mode, std::string _filename) {
+File::File(AString _path, FileMode _mode, AString _filename) {
 	path = _path;
 	filename = _filename;
 	mode = _mode;
@@ -31,7 +31,7 @@ bool File::open() {
 		break;
 	}
 
-	stream = fopen(path.c_str(), mode_string);
+	stream = fopen(path.ptr(), mode_string);
 	delete[] mode_string;
 	is_open = true;
 	return stream != nullptr;
@@ -73,9 +73,9 @@ void* File::read_buffer(size_t length) {
 	return block;
 }
 
-std::string File::read_string(size_t length) {
-	std::string str(length + 1, '\0');
-	fread((void*)str.data(), length, 1, stream);
+AString File::read_string(size_t length) {
+	AString str(length + 1, '\0');
+	fread((void*)str.ptr(), length, 1, stream);
 	return str;
 }
 

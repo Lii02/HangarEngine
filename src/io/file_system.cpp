@@ -19,7 +19,7 @@ FileSystem*& FileSystem::get() {
 	return g_FileSystem;
 }
 
-FileSystem::FileSystem(std::string _fs_path) {
+FileSystem::FileSystem(AString _fs_path) {
 	path = _fs_path;
 	open();
 }
@@ -35,13 +35,13 @@ FileSystem ::~FileSystem() {
 }
 
 void FileSystem::open() {
-	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path)) {
+	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path.ptr())) {
 		if (entry.is_directory()) {
-			FileSystem* group = new FileSystem(entry.path().string());
+			FileSystem* group = new FileSystem(entry.path().string().c_str());
 			folders.push(group);
 		} else if(entry.is_regular_file()) {
-			std::string filepath = entry.path().string();
-			File* file = new File(filepath, FileMode::READ, filepath.substr(path.length(), filepath.length()));
+			auto filepath = entry.path().string();
+			File* file = new File(filepath.c_str(), FileMode::READ, filepath.substr(path.get_length(), filepath.length()).c_str());
 			files.push(file);
 		}
 	}
@@ -53,7 +53,7 @@ void FileSystem::close_files() {
 	}
 }
 
-File* FileSystem::immediate_search_file(std::string filename) {
+File* FileSystem::immediate_search_file(AString filename) {
 	for (auto& file : files) {
 		if (file->get_filename() == filename)
 			return file;
@@ -63,7 +63,7 @@ File* FileSystem::immediate_search_file(std::string filename) {
 	return file;
 }
 
-FileSystem* FileSystem::immediate_search_folder(std::string folder_name) {
+FileSystem* FileSystem::immediate_search_folder(AString folder_name) {
 	for (auto& group : folders) {
 		if (group->GetPath() == COMPLETE_PATH(folder_name))
 			return group;
@@ -71,16 +71,16 @@ FileSystem* FileSystem::immediate_search_folder(std::string folder_name) {
 	return nullptr;
 }
 
-File* FileSystem::add_file(std::string filename, FileMode mode) {
+File* FileSystem::add_file(AString filename, FileMode mode) {
 	File* file = new File(COMPLETE_PATH(filename), mode, filename);
 	file->open();
 	files.push(file);
 	return file;
 }
 
-FileSystem* FileSystem::add_folder(std::string folderName) {
-	std::string name = COMPLETE_PATH(folderName);
-	std::filesystem::create_directory(name);
+FileSystem* FileSystem::add_folder(AString folder_name) {
+	AString name = COMPLETE_PATH(folder_name);
+	std::filesystem::create_directory(name.ptr());
 	FileSystem* group = new FileSystem(name);
 	folders.push(group);
 	return group;

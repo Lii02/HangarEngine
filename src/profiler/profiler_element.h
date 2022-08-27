@@ -1,6 +1,7 @@
 #ifndef PROFILER_ELEMENT_H
 #define PROFILER_ELEMENT_H
 #include "framework/stopwatch.h"
+#include "string/astring.h"
 
 enum class ProfilerElementCategory {
 	RENDER,
@@ -9,16 +10,16 @@ enum class ProfilerElementCategory {
 
 class ProfilerElement {
 private:
-	std::string name;
+	AString name;
 	Stopwatch stopwatch;
 	ProfilerElementCategory category;
 public:
-	ProfilerElement(std::string _name, ProfilerElementCategory _category);
+	ProfilerElement(AString _name, ProfilerElementCategory _category);
 	
 	void begin();
 	void end();
 	double get_elapsed_time() const;
-	std::string get_name() const;
+	AString get_name() const;
 	ProfilerElementCategory get_category() const;
 };
 

@@ -105,6 +105,5 @@ struct Vector4 {
 typedef Vector4 Quaternion;
 
 #include "vertex_types.h"
-#include "mesh_data_3d.h"
 
 #endif

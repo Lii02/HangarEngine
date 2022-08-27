@@ -6,7 +6,7 @@
 template <typename T>
 class Stretch {
 private:
-	mutable T* buffer;
+	T* buffer;
 	size_t size, capacity;
 public:
 	Stretch(size_t _capacity = 1) {
@@ -69,6 +69,10 @@ public:
 
 	size_t decrease_size() {
 		return size--;
+	}
+
+	void reset_index() {
+		size = 0;
 	}
 
 	void set_size(size_t new_size) {

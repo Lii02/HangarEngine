@@ -1,12 +1,13 @@
 #ifndef STRINGITERATOR_H
 #define STRINGITERATOR_H
+#include "string/astring.h"
 
 class StringIterator {
 private:
-	std::string* str;
+	AString* str;
 	uint32_t index;
 public:
-	StringIterator(std::string& _str);
+	StringIterator(AString& _str);
 	StringIterator(const StringIterator&) = delete;
 
 	uint32_t get_index() const;

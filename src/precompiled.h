@@ -1,6 +1,8 @@
 #ifndef HANGAR_PRECOMPILED_H
 #define HANGAR_PRECOMPILED_H
 
+#pragma warning(disable : 5043)
+
 #ifdef _MSC_VER
 #define HANGAR_API __declspec(dllexport)
 #elif
@@ -37,12 +39,9 @@ struct MessagePacket {
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
 #include <filesystem>
-#include <string>
-#include <functional>
 #include <thread>
 #include <mutex>
 #include <chrono>
-#include <random>
 #include <stack>
 #include <map>
 #include <queue>
@@ -51,7 +50,5 @@ struct MessagePacket {
 #include <stdlib.h>
 #include <math.h>
 #include <stdint.h>
-
-#include "helpers/random_gen.hpp"
 
 #endif

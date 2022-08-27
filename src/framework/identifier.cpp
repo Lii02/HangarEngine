@@ -1,6 +1,7 @@
 #include "precompiled.h"
 #include "identifier.h"
 #include "helpers/time_helper.h"
+#include "string/astring.h"
 
 Identifier::Identifier() {
 	str = new char[HANGAR_IDENTIFIER_LENGTH + 1];
@@ -47,9 +48,9 @@ Identifier Identifier::new_identifier() {
 }
 
 bool operator<(const Identifier& left, const Identifier& right) {
-	return std::hash<std::string>{}(left.get_string()) < std::hash<std::string>{}(right.get_string());
+	return AString(left.get_string()).hash() < AString(right.get_string()).hash();
 }
 
 bool operator>(const Identifier& left, const Identifier& right) {
-	return std::hash<std::string>{}(left.get_string()) > std::hash<std::string>{}(right.get_string());
+	return AString(left.get_string()).hash() > AString(right.get_string()).hash();
 }

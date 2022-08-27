@@ -1,16 +1,17 @@
 #ifndef DYNAMIC_LIBRARY_H
 #define DYNAMIC_LIBRARY_H
+#include "string/astring.h"
 
 class DynamicLibrary {
 private:
 	class Impl;
 	Impl* lib_impl;
-	std::string module_name;
+	AString module_name;
 public:
-	DynamicLibrary(std::string _module_name);
+	DynamicLibrary(AString _module_name);
 	~DynamicLibrary();
 	
-	void* get_function(std::string function_name);
+	void* get_function(AString function_name);
 };
 
 #endif

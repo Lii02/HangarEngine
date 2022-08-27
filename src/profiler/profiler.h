@@ -16,7 +16,7 @@ public:
 	Profiler(const Profiler&) = delete;
 
 	void clear_totals();
-	void begin_profile(std::string name, ProfilerElementCategory category);
+	void begin_profile(AString name, ProfilerElementCategory category);
 	void end_function();
 	double get_total(ProfilerElementCategory category);
 };

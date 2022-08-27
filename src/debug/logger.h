@@ -1,14 +1,15 @@
 #ifndef LOGGER_H
 #define LOGGER_H
+#include "string/astring.h"
 
 namespace Logger {
 	void initialize();
 	void deinitialize();
-	void message(const std::string& msg);
-	void error(const std::string& msg);
-	void warning(const std::string& msg);
-	void confirmation(const std::string& msg);
-	void assertion(const std::string& msg, const char* file, int64_t line);
+	void message(const AString& msg);
+	void error(const AString& msg);
+	void warning(const AString& msg);
+	void confirmation(const AString& msg);
+	void assertion(const AString& msg, const char* file, int64_t line);
 }
 
 #endif

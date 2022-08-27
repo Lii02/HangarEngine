@@ -1,8 +1,9 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
 #include "containers/list.h"
+#include "containers/pair.h"
 
-typedef std::function<void()> ThreadFunction;
+typedef void (*ThreadFunction)(void*);
 
 class ThreadPool {
 private:
@@ -10,7 +11,7 @@ private:
 	std::atomic_bool done;
 	std::condition_variable cond;
 	List<std::thread*> workers;
-	std::queue<ThreadFunction> jobs;
+	std::queue<Pair<ThreadFunction, void*>> jobs;
 	std::mutex mut;
 public:
 	static void initialize(size_t _thread_pool_size = 2);
@@ -22,7 +23,7 @@ public:
 
 	void start();
 	void stop();
-	void add_job(ThreadFunction job);
+	void add_job(ThreadFunction job, void* args);
 };
 
 #endif

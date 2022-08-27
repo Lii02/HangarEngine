@@ -23,7 +23,7 @@ struct Direct3D11API::IRenderAPI::RenderShader {
 	ID3D11VertexShader* vertex_shader;
 	ID3D11PixelShader* pixel_shader;
 	ID3D11InputLayout* layout;
-	std::string vertex_entry, pixel_entry;
+	AString vertex_entry, pixel_entry;
 
 	~RenderShader() {
 		vertex_shader->Release();
@@ -103,7 +103,7 @@ void Direct3D11API::draw_indexed(uint32_t count, uint32_t first) {
 void Direct3D11API::clean_shaders() {
 }
 
-uint64_t Direct3D11API::create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, List<InputElement> inputs) {
+uint64_t Direct3D11API::create_render_shader(AString shader_source, AString vertex_entry, AString pixel_entry, List<InputElement> inputs) {
 	return uint64_t();
 }
 
@@ -120,8 +120,8 @@ float Direct3D11API::get_aspect_ratio() {
 	return 0.0f;
 }
 
-std::string Direct3D11API::get_device_name() {
-	return std::string();
+AString Direct3D11API::get_device_name() {
+	return AString();
 }
 
 uint64_t Direct3D11API::create_texture_2d(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) {

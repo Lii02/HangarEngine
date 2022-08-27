@@ -2,7 +2,7 @@
 #define HANGAR_ASSERT_H
 
 namespace Hangar {
-	void assert(bool expression, const std::string& msg, const char* file, int64_t line);
+	void assert(bool expression, const char* msg, const char* file, int64_t line);
 }
 
 #ifdef HANGAR_ENABLE_ASSERT

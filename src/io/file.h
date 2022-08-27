@@ -1,5 +1,6 @@
 #ifndef FILE_H
 #define FILE_H
+#include "string/astring.h"
 
 enum class FileMode {
 	READ,
@@ -9,12 +10,12 @@ enum class FileMode {
 
 class File {
 private:
-	std::string path, filename;
+	AString path, filename;
 	FileMode mode;
 	FILE* stream;
 	bool is_open;
 public:
-	File(std::string _path, FileMode _mode, std::string _filename);
+	File(AString _path, FileMode _mode, AString _filename);
 	~File();
 	File(const File&) = delete;
 
@@ -26,7 +27,7 @@ public:
 	void write_string(const char* str);
 	void write_buffer(const void* buffer, size_t length);
 	void* read_buffer(size_t length);
-	std::string read_string(size_t length);
+	AString read_string(size_t length);
 	template <typename T>
 	T read() {
 		T val;
@@ -36,8 +37,8 @@ public:
 	size_t length();
 
 	inline bool get_is_open() const { return is_open; }
-	inline std::string get_path() const { return path; }
-	inline std::string get_filename() const { return filename; }
+	inline AString get_path() const { return path; }
+	inline AString get_filename() const { return filename; }
 };
 
 #endif

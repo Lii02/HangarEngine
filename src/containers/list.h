@@ -112,6 +112,10 @@ public:
 		stretch.clear();
 	}
 
+	void resize(size_t new_capacity) {
+		stretch.resize(new_capacity);
+	}
+
 	T& front() {
 		return stretch[0];
 	}
@@ -128,7 +132,7 @@ public:
 		return end();
 	}
 
-	Iterator& insert(Iterator iterator, T data) {
+	Iterator insert(Iterator iterator, T data) {
 		if (get_size() == 0 && iterator != end()) {
 			push(data);
 			iterator = end();
@@ -146,7 +150,7 @@ public:
 		return iterator;
 	}
 
-	Iterator& erase(Iterator iterator) {
+	Iterator erase(Iterator iterator) {
 		if (get_size() == 0) {
 			iterator = begin();
 		} else {
@@ -171,12 +175,12 @@ public:
 		return Iterator(&stretch[get_size()]);
 	}
 
-	Iterator& emplace_front(const T& data) {
+	Iterator emplace_front(const T& data) {
 		auto it = insert(begin(), data);
 		return it;
 	}
 
-	Iterator& emplace_back(const T& data) {
+	Iterator emplace_back(const T& data) {
 		auto it = insert(end(), data);
 		return it;
 	}

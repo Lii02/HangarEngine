@@ -1,7 +1,7 @@
 #include "precompiled.h"
 #include "profiler_element.h"
 
-ProfilerElement::ProfilerElement(std::string _name, ProfilerElementCategory _category) {
+ProfilerElement::ProfilerElement(AString _name, ProfilerElementCategory _category) {
 	name = _name;
 	category = _category;
 }
@@ -18,7 +18,7 @@ double ProfilerElement::get_elapsed_time() const {
 	return stopwatch.get_delta_seconds();
 }
 
-std::string ProfilerElement::get_name() const {
+AString ProfilerElement::get_name() const {
 	return name;
 }
 

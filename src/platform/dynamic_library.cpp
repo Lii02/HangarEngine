@@ -20,15 +20,15 @@ public:
 };
 #endif
 
-DynamicLibrary::DynamicLibrary(std::string _module_name) {
+DynamicLibrary::DynamicLibrary(AString _module_name) {
 	module_name = _module_name;
-	lib_impl = new Impl(_module_name.c_str());
+	lib_impl = new Impl(_module_name.ptr());
 }
 
 DynamicLibrary::~DynamicLibrary() {
 	delete lib_impl;
 }
 
-void* DynamicLibrary::get_function(std::string function_name) {
-	return lib_impl->get_function(function_name.c_str());
+void* DynamicLibrary::get_function(AString function_name) {
+	return lib_impl->get_function(function_name.ptr());
 }

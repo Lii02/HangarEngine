@@ -31,7 +31,7 @@ void ThreadPool::start() {
 	for (size_t i = 0; i < pool_size; i++) {
 		workers.emplace_back(new std::thread([&]() {
 			while (true) {
-				ThreadFunction job;
+				Pair<ThreadFunction, void*> job;
 				{
 					std::unique_lock<std::mutex> lock(mut);
 
@@ -43,7 +43,7 @@ void ThreadPool::start() {
 					job = jobs.front();
 					jobs.pop();
 				}
-				job();
+				job.first(job.second);
 			}
 		}));
 	}
@@ -60,7 +60,7 @@ void ThreadPool::stop() {
 	workers.clear();
 }
 
-void ThreadPool::add_job(ThreadFunction job) {
+void ThreadPool::add_job(ThreadFunction job, void* args) {
 	std::unique_lock<std::mutex> lock(mut);
-	jobs.emplace([=] { job(); });
+	jobs.emplace(job, args);
 }

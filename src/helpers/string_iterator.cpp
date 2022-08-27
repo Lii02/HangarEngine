@@ -1,7 +1,7 @@
 #include "precompiled.h"
 #include "string_iterator.h"
 
-StringIterator::StringIterator(std::string& _str) {
+StringIterator::StringIterator(AString& _str) {
 	str = &_str;
 	reset_index();
 }
@@ -15,7 +15,7 @@ void StringIterator::reset_index() {
 }
 
 bool StringIterator::is_end() const {
-	return index >= str->length();
+	return index >= str->get_length();
 }
 
 char StringIterator::advance() {
@@ -40,6 +40,6 @@ bool StringIterator::is_alpha_num(char c) const {
 }
 
 char StringIterator::peek_next() const {
-	if (index + 1 >= str->length()) return '\0';
+	if (index + 1 >= str->get_length()) return '\0';
 	return str->at(index + 1);
 }

@@ -47,12 +47,12 @@ public:
 	virtual void bind_constant_buffer(uint64_t index, uint32_t slot) override;
 	virtual void draw_indexed(uint32_t count, uint32_t first) override;
 	virtual void clean_shaders() override;
-	virtual uint64_t create_render_shader(std::string_view shader_source, std::string vertex_entry, std::string pixel_entry, List<InputElement> inputs) override;
+	virtual uint64_t create_render_shader(AString shader_source, AString vertex_entry, AString pixel_entry, List<InputElement> inputs) override;
 	virtual void bind_render_shader(uint64_t index) override;
 	virtual void remove_render_shader(uint64_t index) override;
 	virtual void set_topology(RenderTopology topology) override;
 	virtual float get_aspect_ratio() override;
-	virtual std::string get_device_name() override;
+	virtual AString get_device_name() override;
 	virtual uint64_t create_texture_2d(void* data, TextureFormat format, uint32_t width, uint32_t height, uint32_t slot) override;
 	virtual void bind_texture_2d(uint64_t index) override;
 	virtual void remove_texture_2d(uint64_t index) override;

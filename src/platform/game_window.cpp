@@ -32,7 +32,7 @@ private:
 	HINSTANCE hinstance;
 	bool polling;
 public:
-	inline void open(std::string title, uint32_t width, uint32_t height, bool is_resizable) {
+	inline void open(AString title, uint32_t width, uint32_t height, bool is_resizable) {
 		hinstance = GetModuleHandle(NULL);
 		polling = true;
 
@@ -72,8 +72,8 @@ public:
 		}
 	}
 
-	inline void set_title(std::string newTitle) {
-		SetWindowTextA(handle, newTitle.c_str());
+	inline void set_title(AString new_title) {
+		SetWindowTextA(handle, new_title.ptr());
 	}
 
 	inline void set_size(uint32_t width, uint32_t height) {
@@ -94,7 +94,7 @@ public:
 };
 #endif
 
-GameWindow::GameWindow(std::string _title, uint32_t _width, uint32_t _height, bool _is_resizable) {
+GameWindow::GameWindow(AString _title, uint32_t _width, uint32_t _height, bool _is_resizable) {
 	title = _title;
 	width = _width;
 	height = _height;
@@ -121,7 +121,7 @@ void GameWindow::poll() {
 	window_impl->poll();
 }
 
-void GameWindow::set_title(std::string new_title) {
+void GameWindow::set_title(AString new_title) {
 	title = new_title;
 	window_impl->set_title(new_title);
 }
@@ -132,8 +132,8 @@ void GameWindow::set_size(uint32_t new_width, uint32_t new_height) {
 	window_impl->set_size(width, height);
 }
 
-void GameWindow::set_resize_function(ResizeFunc resize_function) {
-	resize = resize_function;
+void GameWindow::set_resize_function(ResizeFunc func) {
+	resize = func;
 }
 
 WindowHandle GameWindow::get_handle() {

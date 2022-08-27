@@ -31,7 +31,7 @@ void Profiler::clear_totals() {
 	}
 }
 
-void Profiler::begin_profile(std::string name, ProfilerElementCategory category) {
+void Profiler::begin_profile(AString name, ProfilerElementCategory category) {
 	ProfilerElement element = ProfilerElement(name, category);
 	element.begin();
 	elements.push(element);
