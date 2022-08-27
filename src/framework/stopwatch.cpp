@@ -6,13 +6,12 @@ Stopwatch::Stopwatch() {
 }
 
 void Stopwatch::begin() {
-	begin_point = std::chrono::high_resolution_clock::now();
+	begin_point = clock();
 }
 
 void Stopwatch::end() {
-	end_point = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double, std::milli> deltaDuration = end_point - begin_point;
-	delta = deltaDuration.count();
+	end_point = clock();
+	delta = end_point - begin_point;
 }
 
 double Stopwatch::get_delta_millis() const {
@@ -20,5 +19,5 @@ double Stopwatch::get_delta_millis() const {
 }
 
 double Stopwatch::get_delta_seconds() const {
-	return delta / 1000;
+	return delta / CLOCKS_PER_SEC;
 }
