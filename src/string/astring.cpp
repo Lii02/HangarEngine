@@ -63,7 +63,10 @@ void AString::clear() {
 }
 
 void AString::copy(const AString& astring_copy) {
-	stretch.copy(astring_copy.stretch);
+	size_t string_length = astring_copy.get_length();
+	stretch.set_size(string_length);
+	stretch.resize(string_length);
+	strcpy(ptr(), astring_copy.ptr());
 }
 
 char& AString::first() {
@@ -76,6 +79,14 @@ char& AString::last() {
 
 char& AString::at(size_t i) {
 	return stretch[i];
+}
+
+AStringIterator AString::begin() {
+	return AStringIterator(&stretch[0]);
+}
+
+AStringIterator AString::end() {
+	return AStringIterator(&stretch[get_length()]);
 }
 
 bool AString::operator==(const AString& str) {
@@ -104,4 +115,42 @@ char& AString::operator[](size_t i) {
 
 const char& AString::operator[](size_t i) const {
 	return stretch[i];
+}
+
+AStringIterator::AStringIterator(char* _current) {
+	current = _current;
+}
+
+AStringIterator AStringIterator::operator++() {
+	current++;
+	return *this;
+}
+
+AStringIterator& AStringIterator::operator++(int) {
+	AStringIterator it = *this;
+	current++;
+	return it;
+}
+
+AStringIterator AStringIterator::operator--() {
+	current--;
+	return *this;
+}
+
+AStringIterator& AStringIterator::operator--(int) {
+	AStringIterator it = *this;
+	current--;
+	return it;
+}
+
+bool AStringIterator::operator==(const AStringIterator& right) {
+	return current == right.current;
+}
+
+bool AStringIterator::operator!=(const AStringIterator& right) {
+	return current != right.current;
+}
+
+char AStringIterator::operator*() {
+	return *current;
 }

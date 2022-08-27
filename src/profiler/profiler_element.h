@@ -14,6 +14,7 @@ private:
 	Stopwatch stopwatch;
 	ProfilerElementCategory category;
 public:
+	ProfilerElement() = default;
 	ProfilerElement(AString _name, ProfilerElementCategory _category);
 	
 	void begin();

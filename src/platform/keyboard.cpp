@@ -32,19 +32,19 @@ public:
 #endif
 
 namespace {
-	Keyboard* g_Keyboard;
+	Keyboard* g_keyboard;
 }
 
 Keyboard*& Keyboard::get() {
-	return g_Keyboard;
+	return g_keyboard;
 }
 
 void Keyboard::initialize() {
-	g_Keyboard = new Keyboard();
+	g_keyboard = new Keyboard();
 }
 
 void Keyboard::deinitialize() {
-	delete g_Keyboard;
+	delete g_keyboard;
 }
 
 Keyboard::Keyboard() {

@@ -2,7 +2,26 @@
 #define ASTRING_H
 #include "containers/stretch.h"
 
+class String;
+
+class AStringIterator {
+	friend class String;
+private:
+	char* current;
+public:
+	AStringIterator(char* _current);
+
+	AStringIterator operator++();
+	AStringIterator& operator++(int);
+	AStringIterator operator--();
+	AStringIterator& operator--(int);
+	bool operator==(const AStringIterator& right);
+	bool operator!=(const AStringIterator& right);
+	char operator*();
+};
+
 class AString {
+	friend class StringIterator;
 private:
 	Stretch<char> stretch;
 public:
@@ -24,6 +43,8 @@ public:
 	char& first();
 	char& last();
 	char& at(size_t i);
+	AStringIterator begin();
+	AStringIterator end();
 	bool operator==(const AString& str);
 	bool operator!=(const AString& str);
 	AString operator=(const AString& astring_copy);

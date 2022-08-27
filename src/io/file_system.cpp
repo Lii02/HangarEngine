@@ -4,19 +4,19 @@
 #define COMPLETE_PATH(str) (path + "\\" + str)
 
 namespace {
-	FileSystem* g_FileSystem;
+	FileSystem* g_file_system;
 }
 
 void FileSystem::initialize() {
-	g_FileSystem = new FileSystem("./");
+	g_file_system = new FileSystem("./");
 }
 
 void FileSystem::deinitialize() {
-	delete g_FileSystem;
+	delete g_file_system;
 }
 
 FileSystem*& FileSystem::get() {
-	return g_FileSystem;
+	return g_file_system;
 }
 
 FileSystem::FileSystem(AString _fs_path) {
@@ -37,8 +37,8 @@ FileSystem ::~FileSystem() {
 void FileSystem::open() {
 	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path.ptr())) {
 		if (entry.is_directory()) {
-			FileSystem* group = new FileSystem(entry.path().string().c_str());
-			folders.push(group);
+			FileSystem* folder = new FileSystem(entry.path().string().c_str());
+			folders.push(folder);
 		} else if(entry.is_regular_file()) {
 			auto filepath = entry.path().string();
 			File* file = new File(filepath.c_str(), FileMode::READ, filepath.substr(path.get_length(), filepath.length()).c_str());

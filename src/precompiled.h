@@ -39,7 +39,6 @@ struct MessagePacket {
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
 #include <filesystem>
-#include <stack>
 #include <map>
 
 #include <time.h>

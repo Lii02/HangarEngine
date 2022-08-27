@@ -66,8 +66,8 @@ public:
 		: stretch(_start_capacity) {
 	}
 
-	List(const List& list_copy) {
-		copy(list_copy);
+	List(const List& _list_copy) {
+		copy(_list_copy);
 	}
 
 	T* ptr() {

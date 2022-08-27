@@ -2,19 +2,19 @@
 #include "profiler.h"
 
 namespace {
-	Profiler* g_Profiler;
+	Profiler* g_profiler;
 }
 
 Profiler*& Profiler::get() {
-	return g_Profiler;
+	return g_profiler;
 }
 
 void Profiler::initialize() {
-	g_Profiler = new Profiler();
+	g_profiler = new Profiler();
 }
 
 void Profiler::deinitialize() {
-	delete g_Profiler;
+	delete g_profiler;
 }
 
 Profiler::Profiler() {
@@ -37,7 +37,7 @@ void Profiler::begin_profile(AString name, ProfilerElementCategory category) {
 	elements.push(element);
 }
 
-void Profiler::end_function() {
+void Profiler::end_profile() {
 	ProfilerElement& element = elements.top();
 	element.end();
 	totals[element.get_category()] += element.get_elapsed_time();

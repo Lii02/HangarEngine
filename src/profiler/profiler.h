@@ -1,10 +1,11 @@
 #ifndef PROFILER_H
 #define PROFILER_H
 #include "profiler_element.h"
+#include "containers/stack.h"
 
 class Profiler {
 private:
-	std::stack<ProfilerElement> elements;
+	Stack<ProfilerElement> elements;
 	std::map<ProfilerElementCategory, double> totals;
 public:
 	static Profiler*& get();
@@ -17,7 +18,7 @@ public:
 
 	void clear_totals();
 	void begin_profile(AString name, ProfilerElementCategory category);
-	void end_function();
+	void end_profile();
 	double get_total(ProfilerElementCategory category);
 };
 
