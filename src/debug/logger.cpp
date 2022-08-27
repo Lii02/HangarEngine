@@ -45,7 +45,7 @@ namespace Logger {
 	void assertion(const std::string& msg, const char* file, int64_t line) {
 		std::lock_guard<std::mutex> lck(g_LoggerMutex);
 		Console::get()->set_text_color(ConsoleTextColor::MAGENTA);
-		printf("[Hangar | Assert fail | %s, %d]: %s\n", file, line, TimeHelper::get_time_string_24().c_str(), msg.c_str());
+		printf("[Hangar | Assert fail | %s, %d | %s]: %s\n", file, line, TimeHelper::get_time_string_24().c_str(), msg.c_str());
 		Console::get()->reset_colors();
 	}
 }

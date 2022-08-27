@@ -29,7 +29,7 @@ struct MessagePacket {
 #define HANGAR_LINUX
 #endif
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 #define HANGAR_ENABLE_ASSERT
 #endif
 

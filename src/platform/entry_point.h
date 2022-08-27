@@ -8,7 +8,7 @@ struct ArgumentPacket {
 
 extern void Main(ArgumentPacket args);
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
 #ifdef HANGAR_WINDOWS
 	#pragma comment(linker, "/subsystem:console")
