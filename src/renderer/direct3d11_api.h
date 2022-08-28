@@ -31,7 +31,7 @@ private:
 	D3D_FEATURE_LEVEL feature_level;
 	GPU* selected_gpu;
 public:
-	Direct3D11API(GameWindow* _window_ptr);
+	Direct3D11API(void* _window_ptr);
 	~Direct3D11API();
 
 	virtual void initialize() override;

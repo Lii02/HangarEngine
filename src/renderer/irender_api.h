@@ -30,7 +30,7 @@ typedef List<InputElement> InputElementArray;
 
 class IRenderAPI {
 protected:
-	GameWindow* window_ptr;
+	void* window_ptr;
 	uint64_t object_draw_count; // # of objects being draw
 	uint64_t vertex_draw_count; // # of vertices being draw
 	float clear_color[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -43,7 +43,7 @@ protected:
 	struct Texture2D;
 	List<Texture2D*> textures;
 public:
-	IRenderAPI(GameWindow* _window_ptr) : window_ptr(_window_ptr), object_draw_count(0), vertex_draw_count(0), depth(1.0f), vsync(true) { }
+	IRenderAPI(void* _window_ptr) : window_ptr(_window_ptr), object_draw_count(0), vertex_draw_count(0), depth(1.0f), vsync(true) { }
 	virtual ~IRenderAPI() { }
 	IRenderAPI(const IRenderAPI&) = delete;
 

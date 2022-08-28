@@ -1,6 +1,5 @@
 #include "Precompiled.h"
 #include "direct3d11_api.h"
-#include "platform/game_window.h"
 #include "debug/assert.h"
 #include <d3dcompiler.h>
 
@@ -43,7 +42,7 @@ struct Direct3D11API::IRenderAPI::Texture2D {
 	}
 };
 
-Direct3D11API::Direct3D11API(GameWindow* _window_ptr)
+Direct3D11API::Direct3D11API(void* _window_ptr)
 	: IRenderAPI(_window_ptr) {
 	initialize();
 }
@@ -54,8 +53,8 @@ Direct3D11API::~Direct3D11API() {
 
 void Direct3D11API::set_viewport() {
 	D3D11_VIEWPORT vp;
-	vp.Width = (float)window_ptr->get_width();
-	vp.Height = (float)window_ptr->get_height();
+	vp.Width = (float)1280;
+	vp.Height = (float)720;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = depth;
 	vp.TopLeftX = 0;

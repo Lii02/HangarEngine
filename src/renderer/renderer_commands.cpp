@@ -1,7 +1,6 @@
 #include "precompiled.h"
 #include "renderer_commands.h"
 #include "direct3d11_api.h"
-#include "platform/game_window.h"
 
 namespace {
 	RendererType g_RendererType;
