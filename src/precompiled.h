@@ -38,11 +38,10 @@ struct MessagePacket {
 #define HANGAR_BIT(x) (1 << x)
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
-#include <map>
-
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #endif

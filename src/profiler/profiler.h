@@ -2,11 +2,12 @@
 #define PROFILER_H
 #include "profiler_element.h"
 #include "containers/stack.h"
+#include "containers/map.h"
 
 class Profiler {
 private:
 	Stack<ProfilerElement> elements;
-	std::map<ProfilerElementCategory, double> totals;
+	Map<ProfilerElementCategory, double> totals;
 public:
 	static Profiler*& get();
 	static void initialize();

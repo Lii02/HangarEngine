@@ -18,17 +18,15 @@ void Profiler::deinitialize() {
 }
 
 Profiler::Profiler() {
-	totals.emplace(ProfilerElementCategory::RENDER, 0.0);
-	totals.emplace(ProfilerElementCategory::MISC, 0.0);
+	totals.insert(create_pair<ProfilerElementCategory, double>(ProfilerElementCategory::RENDER, 0.0));
+	totals.insert(create_pair<ProfilerElementCategory, double>(ProfilerElementCategory::MISC, 0.0));
 }
 
 Profiler::~Profiler() {
 }
 
 void Profiler::clear_totals() {
-	for (auto& val : totals) {
-		val.second = 0.0;
-	}
+	totals.set_values(0.0);
 }
 
 void Profiler::begin_profile(AString name, ProfilerElementCategory category) {

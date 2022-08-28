@@ -79,6 +79,26 @@ public:
 		}
 		return nullptr;
 	}
+
+	V& operator[](const K& key) {
+		V* v = find(key);
+		return *v;
+	}
+
+	const V& operator[](const K& key) const {
+		V* v = find(key);
+		return *v;
+	}
+
+	void set_values(const V& value) {
+		for (size_t i = 0; i < num_buckets; i++) {
+			List<MapPair>& list = tables[i];
+			for (auto it = list.begin(); it != list.end(); ++it) {
+				MapPair& pair = *it;
+				pair.second = value;
+			}
+		}
+	}
 };
 
 #endif

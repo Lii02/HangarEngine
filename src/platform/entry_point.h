@@ -15,7 +15,6 @@ extern void Main(ArgumentPacket args);
 #endif
 
 int main(int argc, char** argv) {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	srand(time(NULL));
 	Main({ (uint32_t)argc, argv });
 	return 0;
@@ -28,7 +27,6 @@ int main(int argc, char** argv) {
 
 extern "C" {
 	int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
-		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		srand(time(NULL));
 		Main({ (uint32_t)__argc, __argv });
 		return 0;

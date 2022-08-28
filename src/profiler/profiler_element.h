@@ -3,7 +3,7 @@
 #include "framework/stopwatch.h"
 #include "string/astring.h"
 
-enum class ProfilerElementCategory {
+enum ProfilerElementCategory : uint8_t {
 	RENDER,
 	MISC,
 };
