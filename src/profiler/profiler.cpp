@@ -5,7 +5,7 @@ namespace {
 	Profiler* g_profiler;
 }
 
-Profiler*& Profiler::get() {
+Profiler* Profiler::get() {
 	return g_profiler;
 }
 

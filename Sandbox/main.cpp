@@ -9,7 +9,7 @@ int main(int args, char** argv) {
 	Logger::initialize();
 	FileSystem::initialize();
 	Profiler::initialize();
-	Profiler*& profiler = Profiler::get();
+	Profiler* profiler = Profiler::get();
 
 	Profiler::deinitialize();
 	FileSystem::deinitialize();

@@ -9,7 +9,7 @@ private:
 	Stack<ProfilerElement> elements;
 	Map<ProfilerElementCategory, double> totals;
 public:
-	static Profiler*& get();
+	static Profiler* get();
 	static void initialize();
 	static void deinitialize();
 
