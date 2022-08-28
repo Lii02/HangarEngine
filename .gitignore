@@ -4,11 +4,4 @@ build/
 *.vcxproj
 *.filters
 *.user
-CMakeFiles/
-Debug/
-Release/
-*.dir/
-*.cmake
-CMakeCache.txt
-*.kdev4
-.kdev4/
+intermediates/
