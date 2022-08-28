@@ -15,5 +15,5 @@ void Main(ArgumentPacket args) {
 	Profiler::deinitialize();
 	FileSystem::deinitialize();
 	Logger::deinitialize();
-	Thread::sleep(5000);
+	Thread::sleep(2500);
 }

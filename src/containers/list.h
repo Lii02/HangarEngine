@@ -133,7 +133,7 @@ public:
 	}
 
 	Iterator insert(Iterator iterator, T data) {
-		if (get_size() == 0 && iterator != end()) {
+		if (get_size() == 0 || iterator != end()) {
 			push(data);
 			iterator = end();
 		} else {

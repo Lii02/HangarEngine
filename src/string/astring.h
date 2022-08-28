@@ -43,6 +43,7 @@ public:
 	char& first();
 	char& last();
 	char& at(size_t i);
+	AString substring(size_t offset, size_t count);
 	AStringIterator begin();
 	AStringIterator end();
 	bool operator==(const AString& str);

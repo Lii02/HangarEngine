@@ -12,10 +12,10 @@ AString::AString(size_t _start_capacity, char c) {
 }
 
 AString::AString(const char* _str) {
-	size_t string_length = strlen(_str);
-	stretch.set_size(string_length);
-	stretch.resize(string_length);
-	strcpy(ptr(), _str);
+	for (size_t i = 0; i < strlen(_str); i++) {
+		append(_str[i]);
+	}
+	append('\0');
 }
 
 AString::AString(const AString& _astring_copy) {
@@ -63,10 +63,11 @@ void AString::clear() {
 }
 
 void AString::copy(const AString& astring_copy) {
-	size_t string_length = astring_copy.get_length();
-	stretch.set_size(string_length);
-	stretch.resize(string_length);
-	strcpy(ptr(), astring_copy.ptr());
+	stretch.clear();
+	for (size_t i = 0; i < astring_copy.get_length(); i++) {
+		append(astring_copy[i]);
+	}
+	append('\0');
 }
 
 char& AString::first() {
@@ -79,6 +80,16 @@ char& AString::last() {
 
 char& AString::at(size_t i) {
 	return stretch[i];
+}
+
+AString AString::substring(size_t offset, size_t count) {
+	AString str;
+	size_t index = 0;
+	while (index < count) {
+		str.append(at(offset + index));
+		index++;
+	}
+	return str;
 }
 
 AStringIterator AString::begin() {

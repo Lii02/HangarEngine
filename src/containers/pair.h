@@ -20,6 +20,14 @@ struct Pair {
 		delete_first();
 		delete_second();
 	}
+
+	bool operator==(const Pair& other_pair) {
+		return first == other_pair.first && second == other_pair.second;
+	}
+
+	bool operator!=(const Pair& other_pair) {
+		return !(*this == other_pair);
+	}
 };
 
 template <typename F, typename S>

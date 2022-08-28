@@ -9,7 +9,7 @@ namespace {
 }
 
 void FileSystem::initialize() {
-	g_file_system = new FileSystem("./");
+	g_file_system = new FileSystem(".\\");
 }
 
 void FileSystem::deinitialize() {
@@ -26,8 +26,8 @@ FileSystem::FileSystem(AString _fs_path) {
 }
 
 FileSystem ::~FileSystem() {
-	for (auto& group : folders) {
-		delete group;
+	for (auto& folder : folders) {
+		delete folder;
 	}
 
 	for (auto& file : files) {
@@ -37,12 +37,13 @@ FileSystem ::~FileSystem() {
 
 void FileSystem::open() {
 	for (std::filesystem::directory_entry entry : std::filesystem::directory_iterator(path.ptr())) {
+		AString filepath_string = entry.path().string().c_str();
 		if (entry.is_directory()) {
-			FileSystem* folder = new FileSystem(entry.path().string().c_str());
+			FileSystem* folder = new FileSystem(filepath_string);
 			folders.push(folder);
 		} else if(entry.is_regular_file()) {
-			auto filepath = entry.path().string();
-			File* file = new File(filepath.c_str(), FileMode::READ, filepath.substr(path.get_length(), filepath.length()).c_str());
+			AString filename = filepath_string.substring(path.get_length() + 1, filepath_string.get_length());
+			File* file = new File(filepath_string, FileMode::READ, filename);
 			files.push(file);
 		}
 	}

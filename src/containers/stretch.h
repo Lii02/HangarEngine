@@ -92,9 +92,7 @@ public:
 	}
 
 	void clear() {
-		free_data();
-		capacity = 1;
-		buffer = new T[capacity];
+		size = 0;
 	}
 
 	Stretch& operator=(const Stretch& stretch_copy) {

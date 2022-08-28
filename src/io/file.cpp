@@ -6,8 +6,8 @@
 
 File::File(AString _path, FileMode _mode, AString _filename) {
 	path = _path;
-	filename = _filename;
 	mode = _mode;
+	filename = _filename;
 	is_open = false;
 }
 
