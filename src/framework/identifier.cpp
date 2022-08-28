@@ -1,6 +1,5 @@
 #include "precompiled.h"
 #include "identifier.h"
-#include "helpers/time_helper.h"
 #include "string/astring.h"
 
 Identifier::Identifier() {
@@ -32,7 +31,7 @@ const char* Identifier::get_string() const {
 }
 
 void Identifier::generate() {
-	uint64_t timestamp = TimeHelper::get_unix_timestamp();
+	uint64_t timestamp = time(NULL);
 	itoa(timestamp, str, 16);
 	itoa(0x4C69, str + 8, 16);
 	for (int i = 12; i < HANGAR_IDENTIFIER_LENGTH; i++) {
