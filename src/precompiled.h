@@ -9,22 +9,6 @@
 
 #ifdef _WIN32
 #define HANGAR_WINDOWS
-#define NOGDI
-#define NOMINMAX
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <Windowsx.h>
-#undef UINT
-#undef INT
-#undef FLOAT
-#undef min
-#undef max
-struct MessagePacket {
-	HWND hwnd;
-	UINT msg;
-	WPARAM w_param;
-	LPARAM l_param;
-};
 #elif __linux__
 #define HANGAR_LINUX
 #endif
@@ -41,5 +25,6 @@ struct MessagePacket {
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #endif
