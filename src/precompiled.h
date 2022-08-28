@@ -1,8 +1,6 @@
 #ifndef HANGAR_PRECOMPILED_H
 #define HANGAR_PRECOMPILED_H
 
-#pragma warning(disable : 5043)
-
 #ifdef _MSC_VER
 #define HANGAR_API __declspec(dllexport)
 #elif
