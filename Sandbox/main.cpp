@@ -4,6 +4,7 @@
 #include "io/file_system.h"
 #include "profiler/profiler.h"
 #include "threading/thread.h"
+#include "containers/map.h"
 
 void Main(ArgumentPacket args) {
 	Logger::initialize();
@@ -14,5 +15,5 @@ void Main(ArgumentPacket args) {
 	Profiler::deinitialize();
 	FileSystem::deinitialize();
 	Logger::deinitialize();
-	system("pause");
+	Thread::sleep(5000);
 }

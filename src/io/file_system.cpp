@@ -1,5 +1,6 @@
 #include "precompiled.h"
 #include "file_system.h"
+#include <filesystem>
 
 #define COMPLETE_PATH(str) (path + "\\" + str)
 

@@ -38,6 +38,10 @@ public:
 		stretch.copy(_stack_copy.stretch);
 	}
 
+	void clear() {
+		stretch.clear();
+	}
+
 	T& back() {
 		return stretch[0];
 	}
@@ -57,6 +61,14 @@ public:
 	Stack operator=(const Stack& stack_copy) {
 		copy(stack_copy);
 		return *this;
+	}
+
+	T& operator[](size_t i) {
+		return stretch[i];
+	}
+
+	const T& operator[](size_t i) const {
+		return stretch[i];
 	}
 };
 

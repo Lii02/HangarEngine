@@ -18,7 +18,7 @@ Vector2::Vector2(float* arr) {
 }
 
 float Vector2::length() const {
-	return std::sqrtf(x * x + y * y);
+	return sqrtf(x * x + y * y);
 }
 
 float Vector2::length_squared() const {
@@ -64,7 +64,7 @@ Vector3::Vector3(float* arr) {
 }
 
 float Vector3::length() const {
-	return std::sqrtf(x * x + y * y + z * z);
+	return sqrtf(x * x + y * y + z * z);
 }
 
 float Vector3::length_squared() const {
@@ -114,7 +114,7 @@ Vector4::Vector4(float* arr) {
 }
 
 float Vector4::length() const {
-	return std::sqrtf(x * x + y * y + z * z + w * w);
+	return sqrtf(x * x + y * y + z * z + w * w);
 }
 
 float Vector4::length_squared() const {

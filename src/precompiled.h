@@ -38,7 +38,6 @@ struct MessagePacket {
 #define HANGAR_BIT(x) (1 << x)
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
-#include <filesystem>
 #include <map>
 
 #include <time.h>
