@@ -15,11 +15,6 @@ workspace "hangar"
 		staticruntime "off"
 		systemversion "latest"
         	defines { "WIN32" }
-		links {
-			d3d11,
-			dxgi,
-			d3dcompiler
-		}
 	filter "configurations:Debug"
 		symbols "on"
 		defines {  "_DEBUG", }

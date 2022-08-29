@@ -3,7 +3,7 @@
 #include "irender_api.h"
 
 enum class RendererType {
-	DIRECTX11,
+	VULKAN,
 };
 
 class GameWindow;

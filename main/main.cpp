@@ -3,7 +3,7 @@
 #include "io/file_system.h"
 #include "profiler/profiler.h"
 #include "threading/thread.h"
-#include "containers/map.h"
+#include "threading/thread_safe.h"
 
 int main(int args, char** argv) {
 	Logger::initialize();
