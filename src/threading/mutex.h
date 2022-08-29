@@ -15,4 +15,12 @@ public:
 	bool get_is_locked() const;
 };
 
+class MutexLock {
+private:
+	Mutex* mutex;
+public:
+	MutexLock(Mutex* _mutex);
+	~MutexLock();
+};
+
 #endif

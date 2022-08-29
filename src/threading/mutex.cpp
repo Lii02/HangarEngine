@@ -22,3 +22,12 @@ void* Mutex::get_handle() {
 bool Mutex::get_is_locked() const {
 	return is_locked;
 }
+
+MutexLock::MutexLock(Mutex* _mutex) {
+	mutex = _mutex;
+	mutex->lock();
+}
+
+MutexLock::~MutexLock() {
+	mutex->unlock();
+}
