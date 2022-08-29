@@ -5,27 +5,28 @@
 template <class T>
 class ThreadSafe {
 private:
-	T* object;
-	Mutex mutex;
+	T object;
+	mutable Mutex mutex;
 public:
-	ThreadSafe(T* _object) {
+	ThreadSafe(T _object) {
 		object = _object;
 	}
 
 	~ThreadSafe() {
-		delete object;
 	}
 
-	void load(T* _object) {
-		if (object) {
-			mutex.lock();
-			delete object;
-			object = _object;
-			mutex.unlock();
-		}
+	void load(T _object) {
+		mutex.lock();
+		object = _object;
+		mutex.unlock();
 	}
 
-	T* get() {
+	T& get() {
+		MutexLock lock = MutexLock(&mutex);
+		return object;
+	}
+
+	const T& get() const {
 		MutexLock lock = MutexLock(&mutex);
 		return object;
 	}
