@@ -9,13 +9,13 @@ class System {
 private:
 public:
 	static System* get();
-	static void set_global_system(System* system);
+	static void initialize();
 	static void deinitialize();
 
 	virtual ~System() { }
 
 	virtual void debug_break() = 0;
-	virtual void initialize() = 0;
+	virtual void startup() = 0;
 	virtual AString get_name() = 0;
 	virtual DynamicLibrary load_dynamic_library(AString filename) = 0;
 	virtual void free_dynamic_library(DynamicLibrary library) = 0;

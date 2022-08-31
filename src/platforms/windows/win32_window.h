@@ -6,8 +6,9 @@
 class Win32Window : public SystemWindow {
 private:
 	HWND handle;
+	HINSTANCE instance;
 public:
-	Win32Window();
+	Win32Window(AString _title, uint32_t _width, uint32_t _height, bool _is_resizable);
 	~Win32Window();
 
 	virtual void set_is_resizable(bool _is_resizable) override;
@@ -18,6 +19,7 @@ public:
 	virtual void close() override;
 	virtual void poll() override;
 	virtual void* get_window_handle() override;
+	virtual bool is_focus() override;
 };
 
 #endif

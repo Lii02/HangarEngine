@@ -6,7 +6,7 @@ void SystemWin32::debug_break() {
 	DebugBreak();
 }
 
-void SystemWin32::initialize() {
+void SystemWin32::startup() {
 }
 
 AString SystemWin32::get_name() {
