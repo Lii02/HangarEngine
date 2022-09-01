@@ -1,35 +1,35 @@
 #ifndef SYSTEM_WINDOW_H
 #define SYSTEM_WINDOW_H
 #include "string/astring.h"
+#include "math/vectors.h"
+
+enum {
+	SYSTEM_WINDOW_RESIZABLE = HANGAR_BIT(0),
+	SYSTEM_WINDOW_FULLSCREEN = HANGAR_BIT(1),
+};
 
 class SystemWindow {
 public:
-	struct Dimensions {
-		uint32_t width;
-		uint32_t height;
-	};
 protected:
-	bool is_resizable, is_polling;
+	bool is_running;
 	AString title;
-	Dimensions dimensions;
+	Vector2 dimensions;
+	SDL_Window* window;
+	uint8_t flags;
 public:
-	SystemWindow(AString _title, uint32_t _width, uint32_t _height, bool _is_resizable);
+	SystemWindow(AString _title, uint32_t _width, uint32_t _height, uint8_t _flags);
 	virtual ~SystemWindow() { }
 
-	bool get_is_resizable() const;
-	bool is_running() const;
+	bool get_is_running() const;
 	AString get_title() const;
-	virtual void set_is_resizable(bool _is_resizable);
-	virtual Dimensions get_dimensions();
-	virtual void set_dimensions(Dimensions new_dimensions);
-	virtual void set_title(AString new_title);
-	virtual void open() = 0;
-	virtual void close() = 0;
-	virtual void poll() = 0;
-	virtual void* get_window_handle() = 0;
-	virtual bool is_focus() = 0;
-
-	static SystemWindow* create(AString title, uint32_t width, uint32_t height, bool is_resizable);
+	Vector2 get_dimensions();
+	void set_dimensions(Vector2 new_dimensions);
+	void set_title(AString new_title);
+	void open();
+	void close();
+	void poll();
+	void* get_window_handle();
+	bool is_focus();
 };
 
 #endif

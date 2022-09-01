@@ -20,6 +20,9 @@
 #define HANGAR_BIT(x) (1 << x)
 #define HANGAR_ARRAYSIZE(arr) (sizeof(*arr) / sizeof(arr))
 
+#include <SDL2/SDL.h>
+#undef main
+
 #include <time.h>
 #include <stdlib.h>
 #include <math.h>

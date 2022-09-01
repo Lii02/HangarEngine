@@ -3,20 +3,21 @@
 
 Mutex::Mutex() {
 	is_locked = false;
+	m = SDL_CreateMutex();
+}
+
+Mutex::~Mutex() {
+	SDL_DestroyMutex(m);
 }
 
 void Mutex::lock() {
-	m.lock();
+	SDL_LockMutex(m);
 	is_locked = true;
 }
 
 void Mutex::unlock() {
-	m.unlock();
+	SDL_UnlockMutex(m);
 	is_locked = false;
-}
-
-void* Mutex::get_handle() {
-	return m.native_handle();
 }
 
 bool Mutex::get_is_locked() const {

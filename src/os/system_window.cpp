@@ -1,46 +1,68 @@
 #include "precompiled.h"
 #include "system_window.h"
-#ifdef HANGAR_WINDOWS
-#include "platforms/windows/win32_window.h"
-#endif
+#include <SDL2/SDL_syswm.h>
 
-SystemWindow::SystemWindow(AString _title, uint32_t _width, uint32_t _height, bool _is_resizable) {
+SystemWindow::SystemWindow(AString _title, uint32_t _width, uint32_t _height, uint8_t _flags) {
 	title = _title;
-	dimensions = { _width, _height };
-	is_resizable = _is_resizable;
+	dimensions = Vector2(_width, _height);
+	flags = _flags;
 }
 
-bool SystemWindow::get_is_resizable() const {
-	return is_resizable;
-}
-
-bool SystemWindow::is_running() const {
-	return is_polling;
+bool SystemWindow::get_is_running() const {
+	return is_running;
 }
 
 AString SystemWindow::get_title() const {
 	return title;
 }
 
+Vector2 SystemWindow::get_dimensions() {
+	Vector2 dim;
+	return dim;
+}
+
+void SystemWindow::set_dimensions(Vector2 new_dimensions) {
+	dimensions = new_dimensions;
+}
+
 void SystemWindow::set_title(AString new_title) {
 	title = new_title;
 }
 
-void SystemWindow::set_is_resizable(bool _is_resizable) {
-	is_resizable = _is_resizable;
+void SystemWindow::open() {
+	uint32_t sdl_flags = 0;
+	if (flags & SYSTEM_WINDOW_RESIZABLE)
+		sdl_flags |= SDL_WINDOW_RESIZABLE;
+	window = SDL_CreateWindow(title.ptr(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimensions.x, dimensions.y, sdl_flags);
+	if (flags & SYSTEM_WINDOW_FULLSCREEN)
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	is_running = true;
 }
 
-SystemWindow::Dimensions SystemWindow::get_dimensions() {
-	return dimensions;
+void SystemWindow::close() {
+	SDL_DestroyWindow(window);
 }
 
-void SystemWindow::set_dimensions(SystemWindow::Dimensions new_dimensions) {
-	dimensions = new_dimensions;
+void SystemWindow::poll() {
+	SDL_Event ev;
+	while (SDL_PollEvent(&ev)) {
+		switch (ev.type) {
+		case SDL_QUIT:
+			is_running = false;
+			break;
+		}
+	}
 }
 
-SystemWindow* SystemWindow::create(AString title, uint32_t width, uint32_t height, bool is_resizable) {
+void* SystemWindow::get_window_handle() {
 #ifdef HANGAR_WINDOWS
-	return new Win32Window(title, width, height, is_resizable);
+	SDL_SysWMinfo wmInfo;
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(window, &wmInfo);
+	return wmInfo.info.win.window;
 #endif
-	return nullptr;
+}
+
+bool SystemWindow::is_focus() {
+	return false;
 }

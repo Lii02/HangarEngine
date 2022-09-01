@@ -1,17 +1,17 @@
 #ifndef MUTEX_H
 #define MUTEX_H
-#include <mutex>
+#include <SDL2/SDL_mutex.h>
 
 class Mutex {
 private:
-	std::mutex m;
+	SDL_mutex* m;
 	bool is_locked;
 public:
 	Mutex();
+	~Mutex();
 
 	void lock();
 	void unlock();
-	void* get_handle();
 	bool get_is_locked() const;
 };
 

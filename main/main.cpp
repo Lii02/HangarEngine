@@ -12,14 +12,13 @@ int main(int args, char** argv) {
 	System::initialize();
 	Profiler::initialize();
 	Profiler* profiler = Profiler::get();
-	SystemWindow* window = SystemWindow::create("Title", 1280, 720, false);
-	window->open();
+	SystemWindow window = SystemWindow("Hangar Engine", 1280, 720, SYSTEM_WINDOW_RESIZABLE);
+	window.open();
 
-	while (window->is_running()) {
-		window->poll();
+	while (window.get_is_running()) {
+		window.poll();
 	}
-	
-	delete window;
+
 	Profiler::deinitialize();
 	System::deinitialize();
 	FileSystem::deinitialize();
