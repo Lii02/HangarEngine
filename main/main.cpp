@@ -18,10 +18,11 @@ int main(int args, char** argv) {
 	FileSystem* fs = FileSystem::get();
 
 	logger->message("Platform name: " + sys->get_name());
+	logger->message("Path: " + sys->get_path());
 	logger->message("CPU count: " + AString::int_to_string(sys->get_cpu_count()));
 	logger->message("RAM (GB): " + AString::float_to_string(sys->get_ram_mb() / 1024.0f));
 
-	SystemWindow window = SystemWindow("Hangar Engine", 1280, 720, SYSTEM_WINDOW_RESIZABLE);
+	SystemWindow window = SystemWindow("Hangar Engine", 1280, 720, SYSTEM_WINDOW_RESIZABLE | SYSTEM_WINDOW_VULKAN);
 	window.open();
 
 	while (window.get_is_running()) {

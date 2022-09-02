@@ -30,7 +30,7 @@ void System::debug_break() const {
 }
 
 void System::startup() {
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK);
+	SDL_Init(SDL_INIT_EVERYTHING);
 }
 
 AString System::get_name() const {

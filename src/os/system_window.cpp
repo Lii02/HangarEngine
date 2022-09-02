@@ -1,5 +1,6 @@
 #include "precompiled.h"
 #include "system_window.h"
+#include "debug/assert.h"
 #include <SDL2/SDL_syswm.h>
 
 namespace {
@@ -39,10 +40,15 @@ void SystemWindow::set_title(AString new_title) {
 }
 
 void SystemWindow::open() {
-	uint32_t sdl_flags = 0;
+	uint32_t sdl_flags = SDL_WINDOW_SHOWN;
 	if (flags & SYSTEM_WINDOW_RESIZABLE)
 		sdl_flags |= SDL_WINDOW_RESIZABLE;
+	if (flags & SYSTEM_WINDOW_VULKAN)
+		sdl_flags |= SDL_WINDOW_VULKAN;
+	if (flags & SYSTEM_WINDOW_BORDERLESS)
+		sdl_flags |= SDL_WINDOW_BORDERLESS;
 	window = SDL_CreateWindow(title.ptr(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimensions.x, dimensions.y, sdl_flags);
+	HANGAR_ASSERT(window != nullptr, SDL_GetError());
 	if (flags & SYSTEM_WINDOW_FULLSCREEN)
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	is_running = true;
