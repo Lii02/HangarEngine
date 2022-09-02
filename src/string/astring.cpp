@@ -22,6 +22,28 @@ AString::AString(const AString& _astring_copy) {
 	copy(_astring_copy);
 }
 
+AString AString::int_to_string(int number) {
+	AString str;
+	char buffer[10]{ 0 };
+	itoa(number, buffer, 10);
+	for (size_t i = 0; i < strlen(buffer); i++) {
+		str.append(buffer[i]);
+	}
+	str.append('\0');
+	return str;
+}
+
+AString AString::float_to_string(float number) {
+	AString str;
+	char buffer[10]{ 0 };
+	sprintf(buffer, "%f", number);
+	for (size_t i = 0; i < strlen(buffer); i++) {
+		str.append(buffer[i]);
+	}
+	str.append('\0');
+	return str;
+}
+
 char* AString::ptr() {
 	return stretch.ptr();
 }
@@ -67,7 +89,6 @@ void AString::copy(const AString& astring_copy) {
 	for (size_t i = 0; i < astring_copy.get_length(); i++) {
 		append(astring_copy[i]);
 	}
-	append('\0');
 }
 
 char& AString::first() {
@@ -110,6 +131,7 @@ bool AString::operator!=(const AString& str) {
 
 AString operator+(const AString& left, const AString& right) {
 	AString copy = left;
+	copy.pop();
 	for(size_t i = 0; i < right.get_length(); i++)
 		copy.append(right[i]);
 	return copy;

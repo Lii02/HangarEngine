@@ -11,7 +11,16 @@ int main(int args, char** argv) {
 	FileSystem::initialize();
 	System::initialize();
 	Profiler::initialize();
+
+	System* sys = System::get();
 	Profiler* profiler = Profiler::get();
+	Logger* logger = Logger::get();
+	FileSystem* fs = FileSystem::get();
+
+	logger->message("Platform name: " + sys->get_name());
+	logger->message("CPU count: " + AString::int_to_string(sys->get_cpu_count()));
+	logger->message("RAM (GB): " + AString::float_to_string(sys->get_ram_mb() / 1024.0f));
+
 	SystemWindow window = SystemWindow("Hangar Engine", 1280, 720, SYSTEM_WINDOW_RESIZABLE);
 	window.open();
 

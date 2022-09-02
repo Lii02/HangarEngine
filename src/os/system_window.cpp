@@ -2,10 +2,19 @@
 #include "system_window.h"
 #include <SDL2/SDL_syswm.h>
 
+namespace {
+	SystemWindow* singleton;
+}
+
+SystemWindow* SystemWindow::get_singleton() {
+	return singleton;
+}
+
 SystemWindow::SystemWindow(AString _title, uint32_t _width, uint32_t _height, uint8_t _flags) {
 	title = _title;
 	dimensions = Vector2(_width, _height);
 	flags = _flags;
+	singleton = this;
 }
 
 bool SystemWindow::get_is_running() const {

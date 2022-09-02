@@ -30,6 +30,8 @@ public:
 	AString(const char* _str);
 	AString(const AString& _astring_copy);
 
+	static AString int_to_string(int number);
+	static AString float_to_string(float number);
 	char* ptr();
 	const char* ptr() const;
 	size_t get_length() const;

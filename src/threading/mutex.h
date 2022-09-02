@@ -21,6 +21,7 @@ private:
 public:
 	MutexLock(Mutex* _mutex);
 	~MutexLock();
+	MutexLock(const MutexLock&) = delete;
 };
 
 #endif

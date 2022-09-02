@@ -17,6 +17,8 @@ protected:
 	SDL_Window* window;
 	uint8_t flags;
 public:
+	static SystemWindow* get_singleton();
+
 	SystemWindow(AString _title, uint32_t _width, uint32_t _height, uint8_t _flags);
 	virtual ~SystemWindow() { }
 

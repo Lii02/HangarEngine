@@ -25,16 +25,28 @@ System::~System() {
 	SDL_Quit();
 }
 
-void System::debug_break() {
+void System::debug_break() const {
 	SDL_TriggerBreakpoint();
 }
 
 void System::startup() {
-	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK);
 }
 
-AString System::get_name() {
+AString System::get_name() const {
 	return SDL_GetPlatform();
+}
+
+AString System::get_path() const {
+	return SDL_GetBasePath();
+}
+
+int System::get_cpu_count() const {
+	return SDL_GetCPUCount();
+}
+
+int System::get_ram_mb() const {
+	return SDL_GetSystemRAM();
 }
 
 DynamicLibrary System::load_dynamic_library(AString filename) {

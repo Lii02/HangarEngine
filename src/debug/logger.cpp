@@ -25,31 +25,26 @@ Logger::~Logger() {
 }
 
 void Logger::message(const AString& msg) {
-	mutex.lock();
+	MutexLock lock(&mutex);
 	printf("[Hangar | Message | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
-	mutex.unlock();
 }
 
 void Logger::error(const AString& msg) {
-	mutex.lock();
+	MutexLock lock(&mutex);
 	printf("[Hangar | Error | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
-	mutex.unlock();
 }
 
 void Logger::warning(const AString& msg) {
-	mutex.lock();
+	MutexLock lock(&mutex);
 	printf("[Hangar | Warning | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
-	mutex.unlock();
 }
 
 void Logger::confirmation(const AString& msg) {
-	mutex.lock();
+	MutexLock lock(&mutex);
 	printf("[Hangar | Confirmation | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
-	mutex.unlock();
 }
 
 void Logger::assertion(const AString& msg, const char* file, int64_t line) {
-	mutex.lock();
+	MutexLock lock(&mutex);
 	printf("[Hangar | Assert fail | %s, %d | %s]: %s\n", file, line, StringFuncs::get_time_string_24h().ptr(), msg.ptr());
-	mutex.unlock();
 }
