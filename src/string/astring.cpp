@@ -89,6 +89,8 @@ void AString::copy(const AString& astring_copy) {
 	for (size_t i = 0; i < astring_copy.get_length(); i++) {
 		append(astring_copy[i]);
 	}
+	if (astring_copy.get_length() > get_length())
+		append('\0');
 }
 
 char& AString::first() {

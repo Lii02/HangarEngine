@@ -93,6 +93,7 @@ public:
 
 	void clear() {
 		size = 0;
+		memset(buffer, 0, capacity * sizeof(T));
 	}
 
 	Stretch& operator=(const Stretch& stretch_copy) {
