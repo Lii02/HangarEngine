@@ -1,6 +1,8 @@
 #include "precompiled.h"
 #include "system_window.h"
 #include "debug/assert.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
 #include <SDL2/SDL_syswm.h>
 
 namespace {
@@ -59,11 +61,31 @@ void SystemWindow::close() {
 }
 
 void SystemWindow::poll() {
+	Keyboard* kb = Keyboard::get();
+	HANGAR_ASSERT(kb != nullptr, "Keyboard has not been initialized");
+	Mouse* mouse = Mouse::get();
+	HANGAR_ASSERT(mouse != nullptr, "Mouse has not been initialized");
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev)) {
 		switch (ev.type) {
 		case SDL_QUIT:
 			is_running = false;
+			break;
+		case SDL_KEYDOWN:
+			kb->buttons[ev.key.keysym.sym] = true;
+			break;
+		case SDL_KEYUP:
+			kb->buttons[ev.key.keysym.sym] = false;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			mouse->buttons[ev.button.button] = true;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			mouse->buttons[ev.button.button] = false;
+			break;
+		case SDL_MOUSEMOTION:
+			mouse->x = ev.motion.x;
+			mouse->y = ev.motion.y;
 			break;
 		}
 	}

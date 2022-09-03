@@ -5,17 +5,23 @@
 #include "threading/thread.h"
 #include "os/system.h"
 #include "os/system_window.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
 
 int main(int args, char** argv) {
 	Logger::initialize();
 	FileSystem::initialize();
 	System::initialize();
 	Profiler::initialize();
+	Keyboard::initialize();
+	Mouse::initialize();
 
 	System* sys = System::get();
 	Profiler* profiler = Profiler::get();
 	Logger* logger = Logger::get();
 	FileSystem* fs = FileSystem::get();
+	Keyboard* kb = Keyboard::get();
+	Mouse* mouse = Mouse::get();
 
 	logger->message("Platform name: " + sys->get_name());
 	logger->message("Path: " + sys->get_path());
@@ -29,6 +35,8 @@ int main(int args, char** argv) {
 		window.poll();
 	}
 
+	Mouse::deinitialize();
+	Keyboard::deinitialize();
 	Profiler::deinitialize();
 	System::deinitialize();
 	FileSystem::deinitialize();

@@ -41,10 +41,10 @@ void Logger::warning(const AString& msg) {
 
 void Logger::confirmation(const AString& msg) {
 	MutexLock lock(&mutex);
-	printf("[Hangar | Confirmation | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
+	printf("[Hangar | Confirm | %s]: %s\n", StringFuncs::get_time_string_24h().ptr(), msg.ptr());
 }
 
 void Logger::assertion(const AString& msg, const char* file, int64_t line) {
 	MutexLock lock(&mutex);
-	printf("[Hangar | Assert fail | %s, %d | %s]: %s\n", file, line, StringFuncs::get_time_string_24h().ptr(), msg.ptr());
+	printf("[Hangar | Assert | %s:%d | %s]: %s\n", file, line, StringFuncs::get_time_string_24h().ptr(), msg.ptr());
 }

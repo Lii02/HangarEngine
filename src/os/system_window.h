@@ -10,8 +10,12 @@ enum {
 	SYSTEM_WINDOW_BORDERLESS = HANGAR_BIT(3),
 };
 
+class Keyboard;
+class Mouse;
+
 class SystemWindow {
-public:
+	friend class Keyboard;
+	friend class Mouse;
 protected:
 	bool is_running;
 	AString title;
