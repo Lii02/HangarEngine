@@ -2,7 +2,7 @@
 #include "file.h"
 #include "debug/assert.h"
 #include "debug/logger.h"
-#include "memory/memory.h"
+#include "memory/default_allocator.h"
 
 File::File(AString _path, FileMode _mode, AString _filename) {
 	path = _path;
@@ -68,8 +68,8 @@ void File::write_buffer(const void* buffer, size_t length) {
 }
 
 void* File::read_buffer(size_t length) {
-	DefaultMemoryAllocator& allocator = DefaultMemoryAllocator::get();
-	void* block = allocator.allocate(length);
+	DefaultAllocator* allocator = DefaultAllocator::get();
+	void* block = allocator->allocate(length);
 	fread(block, length, 1, stream);
 	return block;
 }

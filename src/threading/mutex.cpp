@@ -2,33 +2,29 @@
 #include "mutex.h"
 
 Mutex::Mutex() {
-	is_locked = false;
-	m = SDL_CreateMutex();
+	mutex = SDL_CreateMutex();
+	locked = false;
 }
 
 Mutex::~Mutex() {
-	SDL_DestroyMutex(m);
+	SDL_DestroyMutex(mutex);
 }
 
 void Mutex::lock() {
-	SDL_LockMutex(m);
-	is_locked = true;
+	SDL_LockMutex(mutex);
+	locked = true;
 }
 
 void Mutex::unlock() {
-	SDL_UnlockMutex(m);
-	is_locked = false;
+	SDL_UnlockMutex(mutex);
+	locked = false;
 }
 
-bool Mutex::get_is_locked() const {
-	return is_locked;
-}
-
-MutexLock::MutexLock(Mutex* _mutex) {
+AutomaticMutex::AutomaticMutex(Mutex* _mutex) {
 	mutex = _mutex;
 	mutex->lock();
 }
 
-MutexLock::~MutexLock() {
+AutomaticMutex::~AutomaticMutex() {
 	mutex->unlock();
 }

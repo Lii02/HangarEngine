@@ -1,55 +1,32 @@
 #include "precompiled.h"
 #include "thread.h"
 
-Thread::Thread(ThreadFunction _func, void* _args) {
-	func = _func;
-	args = _args;
-}
-
-Thread::Thread(const Thread& thread) {
-	func = thread.func;
-	args = thread.args;
+Thread::Thread(ThreadFunction _func, void* _argument) {
+	set_params(_func, _argument);
+	joined = false;
 }
 
 Thread::~Thread() {
 }
 
-Mutex& Thread::get_mutex() {
-	return mutex;
+void Thread::set_params(ThreadFunction _func, void* _argument) {
+	func = _func;
+	argument = _argument;
+}
+
+void Thread::start_thread() {
+	thread = SDL_CreateThread(func, "HangarThread", argument);
 }
 
 void Thread::join() {
-	thread.join();
+	SDL_WaitThread(thread, &return_code);
+	joined = true;
 }
 
 void Thread::detach() {
-	thread.detach();
+	SDL_DetachThread(thread);
 }
 
-void* Thread::get_handle() {
-	return thread.native_handle();
-}
-
-void Thread::run() {
-	if(thread.joinable())
-		thread.join();
-	thread = std::thread(func, args);
-}
-
-Thread Thread::operator=(const Thread& right) {
-	func = right.func;
-	args = right.args;
-	return *this;
-}
-
-void Thread::sleep(int milliseconds) {
-	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-}
-
-void Thread::yield() {
-	std::this_thread::yield();
-}
-
-uint32_t Thread::get_thread_count() {
-	return std::thread::hardware_concurrency();
+uint32_t Thread::get_id() {
+	return SDL_ThreadID();
 }

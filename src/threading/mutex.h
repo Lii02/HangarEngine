@@ -1,27 +1,28 @@
 #ifndef MUTEX_H
 #define MUTEX_H
-#include <SDL2/SDL_mutex.h>
 
 class Mutex {
 private:
-	SDL_mutex* m;
-	bool is_locked;
+	SDL_mutex* mutex;
+	bool locked;
 public:
 	Mutex();
 	~Mutex();
 
 	void lock();
 	void unlock();
-	bool get_is_locked() const;
+
+	HANGAR_FORCE_INLINE bool is_locked() const { return locked; }
 };
 
-class MutexLock {
+class AutomaticMutex {
 private:
 	Mutex* mutex;
 public:
-	MutexLock(Mutex* _mutex);
-	~MutexLock();
-	MutexLock(const MutexLock&) = delete;
+	AutomaticMutex(Mutex* _mutex);
+	~AutomaticMutex();
+
+	HANGAR_FORCE_INLINE bool is_locked() const { return mutex->is_locked(); }
 };
 
 #endif

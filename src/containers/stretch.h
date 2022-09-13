@@ -1,6 +1,6 @@
 #ifndef STRETCH_H
 #define STRETCH_H
-#include "memory/memory.h"
+#include "memory/default_allocator.h"
 #include "debug/assert.h"
 
 template <typename T>
@@ -53,14 +53,14 @@ public:
 	}
 
 	void resize(size_t new_capacity) {
-		DefaultMemoryAllocator& allocator = DefaultMemoryAllocator::get();
-		buffer = allocator.reallocate_template<T>(buffer, capacity, new_capacity);
+		DefaultAllocator* allocator = DefaultAllocator::get();
+		buffer = allocator->reallocate_template<T>(buffer, new_capacity);
 		capacity = new_capacity;
 	}
 
 	void double_capacity() {
-		DefaultMemoryAllocator& allocator = DefaultMemoryAllocator::get();
-		buffer = allocator.reallocate_template<T>(buffer, capacity, capacity *= 2);
+		DefaultAllocator* allocator = DefaultAllocator::get();
+		buffer = allocator->reallocate_template<T>(buffer, capacity *= 2);
 	}
 
 	size_t increase_size() {

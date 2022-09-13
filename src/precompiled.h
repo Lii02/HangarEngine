@@ -13,8 +13,15 @@
 #define HANGAR_LINUX
 #endif
 
-#ifndef NDEBUG
+#ifdef _DEBUG
 #define HANGAR_ENABLE_ASSERT
+#define HANGAR_FORCE_INLINE
+#else
+#ifdef _MSC_VER
+#define POLARIS_FORCE_INLINE __forceinline
+#else
+#define POLARIS_FORCE_INLINE ((always_inline)) inline
+#endif
 #endif
 
 #define HANGAR_BIT(x) (1 << x)

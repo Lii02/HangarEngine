@@ -1,32 +1,31 @@
 #ifndef THREAD_H
 #define THREAD_H
-#include "mutex.h"
-#include <thread>
 
-typedef void(*ThreadFunction)(void*);
+typedef int(*ThreadFunction)(void*);
+
+enum {
+	THREAD_SUCCESS,
+	THREAD_FAILURE = -1,
+};
 
 class Thread {
 private:
-	Mutex mutex;
-	std::thread thread;
+	SDL_Thread* thread;
 	ThreadFunction func;
-	void* args;
+	void* argument;
+	int return_code;
+	bool joined;
 public:
-	Thread() = default;
-	Thread(ThreadFunction _func, void* _args);
-	Thread(const Thread& thread);
+	Thread(ThreadFunction _func = nullptr, void* _argument = nullptr);
 	~Thread();
 
-	Mutex& get_mutex();
+	void set_params(ThreadFunction _func, void* _argument);
+	void start_thread();
 	void join();
 	void detach();
-	void* get_handle();
-	void run();
+	static uint32_t get_id();
 
-	Thread operator=(const Thread& right);
-	static void sleep(int milliseconds);
-	static void yield();
-	static uint32_t get_thread_count();
+	HANGAR_FORCE_INLINE int get_return_code() const { return return_code; }
 };
 
 #endif
