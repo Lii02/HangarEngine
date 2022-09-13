@@ -3,7 +3,7 @@
 
 #ifdef _MSC_VER
 #define HANGAR_API __declspec(dllexport)
-#elif
+#else
 #define HANGAR_API
 #endif
 
