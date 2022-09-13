@@ -17,12 +17,12 @@ public:
 		delete[] buttons;
 	}
 
-	bool get_button_down(uint32_t button) {
+	HANGAR_FORCE_INLINE bool get_button_down(uint32_t button) {
 		HANGAR_ASSERT(button > 0 && button <= num_buttons, "Input method button is out of range");
 		return buttons[button];
 	}
 
-	bool get_button_up(uint32_t button) {
+	HANGAR_FORCE_INLINE bool get_button_up(uint32_t button) {
 		HANGAR_ASSERT(button > 0 && button <= num_buttons, "Input method button is out of range");
 		return !buttons[button];
 	}

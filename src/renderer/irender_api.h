@@ -71,16 +71,16 @@ public:
 	virtual void remove_texture_2d(uint64_t index) = 0;
 	virtual void clean_textures() = 0;
 
-	void clear_stats() {
+	HANGAR_FORCE_INLINE void clear_stats() {
 		object_draw_count = 0;
 		vertex_draw_count = 0;
 	}
-	inline bool is_vsync_enabled() const { return vsync; }
-	inline void set_clear_color(float _clear_color[4]) { memcpy(clear_color, _clear_color, sizeof(float) * 4); }
-	inline void set_depth(float _depth) { depth = _depth; }
-	inline void set_vsync(bool _vsync) { vsync = _vsync; }
-	inline uint64_t get_object_draw_count() const { return object_draw_count; };
-	inline uint64_t get_vertex_draw_count() const { return vertex_draw_count; };
+	HANGAR_FORCE_INLINE  bool is_vsync_enabled() const { return vsync; }
+	HANGAR_FORCE_INLINE void set_clear_color(float _clear_color[4]) { memcpy(clear_color, _clear_color, sizeof(float) * 4); }
+	HANGAR_FORCE_INLINE void set_depth(float _depth) { depth = _depth; }
+	HANGAR_FORCE_INLINE void set_vsync(bool _vsync) { vsync = _vsync; }
+	HANGAR_FORCE_INLINE uint64_t get_object_draw_count() const { return object_draw_count; };
+	HANGAR_FORCE_INLINE uint64_t get_vertex_draw_count() const { return vertex_draw_count; };
 };
 
 #endif

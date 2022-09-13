@@ -25,8 +25,8 @@ public:
 	FileSystem* add_folder(AString folder_name);
 	void refresh();
 
-	inline File* operator[](AString filename) { return immediate_search_file(filename); }
-	inline AString GetPath() const { return path; }
+	HANGAR_FORCE_INLINE File* operator[](AString filename) { return immediate_search_file(filename); }
+	HANGAR_FORCE_INLINE AString GetPath() const { return path; }
 };
 
 #endif
