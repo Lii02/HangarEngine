@@ -24,8 +24,8 @@ AString::AString(const AString& _astring_copy) {
 
 AString AString::int_to_string(int number) {
 	AString str;
-	char buffer[10]{ 0 };
-	itoa(number, buffer, 10);
+	char buffer[10]{ 0 };\
+	SDL_itoa(number, buffer, 10);
 	for (size_t i = 0; i < strlen(buffer); i++) {
 		str.append(buffer[i]);
 	}

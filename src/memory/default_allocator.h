@@ -18,8 +18,7 @@ namespace HangarC {
 	}
 }
 
-// Some compilers require noexcept
-block_t operator new(size_t size) noexcept;
-void operator delete(block_t block) noexcept;
+void* operator new(size_t size);
+void operator delete(void* block);
 
 #endif

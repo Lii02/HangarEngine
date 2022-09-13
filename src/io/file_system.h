@@ -1,6 +1,6 @@
 #ifndef FILEGROUP_H
 #define FILEGROUP_H
-#include "File.h"
+#include "file.h"
 #include "containers/list.h"
 
 class FileSystem {

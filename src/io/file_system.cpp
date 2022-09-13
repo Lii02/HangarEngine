@@ -2,14 +2,14 @@
 #include "file_system.h"
 #include <filesystem>
 
-#define COMPLETE_PATH(str) (path + "\\" + str)
+#define COMPLETE_PATH(str) (path + "/" + str)
 
 namespace {
 	FileSystem* g_file_system;
 }
 
 void FileSystem::initialize() {
-	g_file_system = new FileSystem(".\\");
+	g_file_system = new FileSystem("./");
 }
 
 void FileSystem::deinitialize() {

@@ -1,6 +1,6 @@
 #ifndef MATH_MATRIX_H
 #define MATH_MATRIX_H
-#include "Vectors.h"
+#include "vectors.h"
 
 struct Matrix {
 	union {

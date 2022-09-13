@@ -42,10 +42,10 @@ void HangarC::default_deallocate(block_t block) {
 	DefaultAllocator::get()->deallocate(block);
 }
 
-block_t operator new(size_t size) noexcept {
+void* operator new(size_t size) {
 	return HangarC::default_allocate(size);
 }
 
-void operator delete(block_t block) noexcept {
+void operator delete(void* block) {
 	HangarC::default_deallocate(block);
 }

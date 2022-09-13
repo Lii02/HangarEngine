@@ -1,5 +1,5 @@
-#include "Precompiled.h"
-#include "Logger.h"
+#include "precompiled.h"
+#include "logger.h"
 #include "string/stringfuncs.h"
 
 namespace {

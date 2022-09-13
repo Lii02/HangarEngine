@@ -4,7 +4,7 @@
 
 class SystemWindow;
 
-typedef SDL_KeyCode KeyCode;
+typedef SDL_KeyCode HKeyCode;
 
 class Keyboard : public IInputMethod {
 	friend class SystemWindow;

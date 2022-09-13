@@ -3,6 +3,9 @@ workspace "hangar"
 	cppdialect "c++latest"
 	configurations { "Debug", "Release" }
 	flags { "MultiProcessorCompile" }
+	links {
+		"SDL2"
+	}
 	defines {
 		"UNICODE",
 	}

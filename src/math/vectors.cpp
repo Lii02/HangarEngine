@@ -1,5 +1,5 @@
-#include "Precompiled.h"
-#include "Vectors.h"
+#include "precompiled.h"
+#include "vectors.h"
 
 // Vector2
 Vector2::Vector2(float _x, float _y) {

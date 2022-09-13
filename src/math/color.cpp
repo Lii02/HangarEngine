@@ -1,5 +1,5 @@
-#include "Precompiled.h"
-#include "Color.h"
+#include "precompiled.h"
+#include "color.h"
 
 Color::Color(float _r, float _g, float _b, float _a) {
 	r = _r;
