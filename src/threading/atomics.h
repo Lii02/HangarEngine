@@ -2,11 +2,11 @@
 #define ATOMICS_H
 #include "precompiled.h"
 #include "Mutex.h"
-#include "memory/memory.h"
+#include "memory/default_allocator.h"
 
 typedef void(*AtomicFreeFunction)(void* block);
 
-template <typename T, AtomicFreeFunction F = PolarisC::default_deallocate>
+template <typename T, AtomicFreeFunction F = HangarC::default_deallocate>
 class Atomic {
 private:
 	T* value;
